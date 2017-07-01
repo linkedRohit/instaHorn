@@ -4,16 +4,39 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/app.css" />
+        <link rel="stylesheet" href="/assets/css/feed.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
     </head>
-    <body>
-        <div class="container mt20">
+    <body class="feedLayer">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Onl9 Deb8</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Feeds</a></li>
+                        <li><a href="#">Trending Topics</a></li>
+                        <li><a href="#">My Debates</a></li>
+                    </ul>                    
+                    <button class="btn btn-success navbar-btn">Start a debate</button>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt20 feedLayer">
             <div class="row-fluid clearfix">
                 <div class="col-sm-2">
                     <div class="panel panel-default">
                         <div class="panel-body p2">
                             <div class="userProfile text-center">
-                                <div class="photo"><img src="{{ asset('images/svg/programmer.svg') }}" height="50px" width="50px" /></div>
+                                <div class="photo"><img src="https://scontent.fdel1-1.fna.fbcdn.net/v/t1.0-9/19399545_2012451772113731_4379657172752804918_n.jpg?oh=b49eb10f803ea145ef1f350cfbcf13a1&oe=59DB5C60" height="50px" width="50px" /></div>
                                 <div class="mt5"><b>Rohit Sharma</b></div>
                                 <div><span class="fa fa-coffee"></span> CEO @Stareup</div>
                             </div>
@@ -23,7 +46,7 @@
                 <div class="col-sm-8">
                     <div class="panel">
                         <div class="panel-body">
-                            <h3>Does Facebook needs a Dislike Button ?</h3>
+                            <h3 class="text-center">Does Facebook needs a Dislike Button ?</h3>
                             <div class="row-fluid">
                                 <div class="col-sm-6 p0 spot">
                                     <div class="bg-ok p5 text-right">
@@ -55,6 +78,5 @@
         <script src="/assets/js/angular.min.js"></script>
         <script src="/assets/js/angular-resource.min.js"></script>
         <script src="/assets/js/angular-route.min.js"></script>
-        <script src="/assets/js/jquery.min.js"></script>
     </body>
 </html>
