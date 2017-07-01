@@ -12,6 +12,7 @@ PORT = process.env.PORT || 3000;
 process.env.PWD = process.cwd();
 
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
+app.use('/views', express["static"](path.join(process.env.PWD, 'views')));
 
 app.use('/api', proxy('127.0.0.1:8000', {
 forwardPath: function(req, res) {
@@ -19,24 +20,6 @@ forwardPath: function(req, res) {
 }
 }));
 
-app.get('*', function(req, res) {
-    var file, filepath, htmlpath;
-
-    file = url.parse(req.url).pathname;
-    if (!file.endsWith('.html')) {
-      file += '.html';
-    }
-
-    htmlpath = path.join(process.env.PWD, 'views');
-    filepath = path.join(htmlpath, file);
-
-    if (fs.existsSync(filepath)) {
-      return res.sendFile(filepath);
-    } else {
-      return res.sendFile(path.join(htmlpath, 'index.html'));
-    }
-
-});
 
 app.listen(PORT, function() {
     return console.log('Listening to ' + PORT);
