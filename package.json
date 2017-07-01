@@ -2,7 +2,7 @@
   "name": "frontend-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,7 +25,8 @@
     "express": "^4.15.3",
     "express-http-proxy": "^1.0.4",
     "font-awesome": "^4.7.0",
-    "jquery-lite": "^2.2.3"
+    "jquery-lite": "^2.2.3",
+    "json-server": "^0.10.3"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
