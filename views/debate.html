@@ -5,16 +5,17 @@
         <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/app.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/socket.io/socket.io.js"></script>
     </head>
-    <body>
-        <div class="container">
+    <body ng-app="DebateApp">
+        <div class="container" ng-controller="AppCtrl">
             <div class="row-fluid clearfix">
-                <div class="col-xs-12 text-center">
-                    <h1>Does Facebook needs a Dislike Button ?</h1>
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <h1>{{ question }}</h1>
                     <p>
-                        Asked by <strong>Anonymous</strong> &bullet;&nbsp;
+                        Asked by <strong>{{ name }}</strong> &bullet;&nbsp;
                         <span class="text-muted">
-                            <i class="fa fa-clock-o"></i> 3 hours ago
+                            <i class="fa fa-clock-o"></i> <span am-time-ago="when"></span>
                         </span>
                     </p>
                     <div class="text-center mt20 btn-space">
@@ -122,5 +123,8 @@
         <script src="/assets/js/angular-resource.min.js"></script>
         <script src="/assets/js/angular-route.min.js"></script>
         <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/moment.min.js"></script>
+        <script src="/assets/js/angular-moment.min.js"></script>
+        <script src="/assets/js/app.js"></script>
     </body>
 </html>
