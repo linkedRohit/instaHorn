@@ -1,0 +1,34 @@
+{
+  "name": "frontend-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/debate-platform/frontend-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/debate-platform/frontend-ui/issues"
+  },
+  "homepage": "https://gitlab.com/debate-platform/frontend-ui#README",
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-resource": "^1.6.4",
+    "angular-route": "^1.6.4",
+    "bootstrap": "^3.3.7",
+    "bootswatch": "^3.3.7",
+    "express": "^4.15.3",
+    "express-http-proxy": "^1.0.4",
+    "font-awesome": "^4.7.0",
+    "jquery-lite": "^2.2.3"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "stylus": "^0.54.5"
+  }
+}
