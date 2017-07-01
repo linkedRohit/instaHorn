@@ -2,3 +2,44 @@
  	margin-top: 40%;
  	text-align: center;
 }
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.f11 {
+    font-size: 1.1em;
+}
+
+.p0 {
+    padding: 0;
+}
+
+.btn-space .btn {
+    margin:5px 10px;
+}
+
+.btn .fa {
+    margin-right: 5px;
+}
+
+.bg-ok {
+    margin-right: -5px;
+    border-right: 5px solid #adef97;
+}
+
+.bg-no {
+    border-left: 5px solid #ffb1c2;
+}
+
+.p10 {
+    padding: 10px;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.mt0 {
+    margin-top: 0;
+}
