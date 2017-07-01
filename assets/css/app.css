@@ -3,6 +3,10 @@
  	text-align: center;
 }
 
+.mt10 {
+    margin-top: 10px;
+}
+
 .mt20 {
     margin-top: 20px;
 }
@@ -11,9 +15,18 @@
     font-size: 1.1em;
 }
 
+.f2 {
+    font-size: 2em;
+}
+
 .p0 {
     padding: 0;
 }
+
+.p5 {
+    padding: 5px;
+}
+
 
 .btn-space .btn {
     margin:5px 10px;
@@ -21,6 +34,15 @@
 
 .btn .fa {
     margin-right: 5px;
+}
+
+.spot .bg-ok {
+    margin-right: 0;
+}
+
+.spot .bg-ok, .spot .bg-no {
+    font-size: 0.9em;
+    color: #555;
 }
 
 .bg-ok {

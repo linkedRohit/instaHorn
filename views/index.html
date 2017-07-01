@@ -4,6 +4,17 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/app.css" />
+    	<script src="/socket.io/socket.io.js"></script>
+    	<script>
+            var socket = io();
+            
+            socket.on('auth', function(){
+                socket.emit('init', {
+                    'token': '10923490yuew9iashdihasidijasndknihe4891',
+                    'url': location.pathname
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
