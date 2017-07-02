@@ -1,3 +1,32 @@
 .feedLayer {
 	background: #EEE;
 }
+
+.photo {
+    border-radius: 25px;
+}
+
+.userPhotos {
+	border-radius: 25px;
+	padding:5;	
+}
+
+.userInfo {
+	font-size: 10px;
+	width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.postedTime {
+	margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.responseText {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
