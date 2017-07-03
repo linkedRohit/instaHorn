@@ -41,7 +41,7 @@ io.listen(app.listen(PORT, function() {
 // socket stuff
 var socketList = {};
 var userList = {};
-/*
+
 io.on('connection', function(socket){
 
     // ask for authentication
@@ -76,4 +76,4 @@ io.on('connection', function(socket){
         }
     });
 
-});*/
+});
