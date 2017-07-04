@@ -34,10 +34,17 @@ app.factory('socket', function ($rootScope) {
   };
 });
 
+app.controller('FeedCtrl', function($scope, socket) {
+    
+});
+
 app.controller('AppCtrl', function($scope, socket) {
     socket.on('debate-ques', function(data){
         $scope.question = data.description;
         $scope.name = data.fullName;
         $scope.when = data.postedOn;
+    });
+
+    socket.on('user-commented', function(comment){
     });
 });
