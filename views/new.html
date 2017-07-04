@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/summernote.css" />
+        <link rel="stylesheet" href="/assets/css/select2.min.css" />
         <link rel="stylesheet" href="/assets/css/app.css" />
         <link rel="stylesheet" href="/assets/css/feed.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,12 +23,16 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Tags</label>
-                    <input type="text" class="form-control" name="tags" id="tags" placeholder="Add tags related to your subject and audience"></input>
+                    <select multiple="multiple" class="form-control" name="tags" id="tags" placeholder="Add tags related to your subject and audience">
+                        <option>Politics</option>
+                        <option value="">Open Discussion</option>
+                        <option value="">Comedy</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="description">Share with</label>
-                    <select class="form-control" name="friends" id="friends">
-                        <option value="-1">Select Friends</option>
+                    <select multiple="multiple" class="form-control" name="friends" id="friends">
+                        <option disabled>Select Friends</option>
                         <option value="Mayank">Mayank</option>
                         <option value="Mayank">Rohit</option>
                         <option value="Mayank">Shahrukh Khan</option>
@@ -48,9 +53,15 @@
         <script src="/assets/js/angular-moment.min.js"></script>
         <script src="/assets/js/app.js"></script>
         <script src="/assets/js/summernote.min.js"></script>
+        <script src="/assets/js/select2.min.js"></script>
         <script>
             $(document).ready(function() {
               $('#subject').summernote();
+              $('#tags').select2({
+                  tags: true,
+                  tokenSeparators: [',']
+              });
+              $('#friends').select2();
             });
         </script>
     </body>
