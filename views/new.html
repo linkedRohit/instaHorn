@@ -10,29 +10,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="/socket.io/socket.io.js"></script>
     </head>
-    <body>
-        <div class="container">
+    <body ng-app="debateApp" >
+        <div class="container" ng-controller="topics">
             <div class="col-sm-12">
                 <h2>Start a new Debate</h2>
             </div>
             <div class="col-sm-12">
-            <form>
+            <form ng-submit="sub()" method="post">
+                <input type="hidden" ng-model="formdata.uid" value="1">
                 <div class="form-group">
                     <label for="description">Subject </label><i class="text-danger fa fa-asterisk"></i>
-                    <textarea  class="form-control" name="subject" id="subject" placeholder="Add a striking introduction to the subject you want to discuss. Make sure you convey your subject in 250 characters." rows="4"></textarea>
+                    <textarea ng-model="formData.description" class="form-control" name="subject" id="subject" placeholder="Add a striking introduction to the subject you want to discuss. Make sure you convey your subject in 250 characters." rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="description">Tags</label>
-                    <select multiple="multiple" class="form-control" name="tags" id="tags" placeholder="Add tags related to your subject and audience">
-                        <option>Politics</option>
-                        <option value="">Open Discussion</option>
-                        <option value="">Comedy</option>
-                    </select>
+                    <input type="text" ng-model="formData.tags" class="form-control" name="tags" id="tags" placeholder="Add tags related to your subject and audience"></input>
                 </div>
                 <div class="form-group">
                     <label for="description">Share with</label>
-                    <select multiple="multiple" class="form-control" name="friends" id="friends">
-                        <option disabled>Select Friends</option>
+                    <select class="form-control" ng-model="formData.shareWith" name="friends" id="friends">
+                        <option value="-1">Select Friends</option>
                         <option value="Mayank">Mayank</option>
                         <option value="Mayank">Rohit</option>
                         <option value="Mayank">Shahrukh Khan</option>
@@ -55,14 +52,12 @@
         <script src="/assets/js/summernote.min.js"></script>
         <script src="/assets/js/select2.min.js"></script>
         <script>
-            $(document).ready(function() {
-              $('#subject').summernote();
               $('#tags').select2({
                   tags: true,
                   tokenSeparators: [',']
               });
               $('#friends').select2();
-            });
         </script>
+        <script src="/controllers/TopicUIController.js"></script>
     </body>
 </html>
