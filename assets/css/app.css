@@ -80,6 +80,11 @@ html, body {
     padding: 10px;
 }
 
+.plr10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .mb0 {
     margin-bottom: 0;
 }
@@ -88,10 +93,18 @@ html, body {
     margin-top: 0;
 }
 
-.f10 {
-    font-size: 10px;
+.m0 {
+    margin: 0;
+}
+
+.f09 {
+    font-size: 0.9em;
 }
 
 .f12 {
     font-size: 12px;
+}
+
+.ca {
+    color: #aaa;
 }

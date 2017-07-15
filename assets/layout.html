@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/assets/css/app.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    	<script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>
+            function statusChangeCallback(loginStatus) {
+                if(loginStatus.status =='connected') {
+                    var userAuthStatus = loginStatus.authResponse;
+
+                    FB.api('/me', {fields: 'email'}, function(response) {
+                        var userObject = {};
+                        userObject.accessToken = userAuthStatus.accessToken;
+                        userObject.expiresIn = userAuthStatus.expiresIn;
+                        userObject.email = response.email;
+                        userObject.userId = response.userID;
+                        window.location = 'feed.html?' + JSON.stringify(userObject);
+                    });
+                }
+            }
+
+            window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : '456012464779296',
+                  cookie     : true,
+                  xfbml      : true,
+                  version    : 'v2.8'
+                });
+
+                FB.AppEvents.logPageView();
+
+                FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                });
+
+                function checkLoginState() {
+                    FB.getLoginStatus(function(response) {
+                        statusChangeCallback(response);
+                    });
+                }
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <div class="container-fluid app">
+            <div class="welcomePage" style="margin-top: 200px;">
+                <div class="row">
+                    <span class="fa fa-pencil f50" ></span>
+                    <h4>Online debating</h4>
+                </div>
+                <div class="row" style="margin-top:30px;">
+                    <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true" onlogin=checkLoginState()></div>
+                </div>
+            </div>
+        </div>
+        <script src="app.min.js"></script>
+    </body>
+</html>

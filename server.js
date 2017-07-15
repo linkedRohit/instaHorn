@@ -36,13 +36,7 @@ PORT = process.env.PORT || 3000;
 process.env.PWD = process.cwd();
 
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
-app.use('/views', express["static"](path.join(process.env.PWD, 'views')));
-
-app.use('/api', proxy('127.0.0.1:8000', {
-    forwardPath: function(req, res) {
-      return '/api' + url.parse(req.url).path;
-    }
-}));
+app.use('/', express["static"](process.env.PWD));
 
 io.listen(app.listen(PORT, function() {
     return console.log('Listening to ' + PORT);
@@ -60,8 +54,12 @@ function processPage(socket, path){
             L.info('Page', path);
             debatePageInit(socket, page);
         break;
+        case '/views/feed.html':
+            L.info('Page', path);
+            feedPageInit(socket, page);
+        break;
         default:
-            L.error('Page Not Found', path);
+            L.err('Page Not Found', path);
         break;
     }
 }
@@ -77,6 +75,14 @@ function debatePageInit(socket, page){
     });
 }
 
+function feedPageInit(socket, page){
+    mysql.query('select * from topics order by tid desc limit 10', function(err, result){
+        if(err) console.log('Error', err);
+        L.info('Loading Feeds', 'Yo!');
+        socket.emit('feed-load', result);
+    });
+}
+
 io.on('connection', function(socket){
 
     // ask for authentication
@@ -85,7 +91,7 @@ io.on('connection', function(socket){
 
     // initiates the page (authentication callback)
     socket.on('init', function(data){
-        mysql.query('select * from users where accessToken = ?', [data.token], function(err, result){
+        mysql.query('select * from users where accessToken not in (?)', [data.token], function(err, result){
             if(err) console.log('Error', err);
             result = result[0];
             L.info(result.uid, 'Authenticated');
@@ -99,7 +105,7 @@ io.on('connection', function(socket){
             length = _.get(userList, result.uid, []).length;
             _.set(userList, [result.uid, length], socket.id);
 
-            processPage(socket, data.url);
+            socket.emit('verify', result);
         });
     });
 
@@ -109,7 +115,7 @@ io.on('connection', function(socket){
         L.err(userId, 'User Disconnected');
 
         delete socketList[socket.id];
-        var index = userList[userId].indexOf(socket.id);
+        var index = -1; //userList[userId].indexOf(socket.id);
         if(index >=0 ) {
             userList[userId].splice(index, 1);
         }
