@@ -5,4 +5,9 @@ app.controller('NavCtrl', function(Page, $scope, socket, User) {
         socket.emit('fetch-feed');
     };
 
+	$scope.showDebatePosting = false;
+
+    $scope.showDebateForm = function() {
+    	Page.set('postDebate');
+    }
 });

@@ -9,5 +9,5 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
             when: data.postedOn
         };
     });
-
+    
 });
