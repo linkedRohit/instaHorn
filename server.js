@@ -246,11 +246,6 @@ io.on('connection', function(socket){
                 length = _.get(userList, result.id, []).length;
                 _.set(userList, [result.id, length], socket.id);
             })
-            /*
-            .then(function(){
-                debatePageInit(socket, 1);
-            })
-            */
             .fail(function(err){
                 L.error('Init Error', err);
             });
@@ -269,6 +264,10 @@ io.on('connection', function(socket){
 
         socket.on('fetch-feed', function() {
             feedPageInit(socket, 0);
+        });
+
+        socket.on('fetch-question', function(id) {
+            debatePageInit(socket, id);
         })
     });
 

@@ -1,8 +1,8 @@
-<div class="col-sm-8" ng-controller="FeedCtrl">
+<div ng-controller="FeedCtrl">
     <div class="panel" ng-repeat="story in feeds">
         <div class="panel-body">
             <h3 class="p10 m0 text-center">
-                <a href="/views/debate.html?id={{ story.tid }}">
+                <a href="#" ng-click="loadQuestion(story.tid)">
                     {{ story.description }}
                 </a>
             </h3>
