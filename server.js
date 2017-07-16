@@ -98,22 +98,18 @@ function processPage(socket, path){
 function feedPageInit(socket, page){
     mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
-        L.info('fetching feeds', true);
+        L.info('fetching feeds', result.length);
         socket.emit('feed-load', result);
     });
 }
 
 function startDebate(socket, data) {
     var defer = Q.defer();
-    console.log(data);
-    mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId], 
+    mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
         function(err, result){
-            console.log(err, result);
             err ? defer.reject() : defer.resolve();
         }
     );
-
-
     return defer.promise;
 }
 
@@ -181,9 +177,14 @@ function registerUserInDatabase( data, token ){
     var defer = Q.defer();
 
     mysql.query('insert into users (fullName, accessToken, email, fbid) values (?,?,?,?)',
-    [data.name, token, data.email, data.id],
+    [data.user.name, token, data.user.email, data.user.id],
     function(err, result){
-        err ? defer.reject() : defer.resolve();
+        if(err) {
+            defer.reject();
+        } else {
+            data.db = { id: result.insertId };
+            defer.resolve(data);
+        }
     });
 
     return defer.promise;
@@ -235,9 +236,10 @@ io.on('connection', function(socket){
             .then(function(result){
                 if( result.db.length == 0 ) {
                     L.info('registerUserInDatabase', result.user.email, result.user.id );
-                    registerUserInDatabase(result.user, data.accessToken);
+                    return registerUserInDatabase(result, data.accessToken);
                 } else {
                     L.info('updateUserInDatabase', result.user.email, result.user.id );
+                    result.db = result.db.pop();
                     updateUserInDatabase(result.user, data.accessToken);
                 }
                 return result;
@@ -245,19 +247,19 @@ io.on('connection', function(socket){
             .then(function(result){
                 L.info('Sending User to Frontend', JSON.stringify(result.user));
                 socket.emit('login-user-received', result.user);
-                return result.user;
+                return result.db;
             })
             .then(function(result){
-                L.info(result.id, 'Authenticated');
+                L.info(result.uid, 'Authenticated');
 
                 _.set(socketList, socket.id, result);
 
-                if(_.get(userList, result.id, false) === false){
-                    _.set(userList, result.id, []);
+                if(_.get(userList, result.uid, false) === false){
+                    _.set(userList, result.uid, []);
                 }
 
-                length = _.get(userList, result.id, []).length;
-                _.set(userList, [result.id, length], socket.id);
+                length = _.get(userList, result.uid, []).length;
+                _.set(userList, [result.uid, length], socket.id);
             })
             .fail(function(err){
                 L.error('Init Error', err);
@@ -265,7 +267,7 @@ io.on('connection', function(socket){
         }
 
         socket.on('disconnect', function(){
-            var userId = _.get(socketList, [socket.id, 'id'], '-1');
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             L.err(userId, 'User Disconnected');
 
             delete socketList[socket.id];
@@ -284,11 +286,11 @@ io.on('connection', function(socket){
         })
 
         socket.on('add-topic', function(data) {
-            var userId = _.get(socketList, [socket.id, 'id'], '-1');
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             data.userId = userId;
             Q(undefined)
             .then(function(){
-                L.info('starting debate', data);
+                L.info('starting debate', data.description);
                 return startDebate(socket, data);
             }).fail(function(err){
                 L.error('Error while starting new debate', err);
