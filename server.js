@@ -236,49 +236,37 @@ io.on('connection', function(socket){
             .then(function(result){
                 L.info('Sending User to Frontend', JSON.stringify(result.user));
                 socket.emit('login-user-received', result.user);
+                return result.user;
+            })
+            .then(function(result){
+                L.info(result.id, 'Authenticated');
+
+                _.set(socketList, socket.id, result);
+
+                if(_.get(userList, result.id, false) === false){
+                    _.set(userList, result.id, []);
+                }
+
+                length = _.get(userList, result.id, []).length;
+                _.set(userList, [result.id, length], socket.id);
             })
             .fail(function(err){
                 L.error('Init Error', err);
             });
-
-
         }
-/*
-        mysql.query('select * from users where accessToken not in (?)', [data.token], function(err, result){
-            if(err) console.log('Error', err);
-            result = result[0];
-            L.info(result.uid, 'Authenticated');
 
-            _.set(socketList, socket.id, result);
+        socket.on('disconnect', function(){
+            var userId = _.get(socketList, [socket.id, 'id'], '-1');
+            L.err(userId, 'User Disconnected');
 
-            if(_.get(userList, result.uid, false) === false){
-                _.set(userList, result.uid, []);
+            delete socketList[socket.id];
+            var index = -1; //userList[userId].indexOf(socket.id);
+            if(index >=0 ) {
+                userList[userId].splice(index, 1);
             }
-
-            length = _.get(userList, result.uid, []).length;
-            _.set(userList, [result.uid, length], socket.id);
-
-            socket.emit('verify', result);
         });
-        */
-    });
-/*
-    // on user disconnects
-    socket.on('disconnect', function(){
-        var userId = _.get(socketList, [socket.id, 'uid'], '-1');
-        L.err(userId, 'User Disconnected');
-
-        delete socketList[socket.id];
-        var index = -1; //userList[userId].indexOf(socket.id);
-        if(index >=0 ) {
-            userList[userId].splice(index, 1);
-        }
     });
 
-    socket.on('comment', function(data){
-        console.log(data);
-    });
-*/
 });
 
 module.exports = app;

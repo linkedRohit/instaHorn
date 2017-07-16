@@ -18,13 +18,16 @@
                 <div ng-show="user">
                     <app-navigation></app-navigation>
                     <div class="container">
-                        <div class="col-sm-2">
-                            <app-side-profile></app-side-profile>
-                        </div>
+                        <div class="row-fluid">
+                            <div class="col-sm-2 hidden-xs">
+                                <app-side-profile></app-side-profile>
+                            </div>
+                            <div class="col-sm-10">
+                                <app-debate-feed></app-debate-feed>
+                            </div>
                     </div>
 
-                    <app-debate-feed></app-debate-feed>
-                    <app-debate-page></app-debate-page>
+
                 </div>
         </div>
 
