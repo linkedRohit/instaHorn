@@ -50,7 +50,7 @@ process.env.PWD = process.cwd();
 
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
 app.use('/', express["static"](process.env.PWD));
-/*
+
 app.use('/controllers', express["static"](path.join(process.env.PWD, 'controllers')));
 app.use('/views', express["static"](path.join(process.env.PWD, 'views')));
 app.use(bodyParser.json());
@@ -69,7 +69,6 @@ app.use('/api', proxy('127.0.0.1:8000', {
       return '/api' + url.parse(req.url).path;
   }
 }));
-*/
 
 io.listen(app.listen(PORT, function() {
     return console.log('Listening to ' + PORT);
@@ -109,14 +108,13 @@ function debatePageInit(socket, page){
 }
 
 function feedPageInit(socket, page){
-    mysql.query('select * from topics order by tid desc limit 10', function(err, result){
+    mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
-        L.info('Loading Feeds', 'Yo!');
+        L.info('fetching feeds', true);
         socket.emit('feed-load', result);
     });
 }
 
-/*
 var Topics=require('./api/routes/topicRoutes');
 app.use('/Topics',Topics);
 // catch 404 and forward to error handler
@@ -151,7 +149,6 @@ app.use(function(err, req, res, next) {
     });
 });
 
-*/
 
 function checkFacebookAccessTokenValidity(data) {
     var defer = Q.defer();
@@ -265,6 +262,10 @@ io.on('connection', function(socket){
                 userList[userId].splice(index, 1);
             }
         });
+
+        socket.on('fetch-feed', function() {
+            feedPageInit(socket, 0);
+        })
     });
 
 });

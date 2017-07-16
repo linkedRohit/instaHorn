@@ -11,7 +11,7 @@ app.controller('LoginCtrl', function($scope, socket, User) {
         User.set(user);
         $scope.user = user;
 
-        socket.emit('feed-fetch');
+        socket.emit('fetch-feed');
     });
 
 });

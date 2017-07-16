@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-  Topic = mongoose.model('Topics');
+Topic = require('../models/topicModel');
 
 exports.list_all_topics = function(req, res) {
   Topic.find({}, function(err, topic) {
@@ -10,9 +9,6 @@ exports.list_all_topics = function(req, res) {
     res.json(topic);
   });
 };
-
-
-
 
 exports.create_a_topic = function(req, res) {
   var new_topic = new Topic(req.body);
@@ -23,7 +19,6 @@ exports.create_a_topic = function(req, res) {
   });
 };
 
-
 exports.read_a_topic = function(req, res) {
   Topic.findById(req.params.topicId, function(err, topic) {
     if (err)
@@ -31,7 +26,6 @@ exports.read_a_topic = function(req, res) {
     res.json(topic);
   });
 };
-
 
 exports.update_a_topic = function(req, res) {
   Topic.findOneAndUpdate({_id: req.params.topicId}, req.body, {new: true}, function(err, topic) {
@@ -41,10 +35,7 @@ exports.update_a_topic = function(req, res) {
   });
 };
 
-
 exports.delete_a_topic = function(req, res) {
-
-
   Topic.remove({
     _id: req.params.topicId
   }, function(err, topic) {

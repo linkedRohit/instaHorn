@@ -11,12 +11,12 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body ng-app="debateApp" >
-        <div class="container" ng-controller="topics">
+        <div class="container" ng-controller="TopicCtrl">
             <div class="col-sm-12">
                 <h2>Start a new Debate</h2>
             </div>
             <div class="col-sm-12">
-            <form ng-submit="sub()" method="post">
+            <form ng-submit="startDebate()" method="post">
                 <input type="hidden" ng-model="formdata.uid" value="1">
                 <div class="form-group">
                     <label for="description">Subject </label><i class="text-danger fa fa-asterisk"></i>

@@ -70,10 +70,10 @@ router.put('/:id',function(req,res,next){
 });
 
 
-module.exports=router;
+//module.exports=router;
 
 
-/*'use strict';
+'use strict';
 module.exports = function(app) {
   var topicModule = require('../controllers/topicsController');
 
@@ -89,4 +89,3 @@ module.exports = function(app) {
     .put(topicModule.update_a_topic)
     .delete(topicModule.delete_a_topic);
 };
-*/
