@@ -96,17 +96,6 @@ function processPage(socket, path){
     }
 }
 
-function debatePageInit(socket, page){
-    var id = page.query.id;
-    mysql.query('select fullName, postedOn, description from topics ' +
-                'join users on topics.uid = users.uid where tid = ?', [id], function(err, result){
-        if(err) console.log('Error', err);
-        result = result[0];
-        L.info('Question', result.description);
-        socket.emit('debate-ques', result);
-    });
-}
-
 function feedPageInit(socket, page){
     mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
@@ -154,7 +143,7 @@ function checkFacebookAccessTokenValidity(data) {
     var defer = Q.defer();
     fb.setAccessToken(data.accessToken);
     fb.api('/me', {
-        fields: ['id','name','email']
+        fields: ['id','name','email', 'work']
     },
     function(response){
         response ? defer.resolve(response) : defer.reject(response);
@@ -197,6 +186,16 @@ function updateUserInDatabase( data, token ){
     });
 
     return defer.promise;
+}
+
+function debatePageInit(socket, id){
+    mysql.query('select fullName, postedOn, description from topics ' +
+                'join users on topics.uid = users.uid where tid = ?', [id], function(err, result){
+        if(err) console.log('Error', err);
+        result = result[0];
+        L.info('Question', result.description);
+        socket.emit('debate-ques', result);
+    });
 }
 
 io.on('connection', function(socket){
@@ -247,6 +246,11 @@ io.on('connection', function(socket){
                 length = _.get(userList, result.id, []).length;
                 _.set(userList, [result.id, length], socket.id);
             })
+            /*
+            .then(function(){
+                debatePageInit(socket, 1);
+            })
+            */
             .fail(function(err){
                 L.error('Init Error', err);
             });

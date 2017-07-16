@@ -3,7 +3,11 @@
         <div class="userProfile text-center">
             <img src="https://graph.facebook.com/{{ user.id }}/picture?width=50" class="img-circle">
             <div class="mt5"><b>{{ user.name }}</b></div>
-            <div><span class="fa fa-coffee"></span> CEO @Stareup</div>
+            <div ng-show="user.work">
+                <span class="fa fa-coffee"></span>
+                &nbsp;
+                {{ user.work[0].position.name}} @ {{ user.work[0].employer.name }}
+            </div>
         </div>
     </div>
 </div>
