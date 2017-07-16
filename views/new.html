@@ -17,7 +17,7 @@
             </div>
             <div class="col-sm-12">
             <form ng-submit="startDebate()" method="post">
-                <input type="hidden" ng-model="formdata.uid" value="1">
+                <input type="hidden" ng-model="formData.uid" value="1">
                 <div class="form-group">
                     <label for="description">Subject </label><i class="text-danger fa fa-asterisk"></i>
                     <textarea ng-model="formData.description" class="form-control" name="subject" id="subject" placeholder="Add a striking introduction to the subject you want to discuss. Make sure you convey your subject in 250 characters." rows="4"></textarea>
@@ -62,6 +62,6 @@
               });
               $('#friends').select2();
         </script>
-        <script src="/controllers/TopicUIController.js"></script>
+        <script src="/controllers/topic.js"></script>
     </body>
 </html>

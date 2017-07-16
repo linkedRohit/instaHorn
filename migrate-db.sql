@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: debate
 -- ------------------------------------------------------
--- Server version	5.7.18-0ubuntu0.16.04.1
+-- Server version	5.7.18
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `topics`;
 CREATE TABLE `topics` (
   `tid` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(250) NOT NULL,
-  `uid` int(11) NOT NULL,
+  `uid` int(20) DEFAULT NULL,
   `postedOn` datetime DEFAULT NULL,
   `editedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` int(1) DEFAULT '1',
@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(20) NOT NULL,
   `fullName` varchar(50) NOT NULL,
   `accessToken` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE `users` (
   `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `fbid` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Mayank Mishra','EAAGevaz58CABAGiy0wFCNIMJj94ZAG2MjizHFNEE6V0nsLKWmJrp3iSeHNdsMiOG73eN6uWrJLByk2a4R5e4XTB2FY01uKi4mFe8FDfwi0yi4qQdlh75EDuYzzY0Y7gJmTBE3jzK7vmR8NEDNVgI30gmujwTRUdbm8dZCZAxcoZAXjMZBJCqFxtDg2qh5V1wZD','unlockmyidentity@gmail.com',NULL,'2017-07-16 10:22:48','1597556173622310');
+INSERT INTO `users` VALUES (1,'Mayank Mishra','EAAGevaz58CABAGiy0wFCNIMJj94ZAG2MjizHFNEE6V0nsLKWmJrp3iSeHNdsMiOG73eN6uWrJLByk2a4R5e4XTB2FY01uKi4mFe8FDfwi0yi4qQdlh75EDuYzzY0Y7gJmTBE3jzK7vmR8NEDNVgI30gmujwTRUdbm8dZCZAxcoZAXjMZBJCqFxtDg2qh5V1wZD','unlockmyidentity@gmail.com',NULL,'2017-07-16 10:22:48','1597556173622310'),(2,'Rohit Sharma','EAAGevaz58CABAOCaNKN55MqHUlzgypJYLfAulLaDV533a4j5G71rSUUOcXyWufJfmus3cE2NuJSk8GLyDHASQsa8jSbuqYXxiLTvo06BVZBy2ZAOv5I9xUCcPKpxK20xdvWh9TDVDWu0caBuJXBZAK1ZCbCN6oh3JoMpp2gbsd9OsNXPBkZBT3U5BM7NJ58oZD','rohit.codes0@gmail.com',NULL,'2017-07-16 13:08:11','2023825090976399');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-16 15:54:20
+-- Dump completed on 2017-07-16 18:39:25

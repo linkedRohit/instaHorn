@@ -1,0 +1,30 @@
+<div class="container" ng-controller="TopicCtrl">
+    <div class="col-sm-12">
+        <h2>Start a new Debate</h2>
+    </div>
+    <div class="col-sm-12">
+        <form ng-submit="startDebate()" method="post">
+            <div class="form-group">
+                <label for="description">Subject </label><i class="text-danger fa fa-asterisk"></i>
+                <textarea ng-model="formData.description" class="form-control" name="subject" id="subject" placeholder="Add a striking introduction to the subject you want to discuss. Make sure you convey your subject in 250 characters." rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="description">Tags</label>
+                <input type="text" ng-model="formData.tags" class="form-control" name="tags" 
+                id="tags" placeholder="Add tags related to your subject and audience"></input>
+            </div>
+            <div class="form-group">
+                <label for="description">Share with</label>
+                <select class="form-control" ng-model="formData.shareWith" name="friends" id="friends">
+                    <option value="-1">Select Friends</option>
+                    <option value="Mayank">Mayank</option>
+                    <option value="Mayank">Rohit</option>
+                    <option value="Mayank">Shahrukh Khan</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-default submit pull-right"><i class="fa fa-paper-plane" aria-hidden="true"></i>  Start Debate</button>
+            </div>
+        </form>
+    </div>
+</div>

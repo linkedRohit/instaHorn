@@ -29,7 +29,6 @@ router.get('/:id?',function(req,res,next){
 });
 
 router.post('/',function(req,res,next){
-	req.body.uid = 1;
 	Topic.addTopic(req.body,function(err,count){
 		if(err)
 		{
@@ -42,7 +41,7 @@ router.post('/',function(req,res,next){
 });
 
 router.delete('/:id',function(req,res,next){
-	Task.deleteTask(req.params.id,function(err,count){
+	Task.deleteTopic(req.params.id,function(err,count){
 
 		if(err)
 		{
@@ -56,7 +55,7 @@ router.delete('/:id',function(req,res,next){
 });
 
 router.put('/:id',function(req,res,next){
-	Task.updateTask(req.params.id,req.body,function(err,rows){
+	Task.updateTopic(req.params.id,req.body,function(err,rows){
 
 		if(err)
 		{
@@ -70,9 +69,9 @@ router.put('/:id',function(req,res,next){
 });
 
 
-//module.exports=router;
+module.exports=router;
 
-
+/*
 'use strict';
 module.exports = function(app) {
   var topicModule = require('../controllers/topicsController');
@@ -88,4 +87,4 @@ module.exports = function(app) {
     .get(topicModule.read_a_topic)
     .put(topicModule.update_a_topic)
     .delete(topicModule.delete_a_topic);
-};
+};*/

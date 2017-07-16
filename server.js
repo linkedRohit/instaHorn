@@ -51,7 +51,6 @@ process.env.PWD = process.cwd();
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
 app.use('/', express["static"](process.env.PWD));
 
-app.use('/controllers', express["static"](path.join(process.env.PWD, 'controllers')));
 app.use('/views', express["static"](path.join(process.env.PWD, 'views')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -102,6 +101,20 @@ function feedPageInit(socket, page){
         L.info('fetching feeds', true);
         socket.emit('feed-load', result);
     });
+}
+
+function startDebate(socket, data) {
+    var defer = Q.defer();
+    console.log(data);
+    mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId], 
+        function(err, result){
+            console.log(err, result);
+            err ? defer.reject() : defer.resolve();
+        }
+    );
+
+
+    return defer.promise;
 }
 
 var Topics=require('./api/routes/topicRoutes');
@@ -268,6 +281,22 @@ io.on('connection', function(socket){
 
         socket.on('fetch-question', function(id) {
             debatePageInit(socket, id);
+        })
+
+        socket.on('add-topic', function(data) {
+            var userId = _.get(socketList, [socket.id, 'id'], '-1');
+            data.userId = userId;
+            Q(undefined)
+            .then(function(){
+                L.info('starting debate', data);
+                return startDebate(socket, data);
+            }).fail(function(err){
+                L.error('Error while starting new debate', err);
+            })
+            .then(function(){
+                L.info('load feed for user', userId);
+                feedPageInit(socket, 0);
+            });
         })
     });
 
