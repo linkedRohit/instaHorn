@@ -52,7 +52,9 @@
         <script src="/assets/js/summernote.min.js"></script>
         <script src="/assets/js/select2.min.js"></script>
         <script>
-               $('#subject').summernote();
+               $('#subject').summernote({
+                   airMode: true
+               });
 
               $('#tags').select2({
                   tags: true,

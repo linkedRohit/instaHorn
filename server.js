@@ -1,4 +1,4 @@
-var PORT, app, express, fs, jsonserver, path, proxy, url, _, L, chalk;
+var PORT, app, express, fs, jsonserver, path, proxy, url, _, L, chalk, Q, FB, fb;
 
 path = require('path');
 express = require('express');
@@ -12,6 +12,12 @@ fs = require('fs');
 url = require('url');
 _ = require('lodash');
 chalk = require('chalk');
+Q = require('q');
+FB = require('fb');
+fb = new FB.Facebook({
+    appId: '456012464779296',
+    secret: 'eed306dedb6f6ea9f207bea6f4f534eb'
+});
 
 L = {
     info: function(a, b){
@@ -146,6 +152,56 @@ app.use(function(err, req, res, next) {
 });
 
 */
+
+function checkFacebookAccessTokenValidity(data) {
+    var defer = Q.defer();
+    fb.setAccessToken(data.accessToken);
+    fb.api('/me', {
+        fields: ['id','name','email']
+    },
+    function(response){
+        response ? defer.resolve(response) : defer.reject(response);
+    });
+
+    return defer.promise;
+};
+
+function getUserFromDatabase(userData) {
+    var defer = Q.defer();
+
+    mysql.query('select * from users where fbid = ? and email = ?',
+    [userData.id, userData.email],
+    function(err, result){
+        err ? defer.reject(err) : defer.resolve({ db: result, user: userData });
+    });
+
+    return defer.promise;
+}
+
+function registerUserInDatabase( data, token ){
+    var defer = Q.defer();
+
+    mysql.query('insert into users (fullName, accessToken, email, fbid) values (?,?,?,?)',
+    [data.name, token, data.email, data.id],
+    function(err, result){
+        err ? defer.reject() : defer.resolve();
+    });
+
+    return defer.promise;
+}
+
+function updateUserInDatabase( data, token ){
+    var defer = Q.defer();
+
+    mysql.query('update users set accessToken = ? where fbid = ?',
+    [token, data.id],
+    function(err, result){
+        err ? defer.reject() : defer.resolve();
+    });
+
+    return defer.promise;
+}
+
 io.on('connection', function(socket){
 
     // ask for authentication
@@ -154,6 +210,40 @@ io.on('connection', function(socket){
 
     // initiates the page (authentication callback)
     socket.on('init', function(data){
+        L.info('Intializing Server Request', data.userID);
+
+        if(typeof data.accessToken !== 'undefined' && typeof data.userID !== 'undefined') {
+
+            Q(undefined)
+            .then(function(){
+                L.info('checkFacebookAccessTokenValidity', data.userID);
+                return checkFacebookAccessTokenValidity(data);
+            })
+            .then(function(userData){
+                L.info('getUserFromDatabase', userData.name);
+                return getUserFromDatabase(userData);
+            })
+            .then(function(result){
+                if( result.db.length == 0 ) {
+                    L.info('registerUserInDatabase', result.user.email, result.user.id );
+                    registerUserInDatabase(result.user, data.accessToken);
+                } else {
+                    L.info('updateUserInDatabase', result.user.email, result.user.id );
+                    updateUserInDatabase(result.user, data.accessToken);
+                }
+                return result;
+            })
+            .then(function(result){
+                L.info('Sending User to Frontend', JSON.stringify(result.user));
+                socket.emit('login-user-received', result.user);
+            })
+            .fail(function(err){
+                L.error('Init Error', err);
+            });
+
+
+        }
+/*
         mysql.query('select * from users where accessToken not in (?)', [data.token], function(err, result){
             if(err) console.log('Error', err);
             result = result[0];
@@ -170,8 +260,9 @@ io.on('connection', function(socket){
 
             socket.emit('verify', result);
         });
+        */
     });
-
+/*
     // on user disconnects
     socket.on('disconnect', function(){
         var userId = _.get(socketList, [socket.id, 'uid'], '-1');
@@ -187,7 +278,7 @@ io.on('connection', function(socket){
     socket.on('comment', function(data){
         console.log(data);
     });
-
+*/
 });
 
 module.exports = app;

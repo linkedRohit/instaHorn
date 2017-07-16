@@ -11,10 +11,21 @@
         <div id="fb-root"></div>
 
         <div ng-controller="AppCtrl">
-            <app-login user="user"></app-login>
-            <app-navigation></app-navigation>
-            <app-debate-feed></app-debate-feed>
-            <app-debate-page></app-debate-page>
+            <div ng-controller="LoginCtrl">
+                <div ng-show="user === 0">
+                    <app-login></app-login>
+                </div>
+                <div ng-show="user">
+                    <app-navigation></app-navigation>
+                    <div class="container">
+                        <div class="col-sm-2">
+                            <app-side-profile></app-side-profile>
+                        </div>
+                    </div>
+
+                    <app-debate-feed></app-debate-feed>
+                    <app-debate-page></app-debate-page>
+                </div>
         </div>
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -32,30 +43,13 @@
         <script src="/services/user.js"></script>
 
         <script src="/directives/app-login.js"></script>
+        <script src="/directives/app-profile.js"></script>
         <script src="/directives/app-navigation.js"></script>
         <script src="/directives/app-debate-page.js"></script>
         <script src="/directives/app-debate-feed.js"></script>
 
         <script src="/controllers/app.js"></script>
+        <script src="/controllers/login.js"></script>
         <script src="/controllers/feed.js"></script>
-
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : '456012464779296',
-                  cookie     : true,
-                  xfbml      : true,
-                  version    : 'v2.8'
-                });
-            };
-
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
     </body>
 </html>

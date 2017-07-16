@@ -141,6 +141,7 @@ CREATE TABLE `users` (
   `email` varchar(200) NOT NULL,
   `registeredOn` datetime DEFAULT NULL,
   `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fbid` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -151,7 +152,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Mayank Mishra','10923490yuew9iashdihasidijasndknihe4891','nitb.scholar@gmail.com','2017-07-01 17:53:25','2017-07-01 12:23:25');
+INSERT INTO `users` VALUES (1,'Mayank Mishra','EAAGevaz58CABAGiy0wFCNIMJj94ZAG2MjizHFNEE6V0nsLKWmJrp3iSeHNdsMiOG73eN6uWrJLByk2a4R5e4XTB2FY01uKi4mFe8FDfwi0yi4qQdlh75EDuYzzY0Y7gJmTBE3jzK7vmR8NEDNVgI30gmujwTRUdbm8dZCZAxcoZAXjMZBJCqFxtDg2qh5V1wZD','unlockmyidentity@gmail.com',NULL,'2017-07-16 10:22:48','1597556173622310');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -164,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-02  1:07:25
+-- Dump completed on 2017-07-16 15:54:20

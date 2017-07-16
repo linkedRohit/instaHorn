@@ -1,46 +1,20 @@
 app.factory('Facebook', function($q) {
 
     var _facebook = {};
+    return _facebook;
+});
 
-    FB.AppEvents.logPageView();
+checkLoginState = function(){
+
+    var _loginCtrlScope = angular.element('[ng-controller="LoginCtrl"]').scope();
 
     FB.getLoginStatus(function(response) {
-        _facebook.statusChangeCallback(response);
+        if( response.status == 'connected' && typeof response.authResponse !== 'undefined' ) {
+            _loginCtrlScope.login(response.authResponse);
+        } else {
+            _loginCtrlScope.user = 0;
+            _loginCtrlScope.$apply();
+        }
     });
 
-    _facebook.checkLoginState = function() {
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-    }
-
-    _facebook.statusChangeCallback = function(loginStatus) {
-        if(loginStatus.status =='connected') {
-            var userAuthStatus = loginStatus.authResponse;
-
-            FB.api('/me', {fields: 'email'}, function(response) {
-                var userObject = {};
-                userObject.accessToken = userAuthStatus.accessToken;
-                userObject.expiresIn = userAuthStatus.expiresIn;
-                userObject.email = response.email;
-                userObject.userId = response.userID;
-            });
-        }
-    }
-
-    return {
-        getMyLastName: function() {
-            var deferred = $q.defer();
-            FB.api('/me', {
-                fields: 'last_name'
-            }, function(response) {
-                if (!response || response.error) {
-                    deferred.reject('Error occured');
-                } else {
-                    deferred.resolve(response);
-                }
-            });
-            return deferred.promise;
-        }
-    }
-});
+};
