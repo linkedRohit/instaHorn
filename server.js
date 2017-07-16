@@ -90,7 +90,7 @@ function processPage(socket, path){
             feedPageInit(socket, page);
         break;
         default:
-            L.err('Page Not Found', path);
+        //    L.err('Page Not Found', path);
         break;
     }
 }

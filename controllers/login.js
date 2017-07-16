@@ -9,6 +9,7 @@ app.controller('LoginCtrl', function(Page, $scope, socket, User) {
     }
 
     Page.onChange(function(name){
+        console.log('Page changed to', name);
         $scope.page = name;
     });
 
