@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-    <div class="container">
+    <div class="container" ng-controller="NavCtrl">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navdeb8">
                 <span class="icon-bar"></span>
@@ -10,7 +10,9 @@
         </div>
         <div class="collapse navbar-collapse" id="navdeb8">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Feeds</a></li>
+                <li>
+                    <a href="#" ng-click="loadFeed()">Feeds</a>
+                </li>
                 <li><a href="#">Trending Topics</a></li>
                 <li><a href="#">My Debates</a></li>
             </ul>

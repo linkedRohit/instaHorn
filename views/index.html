@@ -15,7 +15,7 @@
                 <app-login></app-login>
                 <div ng-show="user">
                     <app-navigation></app-navigation>
-                    <div class="container" ng-hide="debate">
+                    <div class="container" ng-show="page === 'feeds'">
                         <div class="row-fluid">
                             <div class="col-sm-3 hidden-xs">
                                 <app-side-profile></app-side-profile>
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="debate">
+                    <div ng-show="page === 'debate'">
                         <app-debate-page></app-debate-page>
                     </div>
                 </div>
@@ -44,6 +44,7 @@
 
         <script src="/services/socket.js"></script>
         <script src="/services/facebook.js"></script>
+        <script src="/services/page.js"></script>
         <script src="/services/user.js"></script>
 
         <script src="/directives/app-login.js"></script>
@@ -54,6 +55,8 @@
 
         <script src="/controllers/app.js"></script>
         <script src="/controllers/login.js"></script>
+        <script src="/controllers/navigation.js"></script>
         <script src="/controllers/feed.js"></script>
+
     </body>
 </html>
