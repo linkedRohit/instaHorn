@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: debate
 -- ------------------------------------------------------
--- Server version	5.7.18
+-- Server version	5.7.18-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -87,7 +87,7 @@ CREATE TABLE `topics` (
   `active` int(1) DEFAULT '1',
   PRIMARY KEY (`tid`),
   UNIQUE KEY `tid` (`tid`,`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `topics` (
 
 LOCK TABLES `topics` WRITE;
 /*!40000 ALTER TABLE `topics` DISABLE KEYS */;
-INSERT INTO `topics` VALUES (1,'Drinking Age Should the drinking age be lowered from 21 to a younger age?',1,'2017-07-02 00:00:44','2017-07-01 18:30:44',1);
+INSERT INTO `topics` VALUES (1,'Drinking Age Should the drinking age be lowered from 21 to a younger age?',1,'2017-07-02 00:00:44','2017-07-01 18:30:44',1),(2,'Are Single-sex schools are better for students?',1,'2017-07-18 02:03:07','2017-07-17 20:33:07',1),(3,'It is never appropriate for the government to restrict freedom of speech.',1,'2017-07-18 02:03:30','2017-07-17 20:33:30',1);
 /*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Mayank Mishra','EAAGevaz58CABAGiy0wFCNIMJj94ZAG2MjizHFNEE6V0nsLKWmJrp3iSeHNdsMiOG73eN6uWrJLByk2a4R5e4XTB2FY01uKi4mFe8FDfwi0yi4qQdlh75EDuYzzY0Y7gJmTBE3jzK7vmR8NEDNVgI30gmujwTRUdbm8dZCZAxcoZAXjMZBJCqFxtDg2qh5V1wZD','unlockmyidentity@gmail.com',NULL,'2017-07-16 10:22:48','1597556173622310'),(2,'Rohit Sharma','EAAGevaz58CABAOCaNKN55MqHUlzgypJYLfAulLaDV533a4j5G71rSUUOcXyWufJfmus3cE2NuJSk8GLyDHASQsa8jSbuqYXxiLTvo06BVZBy2ZAOv5I9xUCcPKpxK20xdvWh9TDVDWu0caBuJXBZAK1ZCbCN6oh3JoMpp2gbsd9OsNXPBkZBT3U5BM7NJ58oZD','rohit.codes0@gmail.com',NULL,'2017-07-16 13:08:11','2023825090976399');
+INSERT INTO `users` VALUES (1,'Mayank Mishra','EAAGevaz58CABAAthHsIVISxy8pkEmwwmzZCr0ZARltRxdCfj5YqKDEiYVUuAXj9Bd89ZAMaTv36T89zhUUqVs4k6RsWvAPyjdArncymrJVhGiMpWFqXxXhXVLhz4p74FX5TqFp0UcZCZC7FjLy7fw1aNLWY1ZBgeUtnXL8Ywf0aZAk0KwpdAAmwYS5P4DtXBWoZD','unlockmyidentity@gmail.com',NULL,'2017-07-17 20:32:36','1597556173622310'),(2,'Rohit Sharma','EAAGevaz58CABAOCaNKN55MqHUlzgypJYLfAulLaDV533a4j5G71rSUUOcXyWufJfmus3cE2NuJSk8GLyDHASQsa8jSbuqYXxiLTvo06BVZBy2ZAOv5I9xUCcPKpxK20xdvWh9TDVDWu0caBuJXBZAK1ZCbCN6oh3JoMpp2gbsd9OsNXPBkZBT3U5BM7NJ58oZD','rohit.codes0@gmail.com',NULL,'2017-07-16 13:08:11','2023825090976399');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-16 18:39:25
+-- Dump completed on 2017-07-18  2:04:11

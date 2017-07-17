@@ -5,4 +5,14 @@ app.controller('NavCtrl', function(Page, $scope, socket, User) {
         socket.emit('fetch-feed');
     };
 
+    $scope.page = false;
+
+    Page.onChange(function(name){
+        $scope.page = name;
+    });
+
+    $scope.loadEditor = function(){
+        Page.set('editor');
+    };
+
 });

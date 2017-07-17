@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div class="container" ng-controller="NavCtrl">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navdeb8">
@@ -9,14 +9,12 @@
             <a class="navbar-brand" href="feed.html">Onl9 Deb8</a>
         </div>
         <div class="collapse navbar-collapse" id="navdeb8">
-            <ul class="nav navbar-nav">
-                <li>
+            <ul class="nav navbar-nav mr20">
+                <li ng-class="{'active': page === 'feeds'}">
                     <a href="#" ng-click="loadFeed()">Feeds</a>
                 </li>
-                <li><a href="#">Trending Topics</a></li>
-                <li><a href="#">My Debates</a></li>
             </ul>
-            <a href="#" class="btn btn-success navbar-btn">
+            <a href="#" class="btn btn-primary btn-sm navbar-btn" ng-click="loadEditor()">
                 Start debating now
             </a>
         </div>

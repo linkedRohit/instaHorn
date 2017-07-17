@@ -12,6 +12,7 @@ app.run(['$window', function($window) {
       version    : 'v2.8'
     });
 
+    NProgress.start();
     checkLoginState();
   };
 

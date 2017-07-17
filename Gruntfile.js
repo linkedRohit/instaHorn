@@ -12,7 +12,12 @@ module.exports = function(grunt) {
                 command: 'nodemon server.js',
                 stdout: true,
                 stderr: true
-            }
+            },
+	    importsql: {
+		command: 'mysql -uroot -proot debate < migrate-db.sql',
+		stdout: true,
+		stderr: true
+	   }
         }
     });
 
@@ -21,4 +26,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('develop', ['exec:fakeserver']);
+    grunt.registerTask('import', ['exec:importsql']);
 }

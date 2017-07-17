@@ -4,8 +4,10 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/app.css" />
+        <link rel="stylesheet" href="/assets/css/nprogress.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
     	<script src="/socket.io/socket.io.js"></script>
+        <script src="/assets/js/nprogress.js"></script>
     </head>
     <body ng-app="DebateApp">
         <div id="fb-root"></div>
@@ -15,14 +17,18 @@
                 <app-login></app-login>
                 <div ng-show="user">
                     <app-navigation></app-navigation>
-                    <div class="container" ng-show="page === 'feeds'">
+                    <div class="container" ng-show="page === 'editor' || page === 'feeds'">
                         <div class="row-fluid">
                             <div class="col-sm-3 hidden-xs">
                                 <app-side-profile></app-side-profile>
                             </div>
                             <div class="col-sm-9">
-                                <app-start-debate></app-start-debate>
-                                <app-debate-feed></app-debate-feed>
+                                <div ng-show="page === 'editor'">
+                                    <app-start-debate></app-start-debate>
+                                </div>
+                                <div ng-show="page === 'feeds'">
+                                    <app-debate-feed></app-debate-feed>
+                                </div>
                             </div>
                         </div>
                     </div>
