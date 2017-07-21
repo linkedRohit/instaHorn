@@ -3,6 +3,7 @@ app.factory('Page', function () {
     var _page = {};
     var name = '';
     var _cbList = [];
+    var subModule = '';
 
     _page.set = function(page){
         name = page;
@@ -17,6 +18,15 @@ app.factory('Page', function () {
 
     _page.onChange = function(cb){
         _cbList.push(cb);
+    };
+
+    _page.setModule = function(sbMod){
+        console.log('submodule is now - ' + sbMod);
+        subModule = sbMod;
+    };
+
+    _page.getModule = function(sbMod){
+        return subModule;
     };
 
     return _page;

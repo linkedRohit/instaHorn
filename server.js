@@ -283,7 +283,7 @@ io.on('connection', function(socket){
 
         socket.on('fetch-question', function(id) {
             debatePageInit(socket, id);
-        })
+        });
 
         socket.on('add-topic', function(data) {
             var userId = _.get(socketList, [socket.id, 'uid'], '-1');
@@ -299,7 +299,24 @@ io.on('connection', function(socket){
                 L.info('load feed for user', userId);
                 feedPageInit(socket, 0);
             });
-        })
+        });
+
+        socket.on('fetch-comments-receive', function(data) {
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
+            data.userId = userId;
+            Q(undefined)
+            .then(function(){
+                L.info('Fetching comments for post', data.id);
+                return getCommentsForPost(socket, data);
+            }).fail(function(err){
+                L.error('Error while fetching comments', err);
+            })
+            .then(function(result){
+                L.info('Sending comments to browser', data.id);
+                socket.emit('fetch-comments-receive', result);
+            });
+        });
+
     });
 
 });

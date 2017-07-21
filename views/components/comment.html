@@ -1,0 +1,12 @@
+<div class="comment">
+    Post your Comment
+    <form ng-controller="CommentCtrl">
+        <textarea ng-model="txtcomment" placeholder="Your Comment" style='width:550px'></textarea>
+        <button ng-click='addComment();' style='margin-top:10px;'>Comment</button>
+
+        <h4>Comments</h4>
+        <ul>
+            <li ng-repeat="cmt in comments"> {{ cmt }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a></li>
+        </ul>
+    </form>
+</div>

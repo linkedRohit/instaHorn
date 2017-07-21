@@ -35,6 +35,11 @@
                     <div ng-show="page === 'debate'">
                         <app-debate-page></app-debate-page>
                     </div>
+
+                    <!--comments will be loaded at Bottom on click of show comments.-->
+                    <div class="row-fluid" ng-show="subModule!=='comment'">
+                      <app-comment-dialog></app-comment-dialog>
+                    </div>
                 </div>
             </div>
         </div>
