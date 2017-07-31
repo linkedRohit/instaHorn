@@ -37,8 +37,8 @@
                     </div>
 
                     <!--comments will be loaded at Bottom on click of show comments.-->
-                    <div class="row-fluid">
-                      <app-comment-dialog></app-comment-dialog>
+                    <div ng-show="subModule==='comment'">
+                        <app-comment-dialog></app-comment-dialog>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,7 @@
         <script src="/directives/app-debate-page.js"></script>
         <script src="/directives/app-debate-feed.js"></script>
         <script src="/directives/app-start-debate.js"></script>
+        <script src="/directives/app-comment-dialog.js"></script>
 
         <script src="/controllers/app.js"></script>
         <script src="/controllers/login.js"></script>

@@ -1,12 +1,18 @@
-<div class="comment" ng-show="subModule==='comment'">
-    Post your Comment
-    <form ng-controller="CommentCtrl">
-        <textarea ng-model="txtcomment" placeholder="Your Comment" style='width:550px'></textarea>
-        <button ng-click='addComment();' style='margin-top:10px;'>Comment</button>
-
-        <h4>Comments</h4>
-        <ul>
-            <li ng-repeat="cmt in comments"> {{ cmt }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a></li>
-        </ul>
-    </form>
+<div ng-controller="CommentCtrl">
+    <div class="comment row">
+        <div class="col-sm-5 col-sm-offset-4">
+            <div class="form-group">
+                <label for="description">Your opinion </label>
+                <textarea ng-model="txtcomment" class="form-control" name="comment" id="comment" placeholder="Write your opinion" rows="3"></textarea>
+            </div>
+            <div>
+                <button ng-click='addComment();' style='margin-top:10px;' class="btn btn-default submit pull-right"><i class="fa fa-paper-plane" aria-hidden="true"></i>  Start Debate</button>
+            </div>
+            <hr>
+            <h4>Opinions</h4>
+            <ul>
+                <li ng-repeat="cmt in comments"> {{ cmt.commentString }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
