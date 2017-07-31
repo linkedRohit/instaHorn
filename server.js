@@ -113,6 +113,15 @@ function startDebate(socket, data) {
     return defer.promise;
 }
 
+function getCommentsForPost(socket, id) {
+    var defer = Q.defer();
+    mysql.query("select * from comments where tid = ? and active = 1", [id],function(err, result){
+        if(err) console.log('Error', err);
+        L.info('sending comments', result.length);
+        socket.emit('fetch-comments-receive', result);
+    });
+}
+
 var Topics=require('./api/routes/topicRoutes');
 app.use('/Topics',Topics);
 // catch 404 and forward to error handler
@@ -301,20 +310,16 @@ io.on('connection', function(socket){
             });
         });
 
-        socket.on('fetch-comments-receive', function(data) {
+        socket.on('fetch-comments', function(data) {
             var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             data.userId = userId;
             Q(undefined)
             .then(function(){
-                L.info('Fetching comments for post', data.id);
-                return getCommentsForPost(socket, data);
+                L.info('Fetching comments for post', data);
+                getCommentsForPost(socket, data);
             }).fail(function(err){
                 L.error('Error while fetching comments', err);
             })
-            .then(function(result){
-                L.info('Sending comments to browser', data.id);
-                socket.emit('fetch-comments-receive', result);
-            });
         });
 
     });

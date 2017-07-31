@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/assets/css/app.css" />
         <link rel="stylesheet" href="/assets/css/nprogress.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    	<script src="/socket.io/socket.io.js"></script>
+    	  <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/js/nprogress.js"></script>
     </head>
     <body ng-app="DebateApp">
@@ -37,7 +37,7 @@
                     </div>
 
                     <!--comments will be loaded at Bottom on click of show comments.-->
-                    <div class="row-fluid" ng-show="subModule!=='comment'">
+                    <div class="row-fluid">
                       <app-comment-dialog></app-comment-dialog>
                     </div>
                 </div>
@@ -72,5 +72,6 @@
         <script src="/controllers/navigation.js"></script>
         <script src="/controllers/feed.js"></script>
         <script src="/controllers/topic.js"></script>
+        <script src="/controllers/comment.js"></script>
     </body>
 </html>

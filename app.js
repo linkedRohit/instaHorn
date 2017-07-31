@@ -1,6 +1,17 @@
 var app = angular.module('DebateApp', [
-    'angularMoment'
+    'angularMoment',
+    'ngRoute'
 ]);
+
+/*app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "/views/components/index.html"
+    })
+    .when("/start", {
+        templateUrl : "/views/components/index.html"
+    });
+});*/
 
 app.run(['$window', function($window) {
 

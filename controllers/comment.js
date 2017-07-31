@@ -12,8 +12,4 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         $scope.comments.splice($index, 1);
     }
 
-    socket.on('feed-load', function(data){
-        $scope.comments = data;
-    });
-
 });

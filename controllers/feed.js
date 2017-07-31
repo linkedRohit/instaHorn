@@ -1,5 +1,7 @@
 app.controller('FeedCtrl', function(Page, $scope, socket) {
 
+    $scope.subModule = false;
+
     socket.on('feed-load', function(data){
         $scope.feeds = data;
     });
@@ -9,7 +11,12 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     }
 
     $scope.loadCommentForm = function(id) {
-        Page.setModule('comment');
+        $scope.subModule = 'comment';
         socket.emit('fetch-comments', id);
     }
+
+    socket.on('fetch-comments-receive', function(data) {
+        $scope.postId = data[0].tid;
+        $scope.comments = data;
+    });
 });
