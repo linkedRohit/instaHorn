@@ -1,27 +1,29 @@
 <div ng-controller="CommentCtrl">
     <div class="comment">
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div class="form-group">
                     <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="Write your opinion" rows="1"></textarea>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <button ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Cast</button>
+            <div class="col-sm-3">
+                <button ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Express</button>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
                 <h4>Opinions</h4>
                 <ul>
-                    <li ng-repeat="thisComment in data">
+                    <li ng-repeat="thisComment in comments" class="usrComments">
                         <div class="col-sm-2">
-                            <img src="https://graph.facebook.com/{{ cmt.uid }}/picture?width=50" class="img-circle">
+                            <img src="https://graph.facebook.com/{{ userInfo[thisComment.uid] }}/picture?width=30" class="img-circle">
                         </div>
-                        <div class="col-sm-10">
-                            {{ cmt.commentString }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a>
+                        <div class="col-sm-8">
+                            {{ thisComment.commentString }}
                         </div>
-                        {{ cmt }}
+                        <div class="col-sm-1">
+                            <a  style="float: right;" href="" ng-click="removeComment($index)"><span class="fa fa-trash-o"></span></a>
+                        </div>
                     </li>
                 </ul>
             </div>

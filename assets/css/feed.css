@@ -35,7 +35,7 @@
 		position: fixed;
 		bottom: 0;
 		width: 100%;
-		background: rgba(0, 0, 0, 0.7);
+		background: rgba(0, 0, 0, 0.85);
 		color: #ccc;
 		padding: 10px;
 		height: 40%;
@@ -44,4 +44,13 @@
 
 .comment ul li {
 	list-style: none;
+}
+
+.usrComments {
+		height: 50px;
+		vertical-align: middle;
+		line-height: 1.5;
+		padding-top: 20px;
+		text-overflow: ellipsis;
+    overflow: auto;
 }

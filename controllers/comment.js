@@ -2,8 +2,11 @@ app.controller('CommentCtrl', function($scope, socket, User) {
 
     $scope.comments = [];
     $scope.addComment = function() {
+      console.log($scope.txtcomment);
         if($scope.txtcomment !=''){
-	        $scope.comments.push($scope.txtcomment);
+          var commentObj = {};
+          commentObj.commentString = $scope.txtcomment;
+	        $scope.comments.push(commentObj);
 	        $scope.txtcomment = "";
         }
     }

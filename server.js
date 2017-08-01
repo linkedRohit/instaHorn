@@ -119,28 +119,35 @@ function onlyUnique(value, index, self) {
 
 function getCommentsForPost(socket, id) {
     var defer = Q.defer();
-    mysql.query("select * from comments where tid = ? and active = 1", [id],function(err, result){
+    mysql.query("select * from comments where tid = ? and active = 1", [id], function(err, result){
         if(err) console.log('Error', err);
-        var response = [];
+        var response = {};
         response.comments = result;
 
         var userList = [];
         for (var i = 0, len = result.length; i < len; i++) {
             userList.push(result[i].uid);
         }
-        userList = userList.filter( onlyUnique );
-        var userListCsv = userList.join();
 
-        mysql.query("select uid, fbid from users where uid in (?)", [userListCsv],function(err, userMapping){
+        userList = userList.filter( onlyUnique );
+
+        /*var prepdStmt = "?";
+        prepdStmt = prepdStmt.repeat(userList.length);
+        //prepdStmt = prepdStmt.replace(/,+$/,'');
+        var userListCsv = userList.join();*/
+        mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
             if(err) console.log('Error', err);
-            var userFbMappingList = [];
+            var userFbMappingList = {};
             for (var i = 0, len = userMapping.length; i < len; i++) {
-              console.log(userMapping[i]);
+                /*var userObj = {};
+                userObj[userMapping[i].uid] = userMapping[i].fbid;
+                userFbMappingList.push(userObj);*/
                 userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
             }
             response.userFbMapping = userFbMappingList;
 
-            L.info('sending comments', response);
+            L.info('sending comments', response.comments.length);
+            console.log(response);
             socket.emit('fetch-comments-receive', response);
         });
     });
