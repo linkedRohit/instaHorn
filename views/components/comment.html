@@ -1,18 +1,30 @@
 <div ng-controller="CommentCtrl">
-    <div class="comment row">
-        <div class="col-sm-5 col-sm-offset-4">
-            <div class="form-group">
-                <label for="description">Your opinion </label>
-                <textarea ng-model="txtcomment" class="form-control" name="comment" id="comment" placeholder="Write your opinion" rows="3"></textarea>
+    <div class="comment">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="form-group">
+                    <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="Write your opinion" rows="1"></textarea>
+                </div>
             </div>
-            <div>
-                <button ng-click='addComment();' style='margin-top:10px;' class="btn btn-default submit pull-right"><i class="fa fa-paper-plane" aria-hidden="true"></i>  Start Debate</button>
+            <div class="col-sm-2">
+                <button ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Cast</button>
             </div>
-            <hr>
-            <h4>Opinions</h4>
-            <ul>
-                <li ng-repeat="cmt in comments"> {{ cmt.commentString }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a></li>
-            </ul>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <h4>Opinions</h4>
+                <ul>
+                    <li ng-repeat="thisComment in data">
+                        <div class="col-sm-2">
+                            <img src="https://graph.facebook.com/{{ cmt.uid }}/picture?width=50" class="img-circle">
+                        </div>
+                        <div class="col-sm-10">
+                            {{ cmt.commentString }} <a  style="float: right;" href="" ng-click="removeComment($index)">x</a>
+                        </div>
+                        {{ cmt }}
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

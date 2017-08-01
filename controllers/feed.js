@@ -17,6 +17,6 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
 
     socket.on('fetch-comments-receive', function(data) {
         $scope.postId = data[0].tid;
-        $scope.comments = data;
+        $scope.data = data;
     });
 });

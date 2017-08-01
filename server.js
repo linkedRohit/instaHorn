@@ -113,12 +113,36 @@ function startDebate(socket, data) {
     return defer.promise;
 }
 
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 function getCommentsForPost(socket, id) {
     var defer = Q.defer();
     mysql.query("select * from comments where tid = ? and active = 1", [id],function(err, result){
         if(err) console.log('Error', err);
-        L.info('sending comments', result.length);
-        socket.emit('fetch-comments-receive', result);
+        var response = [];
+        response.comments = result;
+
+        var userList = [];
+        for (var i = 0, len = result.length; i < len; i++) {
+            userList.push(result[i].uid);
+        }
+        userList = userList.filter( onlyUnique );
+        var userListCsv = userList.join();
+
+        mysql.query("select uid, fbid from users where uid in (?)", [userListCsv],function(err, userMapping){
+            if(err) console.log('Error', err);
+            var userFbMappingList = [];
+            for (var i = 0, len = userMapping.length; i < len; i++) {
+              console.log(userMapping[i]);
+                userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
+            }
+            response.userFbMapping = userFbMappingList;
+
+            L.info('sending comments', response);
+            socket.emit('fetch-comments-receive', response);
+        });
     });
 }
 

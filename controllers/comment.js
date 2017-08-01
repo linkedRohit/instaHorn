@@ -10,6 +10,7 @@ app.controller('CommentCtrl', function($scope, socket, User) {
 
     $scope.removeComment = function($index) {
         $scope.comments.splice($index, 1);
+        //socket.emit('removeComment', $index);
     }
 
 });
