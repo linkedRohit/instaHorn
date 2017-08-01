@@ -118,38 +118,59 @@ function onlyUnique(value, index, self) {
 }
 
 function getCommentsForPost(socket, id) {
-    var defer = Q.defer();
-    mysql.query("select * from comments where tid = ? and active = 1", [id], function(err, result){
-        if(err) console.log('Error', err);
-        var response = {};
-        response.comments = result;
 
-        var userList = [];
-        for (var i = 0, len = result.length; i < len; i++) {
-            userList.push(result[i].uid);
-        }
+    var response = {};
 
-        userList = userList.filter( onlyUnique );
+   Q(undefined)
+   .then(function(){
+       
+       var defer = Q.defer();
+       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1");
+       L.info("SQL-PARAMS", [id]);
+       
+       mysql.query("select * from comments where tid = ? and active = 1", [id], function(err, result){
+           if(err) return defer.reject(err);
 
-        /*var prepdStmt = "?";
-        prepdStmt = prepdStmt.repeat(userList.length);
-        //prepdStmt = prepdStmt.replace(/,+$/,'');
-        var userListCsv = userList.join();*/
-        mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
-            if(err) console.log('Error', err);
-            var userFbMappingList = {};
-            for (var i = 0, len = userMapping.length; i < len; i++) {
-                /*var userObj = {};
-                userObj[userMapping[i].uid] = userMapping[i].fbid;
-                userFbMappingList.push(userObj);*/
-                userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
-            }
-            response.userFbMapping = userFbMappingList;
+           response.comments = result;
 
-            L.info('sending comments', response.comments.length);
-            console.log(response);
-            socket.emit('fetch-comments-receive', response);
-        });
+           var userList = [];
+           for (var i = 0, len = result.length; i < len; i++) {
+               userList.push(result[i].uid);
+           }
+           userList = userList.filter( onlyUnique );
+           
+           defer.resolve(userList);
+       });
+       
+       return defer.promise;
+   })
+   .then(function(userList){
+       
+       var defer = Q.defer();
+       
+       L.info("SQL-QUERY", "select uid, fbid from users where uid in (?)");
+       L.info("SQL-PARAMS", [userList]);
+       
+       if( userList.length <= 0 ) return defer.reject();
+       
+       mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
+           if(err) return defer.reject(err);
+           
+           var userFbMappingList = {};
+           for (var i = 0, len = userMapping.length; i < len; i++) {
+               userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
+           }
+           response.userFbMapping = userFbMappingList;
+       });
+       
+       return defer.promise;
+   })
+   .then(function(userFbMapping){
+       L.info('sending comments', JSON.stringify(response));
+       socket.emit('fetch-comments-receive', response);
+   })
+   .catch(function(err){
+       L.err('getCommentsForPost', JSON.stringify(err));
     });
 }
 
