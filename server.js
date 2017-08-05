@@ -117,6 +117,27 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+function writeCommentsForPost(socket, userId, data){
+    Q(undefined)
+    .then(function(){
+        var defer = Q.defer();
+        mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[
+            userId,
+            data.id,
+            data.comment
+        ], function(err, result){
+           if(err) return defer.reject(err);
+           defer.resolve();
+        });
+    })
+    .then(function(){
+        L.info('sending comments', JSON.stringify(response));
+        socket.emit('new-comment-added', response);
+    });
+    
+    return defer.promise;
+}
+
 function getCommentsForPost(socket, id) {
 
     var response = {};
@@ -125,8 +146,6 @@ function getCommentsForPost(socket, id) {
    .then(function(){
        
        var defer = Q.defer();
-       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1");
-       L.info("SQL-PARAMS", [id]);
        
        mysql.query("select * from comments where tid = ? and active = 1", [id], function(err, result){
            if(err) return defer.reject(err);
@@ -264,7 +283,7 @@ function updateUserInDatabase( data, token ){
 }
 
 function debatePageInit(socket, id){
-    mysql.query('select fullName, postedOn, description from topics ' +
+    mysql.query('select tid, fullName, postedOn, description from topics ' +
                 'join users on topics.uid = users.uid where tid = ?', [id], function(err, result){
         if(err) console.log('Error', err);
         result = result[0];
@@ -372,6 +391,18 @@ io.on('connection', function(socket){
             }).fail(function(err){
                 L.error('Error while fetching comments', err);
             })
+        });
+        
+        
+        socket.on('post-comment', function(data){
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
+            Q(undefined)
+            .then(function(){
+                L.info('Writing a comment for post', [userId, data]);
+                writeCommentsForPost(socket, userId, data);
+            }).fail(function(err){
+                L.error('Error while writing comments', err);
+            });
         });
 
     });

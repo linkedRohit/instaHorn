@@ -6,7 +6,8 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
         $scope.debate = {
             question: data.description,
             name: data.fullName,
-            when: data.postedOn
+            when: data.postedOn,
+            id: data.tid
         };
     });
     

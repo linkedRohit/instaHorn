@@ -10,5 +10,14 @@ app.controller('TopicCtrl', function($scope, socket) {
 	    	$window.location.href = "new.html";
 	    })*/
     };
+    
+    
+    $scope.postMyComment = function(){
+        console.log('Posting Comment', $scope.comment);
+        socket.emit('post-comment', {
+            question: $scope.debate.id,
+            comment: $scope.comment
+        });
+    }
 
 });
