@@ -144,10 +144,12 @@ function getCommentsForPost(socket, id) {
 
    Q(undefined)
    .then(function(){
-       
+
        var defer = Q.defer();
-       
-       mysql.query("select * from comments where tid = ? and active = 1", [id], function(err, result){
+       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1");
+       L.info("SQL-PARAMS", [id]);
+
+       mysql.query("select * from comments where tid = ? and active = 1 order by cid desc", [id], function(err, result){
            if(err) return defer.reject(err);
 
            response.comments = result;
@@ -157,31 +159,32 @@ function getCommentsForPost(socket, id) {
                userList.push(result[i].uid);
            }
            userList = userList.filter( onlyUnique );
-           
+
            defer.resolve(userList);
        });
-       
+
        return defer.promise;
    })
    .then(function(userList){
-       
+
        var defer = Q.defer();
-       
+
        L.info("SQL-QUERY", "select uid, fbid from users where uid in (?)");
        L.info("SQL-PARAMS", [userList]);
-       
+
        if( userList.length <= 0 ) return defer.reject();
-       
+
        mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
            if(err) return defer.reject(err);
-           
+
            var userFbMappingList = {};
            for (var i = 0, len = userMapping.length; i < len; i++) {
                userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
            }
            response.userFbMapping = userFbMappingList;
+           return defer.resolve(response);
        });
-       
+
        return defer.promise;
    })
    .then(function(userFbMapping){

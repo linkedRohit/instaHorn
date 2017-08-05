@@ -1,13 +1,14 @@
 <div ng-controller="CommentCtrl">
-    <div class="comment">
+    <div class="comment" ng-class="class">
+        <div class="upArrow" ng-click="toggleFullScreen()">{{ arrow }}</div>
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-sm-6 col-xs-9 col-sm-offset-3">
                 <div class="form-group">
                     <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="Write your opinion" rows="1"></textarea>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <button ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Express</button>
+            <div class="col-xs-3">
+                <button ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Express</span></button>
             </div>
           </div>
           <div class="row">
@@ -15,13 +16,13 @@
                 <h4>Opinions</h4>
                 <ul>
                     <li ng-repeat="thisComment in comments" class="usrComments">
-                        <div class="col-sm-2">
+                        <div class="col-xs-2">
                             <img src="https://graph.facebook.com/{{ userInfo[thisComment.uid] }}/picture?width=30" class="img-circle">
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-xs-8">
                             {{ thisComment.commentString }}
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-xs-1">
                             <a  style="float: right;" href="" ng-click="removeComment($index)"><span class="fa fa-trash-o"></span></a>
                         </div>
                     </li>
@@ -29,4 +30,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('#toggleSwitch').click(function(e){
+            $('#commentWindow').toggleClass('fullScreen');
+            $('#toggleSwitch').html('\\/');
+        });
+    </script>
 </div>
