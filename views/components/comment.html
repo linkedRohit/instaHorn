@@ -1,5 +1,6 @@
 <div ng-controller="CommentCtrl">
-    <div class="comment">
+    <div class="comment" ng-class="class">
+        <div class="upArrow" ng-click="toggleFullScreen()">{{ arrow }}</div>
         <div class="row">
             <div class="col-sm-6 col-xs-9 col-sm-offset-3">
                 <div class="form-group">
@@ -29,4 +30,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('#toggleSwitch').click(function(e){
+            $('#commentWindow').toggleClass('fullScreen');
+            $('#toggleSwitch').html('\\/');
+        });
+    </script>
 </div>
