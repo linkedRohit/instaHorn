@@ -117,21 +117,28 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+function removeComment(socket, userId, data) {
+    Q(undefined)
+    .then(function(){
+        var defer = Q.defer();
+        mysql.query("delete from comments where tid = ? and cid = ? and uid = ?",[ data.tid, data.cid, userId ],
+        function(err, result){
+            err ? defer.reject() : defer.resolve();
+        });
+    })
+
+    return defer.promise;
+}
+
 function writeCommentsForPost(socket, userId, data){
     Q(undefined)
     .then(function(){
         var defer = Q.defer();
-        L.info('inserting comments', data);
         mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.tid, data.commentString ],
         function(err, result){
             err ? defer.reject() : defer.resolve();
         });
     })
-    .then(function(){
-        L.info('sending comments', JSON.stringify(response));
-        socket.emit('new-comment-added', response);
-    });
-
     return defer.promise;
 }
 
@@ -399,14 +406,29 @@ io.on('connection', function(socket){
             Q(undefined)
             .then(function(){
                 L.info('Writing a comment for post', [userId, data]);
-                writeCommentsForPost(socket, userId, data);
+                return writeCommentsForPost(socket, userId, data);
+                L.info('Writing a comment for post', [userId, data]);
             }).fail(function(err){
-                L.error('Error while writing comments', err);
+                L.err('Error while writing comments', err);
             }).then(function(result){
-                L.info('Comment added', 'yes');
+                L.info('Comment added', result);
+                //data.cid = result.insertId;
+                socket.emit('comment-added', data);
             });
         });
 
+        socket.on('remove-comment', function(data){
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
+            Q(undefined)
+            .then(function(){
+                L.info('Delete comment for post', [data]);
+                removeComment(socket, userId, data);
+            }).fail(function(err){
+                L.err('Error while writing comments', err);
+            }).done(function(){
+                L.info('Comment removed', true);
+            });
+        });
     });
 
 });

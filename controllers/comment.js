@@ -8,17 +8,22 @@ app.controller('CommentCtrl', function($scope, socket, User) {
             var commentObj = {};
             commentObj.commentString = $scope.txtcomment;
             commentObj.tid = 1;
-            commentObj.uid = 1;
             socket.emit('post-comment', commentObj);
-            $scope.comments.unshift(commentObj);
-  	        //$scope.comments.push(commentObj);
   	        $scope.txtcomment = "";
         }
     }
 
-    $scope.removeComment = function($index) {
-        $scope.comments.splice($index, 1);
-        //socket.emit('removeComment', $index);
+    socket.on('comment-added', function(data){
+        console.log(data, $scope.comments);
+        $scope.comments.unshift(data);
+    });
+
+    $scope.removeComment = function(index, cmmtId, tId) {
+        $scope.comments.splice(index, 1);
+        var removeCommentObj = {}
+        removeCommentObj.tid = tId;
+        removeCommentObj.cid = cmmtId;
+        socket.emit('remove-comment', removeCommentObj);
     }
 
     $scope.isFullScreen = false;

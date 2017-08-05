@@ -29,7 +29,7 @@
                             {{ thisComment.commentString }}
                         </div>
                         <div class="col-xs-1">
-                            <a  style="float: right;" href="" ng-click="removeComment($index)"><span class="fa fa-trash-o"></span></a>
+                            <a  style="float: right;" href="" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
                         </div>
                     </li>
                 </ul>
