@@ -66,8 +66,8 @@ html, body {
     margin:5px 10px;
 }
 
-.btn .fa {
-    margin-right: 5px;
+.h100per {
+    height: 100%;
 }
 
 .spot .bg-ok {
