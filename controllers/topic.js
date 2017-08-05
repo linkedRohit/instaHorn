@@ -31,6 +31,7 @@ app.controller('TopicCtrl', function($scope, socket) {
     };
     
     $scope.cancelComment = function(){
+        $scope.comment = '';
         $scope.commentFlag = 0;
     };
 
