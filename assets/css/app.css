@@ -127,6 +127,13 @@ html, body {
     color: #aaa;
 }
 
+.ease {
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+}
+
 .fullScreen {
     position:absolute !important;
     top:0 !important;

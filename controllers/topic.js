@@ -1,5 +1,7 @@
 app.controller('TopicCtrl', function($scope, socket) {
 
+    $scope.commentFlag = 0;
+
     $scope.startDebate = function() {
     	console.log('Sending new topic data to server', $scope.formData);
     	socket.emit('add-topic', $scope.formData);
@@ -19,5 +21,18 @@ app.controller('TopicCtrl', function($scope, socket) {
             comment: $scope.comment
         });
     }
+    
+    $scope.support = function(){
+        $scope.commentFlag = 1;
+    };
+    
+    $scope.oppose = function(){
+        $scope.commentFlag = -1;
+    };
+    
+    $scope.cancelComment = function(){
+        $scope.comment = '';
+        $scope.commentFlag = 0;
+    };
 
 });
