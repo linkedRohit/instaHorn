@@ -121,20 +121,17 @@ function writeCommentsForPost(socket, userId, data){
     Q(undefined)
     .then(function(){
         var defer = Q.defer();
-        mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[
-            userId,
-            data.id,
-            data.comment
-        ], function(err, result){
-           if(err) return defer.reject(err);
-           defer.resolve();
+        L.info('inserting comments', data);
+        mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.tid, data.commentString ],
+        function(err, result){
+            err ? defer.reject() : defer.resolve();
         });
     })
     .then(function(){
         L.info('sending comments', JSON.stringify(response));
         socket.emit('new-comment-added', response);
     });
-    
+
     return defer.promise;
 }
 
@@ -395,8 +392,8 @@ io.on('connection', function(socket){
                 L.error('Error while fetching comments', err);
             })
         });
-        
-        
+
+
         socket.on('post-comment', function(data){
             var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             Q(undefined)
@@ -405,6 +402,8 @@ io.on('connection', function(socket){
                 writeCommentsForPost(socket, userId, data);
             }).fail(function(err){
                 L.error('Error while writing comments', err);
+            }).then(function(result){
+                L.info('Comment added', 'yes');
             });
         });
 

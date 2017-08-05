@@ -38,7 +38,7 @@
 		background: rgba(0, 0, 0, 0.85);
 		color: #ccc;
 		padding: 10px;
-		height: 40%;
+		height: 50%;
 		overflow: auto;
 }
 
@@ -52,4 +52,8 @@
 		padding-top: 20px;
 		text-overflow: ellipsis;
     overflow: auto;
+}
+
+.hideCommentBox {
+		display: none;
 }

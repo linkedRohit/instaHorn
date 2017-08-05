@@ -12,6 +12,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
 
     $scope.loadCommentForm = function(id) {
         $scope.subModule = 'comment';
+        $scope.class = "";
         socket.emit('fetch-comments', id);
     }
 

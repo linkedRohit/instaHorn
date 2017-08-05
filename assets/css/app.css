@@ -144,3 +144,9 @@ html, body {
     cursor: pointer;
     color: #3498db;
 }
+
+.backButton {
+    font-size: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}

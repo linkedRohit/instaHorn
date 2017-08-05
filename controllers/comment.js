@@ -7,8 +7,11 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         if($scope.txtcomment !=''){
             var commentObj = {};
             commentObj.commentString = $scope.txtcomment;
+            commentObj.tid = 1;
             commentObj.uid = 1;
-  	        $scope.comments.push(commentObj);
+            socket.emit('post-comment', commentObj);
+            $scope.comments.unshift(commentObj);
+  	        //$scope.comments.push(commentObj);
   	        $scope.txtcomment = "";
         }
     }
@@ -30,5 +33,9 @@ app.controller('CommentCtrl', function($scope, socket, User) {
             $scope.arrow="/\\";
         }
     };
+
+    $scope.hideCommentBox = function() {
+        $scope.class="hideCommentBox";
+    }
 
 });
