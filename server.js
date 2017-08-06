@@ -131,14 +131,15 @@ function removeComment(socket, userId, data) {
 }
 
 function writeCommentsForPost(socket, userId, data){
-    Q(undefined)
-    .then(function(){
-        var defer = Q.defer();
-        mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.tid, data.commentString ],
+
+    var defer = Q.defer();
+    
+    mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.question, data.comment ],
         function(err, result){
-            err ? defer.reject() : defer.resolve();
-        });
-    })
+            err ? defer.reject(err) : defer.resolve(result.insertId);
+        }
+    );
+    
     return defer.promise;
 }
 
@@ -405,15 +406,16 @@ io.on('connection', function(socket){
             var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             Q(undefined)
             .then(function(){
-                L.info('Writing a comment for post', [userId, data]);
+                L.info('Writing a comment for post', [userId, JSON.stringify(data)]);
                 return writeCommentsForPost(socket, userId, data);
-                L.info('Writing a comment for post', [userId, data]);
-            }).fail(function(err){
-                L.err('Error while writing comments', err);
-            }).then(function(result){
-                L.info('Comment added', result);
-                //data.cid = result.insertId;
+            })
+            .then(function(insertId){
+                L.info('Comment added', insertId);
+                data.cid = insertId;
                 socket.emit('comment-added', data);
+            })
+            .fail(function(err){
+                L.err('Error while writing comments', err);
             });
         });
 
