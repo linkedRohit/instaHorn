@@ -161,16 +161,6 @@ function feedPageInit(socket, page){
     });
 }
 
-function startDebate(socket, data) {
-    var defer = Q.defer();
-    mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
-        function(err, result){
-            err ? defer.reject() : defer.resolve();
-        }
-    );
-    return defer.promise;
-}
-
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
@@ -225,7 +215,7 @@ function getCommentsForPost(socket, id) {
        return defer.promise;
    })
    .then(function(userFbMapping){
-       L.info('sending comments', JSON.stringify(response));
+       L.info('sending comments', response.length);
        socket.emit('fetch-comments-receive', response);
    })
    .catch(function(err){
@@ -411,7 +401,13 @@ io.on('connection', function(socket){
             Q(undefined)
             .then(function(){
                 L.info('starting debate', data.description);
-                startDebate(socket, data);
+                var defer = Q.defer();
+                mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
+                    function(err, result){
+                        err ? defer.reject() : defer.resolve();
+                    }
+                );
+                return defer.promise;
             }).fail(function(err){
                 L.error('Error while starting new debate', err);
             })
@@ -440,7 +436,7 @@ io.on('connection', function(socket){
             .then(function(){
                 L.info('Writing a comment for post', [userId, data]);
                 var defer = Q.defer();
-                mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.tid, data.commentString ],
+                mysql.query("insert into comments (uid, tid, commentString, commentedOn) values (?,?,?, now())",[ userId, data.tid, data.commentString ],
                 function(err, result){
                     err ? defer.reject(err) : defer.resolve(result);
                 });
