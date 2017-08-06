@@ -29,14 +29,25 @@
         </div>
         <div class="panel-footer">
             <div class="f1">
-                <span title="UpVotes">45</span>
-                <a href="#">
-                    <i class="fa fa-chevron-up"></i>
-                </a>
-                <span title="discussions">12</span>
-                <a href="#" ng-click="loadCommentForm(1)">
-                    <i class="fa fa-comment-o"></i>
-                </a><br/>
+                <span class="ml10" title="UpVotes">
+                    <a href="#">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <span>{{ voteCountList[story.tid] }}</span>
+                </span>
+                <span class="ml10" title="DownVotes">
+                    <a href="#" class="cr">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <span>{{ voteCountList[story.tid] }}</span>
+                </span>
+                <span class="ml10">
+                    <a href="#" ng-click="loadCommentForm(1)" title="Opinions">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                    <span>{{ commentCountList[story.tid] }}</span>
+                </span>
+                <br/>
                 <a href="/trending"><small>#4 trending in Politics</small></a>
             </div>
         </div>

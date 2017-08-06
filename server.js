@@ -96,56 +96,78 @@ function processPage(socket, path){
 }
 
 function feedPageInit(socket, page){
-    mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
+    var response = {};
+
+    /*mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
         L.info('fetching feeds', result.length);
         socket.emit('feed-load', result);
-    });
-}
+    });*/
 
-function startDebate(socket, data) {
-    var defer = Q.defer();
-    mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
-        function(err, result){
-            err ? defer.reject() : defer.resolve();
-        }
-    );
-    return defer.promise;
+    Q(undefined)
+    .then(function(){
+        var defer = Q.defer();
+        L.info("SQL-QUERY", "select * from topics where active = 1 order by tid desc limit ?, 10");
+        L.info("SQL-PARAMS", [page]);
+
+        mysql.query("select * from topics where active = 1 order by tid desc limit ?, 10", [page], function(err, result){
+            if(err) return defer.reject(err);
+            response.feed = result;
+            var topicList = [];
+            for (var i = 0, len = result.length; i < len; i++) {
+                topicList.push(result[i].tid);
+            }
+            defer.resolve(topicList);
+        });
+        return defer.promise;
+    })
+    .then(function(topicList){
+        var defer = Q.defer();
+        L.info("SQL-QUERY", "select tid, count(1) as totalComments from comments where tid in (?) group by tid");
+        L.info("SQL-PARAMS", [topicList]);
+        if( topicList.length <= 0 ) return defer.reject();
+        mysql.query("select tid, count(1) as totalComments from comments where tid in (?) group by tid", [topicList], function(err, commentCountResult) {
+            if(err) return defer.reject(err);
+            L.info('comments count', commentCountResult);
+            var commentCount = {};
+            for (var i = 0, len = commentCountResult.length; i < len; i++) {
+                commentCount[commentCountResult[i].tid] = commentCountResult[i].totalComments;
+            }
+            response.commentCount = commentCount;
+            return defer.resolve(topicList);
+        });
+        return defer.promise;
+    })
+    .then(function(topicList){
+        var defer = Q.defer();
+        L.info("SQL-QUERY", "select tid, voteType, count(1) as responses from upVotes where tid in (?) group by tid, voteType");
+        L.info("SQL-PARAMS", [topicList]);
+        if( topicList.length <= 0 ) return defer.reject();
+        mysql.query("select tid, voteType, count(1) as voteCount from upVotes where tid in (?) group by tid, voteType", [topicList], function(err, voteCountResult){
+            if(err) return defer.reject(err);
+            var voteCount = {};
+            for (var i = 0, len = voteCountResult.length; i < len; i++) {
+                voteCount[voteCountResult[i].tid][voteCountResult[i].voteType] = voteCountResult[i].voteCount;
+            }
+            if(voteCount.length) {
+                response.voteCount = voteCount;
+            }
+            defer.resolve(response);
+        });
+        return defer.promise;
+    })
+    .then(function(response){
+        socket.emit('feed-load', response);
+    });
 }
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
-function removeComment(socket, userId, data) {
-    Q(undefined)
-    .then(function(){
-        var defer = Q.defer();
-        mysql.query("delete from comments where tid = ? and cid = ? and uid = ?",[ data.tid, data.cid, userId ],
-        function(err, result){
-            err ? defer.reject() : defer.resolve();
-        });
-    })
-
-    return defer.promise;
-}
-
-function writeCommentsForPost(socket, userId, data){
-
-    var defer = Q.defer();
-    
-    mysql.query("insert into comments (uid, tid, commentString) values (?,?,?)",[ userId, data.question, data.comment ],
-        function(err, result){
-            err ? defer.reject(err) : defer.resolve(result.insertId);
-        }
-    );
-    
-    return defer.promise;
-}
-
 function getCommentsForPost(socket, id) {
 
-    var response = {};
+   var response = {};
 
    Q(undefined)
    .then(function(){
@@ -193,7 +215,7 @@ function getCommentsForPost(socket, id) {
        return defer.promise;
    })
    .then(function(userFbMapping){
-       L.info('sending comments', JSON.stringify(response));
+       L.info('sending comments', response.length);
        socket.emit('fetch-comments-receive', response);
    })
    .catch(function(err){
@@ -379,7 +401,13 @@ io.on('connection', function(socket){
             Q(undefined)
             .then(function(){
                 L.info('starting debate', data.description);
-                return startDebate(socket, data);
+                var defer = Q.defer();
+                mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
+                    function(err, result){
+                        err ? defer.reject() : defer.resolve();
+                    }
+                );
+                return defer.promise;
             }).fail(function(err){
                 L.error('Error while starting new debate', err);
             })
@@ -407,11 +435,18 @@ io.on('connection', function(socket){
             Q(undefined)
             .then(function(){
                 L.info('Writing a comment for post', [userId, JSON.stringify(data)]);
-                return writeCommentsForPost(socket, userId, data);
-            })
-            .then(function(insertId){
-                L.info('Comment added', insertId);
-                data.cid = insertId;
+                var defer = Q.defer();
+                mysql.query("insert into comments (uid, tid, commentString, commentedOn) values (?,?,?, now())",[ userId, data.tid, data.commentString ],
+                function(err, result){
+                    err ? defer.reject(err) : defer.resolve(result);
+                });
+                return defer.promise;
+            }).fail(function(err){
+                L.err('Error while writing comment', err);
+            }).then(function(result){
+                L.info('Comment added', result);
+                data.cid = result.insertId;
+                data.uid = userId;
                 socket.emit('comment-added', data);
             })
             .fail(function(err){
@@ -424,10 +459,15 @@ io.on('connection', function(socket){
             Q(undefined)
             .then(function(){
                 L.info('Delete comment for post', [data]);
-                removeComment(socket, userId, data);
+                var defer = Q.defer();
+                mysql.query("delete from comments where tid = ? and cid = ? and uid = ?",[ data.tid, data.cid, userId ],
+                function(err, result){
+                    err ? defer.reject(err) : defer.resolve(result);
+                });
+                return defer.promise;
             }).fail(function(err){
                 L.err('Error while writing comments', err);
-            }).done(function(){
+            }).then(function(){
                 L.info('Comment removed', true);
             });
         });
