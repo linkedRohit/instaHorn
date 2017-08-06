@@ -127,6 +127,10 @@ html, body {
     color: #aaa;
 }
 
+.cr {
+    color: #e74c3c;
+}
+
 .ease {
     -webkit-transition: all 0.1s ease;
     -moz-transition: all 0.1s ease;
@@ -144,7 +148,7 @@ html, body {
 }
 
 .upArrow {
-    margin-left: 48%;
+    margin-left: 50%;
     font-size: 12px;
     margin-top: -5px;
     margin-bottom: 5px;
@@ -156,4 +160,8 @@ html, body {
     font-size: 15px;
     margin-bottom: 5px;
     cursor: pointer;
+}
+
+.ml10 {
+    margin-left: 10px;
 }

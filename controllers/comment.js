@@ -1,7 +1,7 @@
 app.controller('CommentCtrl', function($scope, socket, User) {
 
     $scope.class="no-fullScreen";
-    $scope.arrow="/\\";
+    $scope.arrow="fa-chevron-up";
     $scope.comments = [];
     $scope.addComment = function() {
         if($scope.txtcomment !=''){
@@ -16,6 +16,7 @@ app.controller('CommentCtrl', function($scope, socket, User) {
     socket.on('comment-added', function(data){
         console.log(data, $scope.comments);
         $scope.comments.unshift(data);
+        $scope.commentCountList[data.tid]++;
     });
 
     $scope.removeComment = function(index, cmmtId, tId) {
@@ -32,10 +33,10 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         $scope.isFullScreen = !$scope.isFullScreen;
         if($scope.isFullScreen) {
             $scope.class="fullScreen";
-            $scope.arrow="\\/";
+            $scope.arrow="fa-chevron-down";
         } else {
             $scope.class="no-fullScreen";
-            $scope.arrow="/\\";
+            $scope.arrow="fa-chevron-up";
         }
     };
 

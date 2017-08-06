@@ -3,7 +3,9 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     $scope.subModule = false;
 
     socket.on('feed-load', function(data){
-        $scope.feeds = data;
+        $scope.feeds = data.feed;
+        $scope.commentCountList = data.commentCount;
+        $scope.voteCountList = data.voteCount;
     });
 
     $scope.loadQuestion = function(id) {
