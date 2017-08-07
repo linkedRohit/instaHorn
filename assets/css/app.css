@@ -13,13 +13,12 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-    border-radius: 10px;
+    border: 1px solid #2c3e50;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+    border: 2px solid #2c3e50;
+    background: #18bc9c;
 }
 
 .welcomePage {
@@ -70,6 +69,10 @@ html, body {
     height: 100%;
 }
 
+.spot {
+    line-height: 1.75;
+}
+
 .spot .bg-ok {
     margin-right: 0;
 }
@@ -103,12 +106,20 @@ html, body {
     margin-bottom: 0;
 }
 
+.mb50 {
+    margin-bottom: 50px;
+}
+
 .mt0 {
     margin-top: 0;
 }
 
 .mr20 {
     margin-right: 20px;
+}
+
+.ml20 {
+    margin-left: 20px;
 }
 
 .m0 {
@@ -164,4 +175,16 @@ html, body {
 
 .ml10 {
     margin-left: 10px;
+}
+
+.border {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.panel {
+  box-shadow: 2px 2px 2px rgb(169, 199, 208);
+}
+
+.lh3 {
+    line-height: 3;
 }

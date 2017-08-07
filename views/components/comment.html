@@ -12,7 +12,7 @@
         <div class="row mt10">
             <div class="col-sm-6 col-xs-9 col-sm-offset-3">
                 <div class="form-group">
-                    <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="Write your opinion" rows="1"></textarea>
+                    <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?" rows="1"></textarea>
                 </div>
             </div>
             <div class="col-xs-3">
@@ -21,28 +21,21 @@
           </div>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                <h4>Opinions</h4>
+                <h4>{{ comments.length > 0 ? 'Comments' : 'No comments' }}</h4>
                 <ul>
                     <li ng-repeat="thisComment in comments" class="usrComments">
                         <div class="col-xs-2">
-                            <img src="https://graph.facebook.com/{{ userInfo[thisComment.uid] }}/picture?width=30" class="img-circle">
+                            <img src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
                         </div>
                         <div class="col-xs-8">
                             {{ thisComment.commentString }}
                         </div>
                         <div class="col-xs-1">
-                            <a  style="float: right;" href="" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
+                            <a style="float: right;" href="" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-
-    <script>
-        $('#toggleSwitch').click(function(e){
-            $('#commentWindow').toggleClass('fullScreen');
-            $('#toggleSwitch').html('\\/');
-        });
-    </script>
 </div>

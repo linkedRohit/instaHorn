@@ -1,7 +1,10 @@
 <div class="rootElem">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row-fluid clearfix">
-            <div class="col-sm-9">
+            <div class="col-sm-9 text-center">
+              <div class="row">
+                  <div class="row text-center"><img class="img-circle" src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
+              </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}"class="ease">{{ debate.question }}</div>
                 <p class="f09">
                     Asked by <strong>{{ debate.name }}</strong> &bullet;&nbsp;
@@ -10,27 +13,59 @@
                     </span>
                 </p>
                 <div class="mt20 btn-space text-center">
-                    <button ng-disabled="commentFlag == 1" class="btn btn-sm btn-success" ng-click="support()">
+                    <button ng-disabled="commentFlag == 1" class="btn btn-sm btn-success" ng-click="vote(debate.id, 'up')">
                         <i class="fa fa-check"></i> I support this one!
-                    </button>
-                    <button ng-disabled="commentFlag == -1" class="btn btn-sm btn-danger" ng-click="oppose()">
-                        <i class="fa fa-times"></i> Nah. Nope. It's Bad.
-                    </button>
+                    </button><medium><span class="badge">{{ debate.upCount }}</span></medium>
+                    <button ng-disabled="commentFlag == -1" class="btn btn-sm btn-danger" ng-click="vote(debate.id, 'down')">
+                        <i class="fa fa-times"></i> Nah. Nope. I disagree.
+                    </button><medium><span class="badge">{{ debate.downCount }}</span></medium>
                 </div>
                 <div class="form-group mt20" ng-class="{'has-error': commentFlag == -1, 'has-success': commentFlag == 1}" ng-hide="commentFlag == 0">
-                    <textarea class="form-control" placeholder="Say your opinion" ng-model="comment"></textarea>
+                    <textarea class="form-control" placeholder="Have an opinion? [Optional]" ng-model="comment"></textarea>
                     <div class="text-right">
-                        <button class="btn btn-xs btn-default mt20" ng-click="cancelComment()">
-                            <i class="fa fa-times"></i> Cancel
+                        <button class="btn btn-xs btn-default mt20" ng-click="cancelOpinion()">
+                            <i class="fa fa-chevron-right"></i> Skip
                         </button>
-                        <button class="btn btn-xs btn-primary mt20" ng-click="postMyComment()">
-                            <i class="fa fa-send"></i> Post your comment
+                        <button class="btn btn-xs btn-primary mt20" ng-click="postMyOpinion()">
+                            <i class="fa fa-send"></i> Post your opinion
                         </button>
                     </div>
                 </div>
+                <div class="col-sm-10 col-sm-offset-1 text-left">
+                  <h4>{{ opinions.length > 0 ? 'Opinions' : 'No Opinion' }}</h4>
+                  <ul>
+                      <li ng-repeat="thisOpinion in opinions" class="usrComments">
+                          <div class="col-xs-1 lh3">
+                              <img src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=30" class="img-circle">
+                          </div>
+                          <div class="col-xs-10 {{ thisOpinion.opinionType }}">
+                              {{ thisOpinion.opinion }}<br/><small><i class="fa fa-clock-o"></i> <span am-time-ago="thisOpinion.updatedOn"></span></small>
+                          </div>
+                          <div class="col-xs-1">
+                              <a style="float: right;" href="" ng-show = {{ thisOpinion.uid === userInfo}}ng-click="removeComment($index, thisOpinion.cid, thisOpinion.tid)"><span class="fa fa-trash-o"></span></a>
+                          </div>
+                      </li>
+                  </ul>
+                </div>
             </div>
             <div class="col-sm-3">
-                
+                <div class="panel border">
+                    <div class="panel-heading similarBox">
+                        <h4>Similar debates going on</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                          <li>
+                        <h5><a href="#" ng-click="loadQuestion(2)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                      </li>
+                        <li>
+                      <h5><a href="#" ng-click="loadQuestion(6)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                    </li>
+                      <li>
+                    <h5><a href="#" ng-click="loadQuestion(9)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                  </li></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -132,6 +167,6 @@
             <div class="col-sm-3">
             </div>
         </div>
-        
+
     </div>
 </div>

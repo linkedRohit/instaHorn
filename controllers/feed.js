@@ -5,6 +5,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     socket.on('feed-load', function(data){
         $scope.feeds = data.feed;
         $scope.commentCountList = data.commentCount;
+        console.log(data);
         $scope.voteCountList = data.voteCount;
         Page.set('feeds');
     });
@@ -16,6 +17,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     $scope.loadCommentForm = function(id) {
         $scope.subModule = 'comment';
         $scope.class = "";
+        $scope.tid = id;
         socket.emit('fetch-comments', id);
     }
 

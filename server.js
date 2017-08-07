@@ -76,7 +76,7 @@ io.listen(app.listen(PORT, function() {
 // socket stuff
 var socketList = {};
 var userList = {};
-
+/*
 function processPage(socket, path){
     var page = new url.parse(path, true);
 
@@ -93,11 +93,12 @@ function processPage(socket, path){
         //    L.err('Page Not Found', path);
         break;
     }
-}
+}*/
 
-function feedPageInit(socket, page){
+function feedPageInit(socket, page, limit){
     var response = {};
-
+    var page = page ? page : 0;
+    var limit = limit ? limit : 20;
     /*mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
         L.info('fetching feeds', result.length);
@@ -107,10 +108,10 @@ function feedPageInit(socket, page){
     Q(undefined)
     .then(function(){
         var defer = Q.defer();
-        L.info("SQL-QUERY", "select * from topics where active = 1 order by tid desc limit ?, 10");
-        L.info("SQL-PARAMS", [page]);
+        L.info("SQL-QUERY", "select * from topics where active = 1 order by tid desc limit ?, ?");
+        L.info("SQL-PARAMS", [page, limit]);
 
-        mysql.query("select * from topics where active = 1 order by tid desc limit ?, 10", [page], function(err, result){
+        mysql.query("select * from topics where active = 1 order by tid desc limit ?, ?", [page, limit], function(err, result){
             if(err) return defer.reject(err);
             response.feed = result;
             var topicList = [];
@@ -140,23 +141,32 @@ function feedPageInit(socket, page){
     })
     .then(function(topicList){
         var defer = Q.defer();
-        L.info("SQL-QUERY", "select tid, voteType, count(1) as responses from upVotes where tid in (?) group by tid, voteType");
+        L.info("SQL-QUERY", "select tid, voteType, count(1) as responses from votes where tid in (?) group by tid, voteType");
         L.info("SQL-PARAMS", [topicList]);
         if( topicList.length <= 0 ) return defer.reject();
-        mysql.query("select tid, voteType, count(1) as voteCount from upVotes where tid in (?) group by tid, voteType", [topicList], function(err, voteCountResult){
+        mysql.query("select tid, voteType, count(1) as voteCount from votes where tid in (?) group by tid, voteType", [topicList], function(err, voteCountResult){
             if(err) return defer.reject(err);
             var voteCount = {};
+            L.info('res', voteCountResult);
             for (var i = 0, len = voteCountResult.length; i < len; i++) {
-                voteCount[voteCountResult[i].tid][voteCountResult[i].voteType] = voteCountResult[i].voteCount;
+                var tid = voteCountResult[i].tid;
+                var voteType = voteCountResult[i].voteType;
+                voteCount[tid] = voteCount[tid] ? voteCount[tid] : {};
+                voteCount[tid][voteType] = voteCountResult[i].voteCount;
             }
-            if(voteCount.length) {
+
+            if(voteCountResult) {
                 response.voteCount = voteCount;
+            } else {
+                response.voteCount = {};
             }
+            //L.info("Response", response);
             defer.resolve(response);
         });
         return defer.promise;
     })
     .then(function(response){
+      L.info("response", response);
         socket.emit('feed-load', response);
     });
 }
@@ -313,7 +323,7 @@ function updateUserInDatabase( data, token ){
 }
 
 function debatePageInit(socket, id){
-    mysql.query('select tid, fullName, postedOn, description from topics ' +
+    mysql.query('select tid, fullName, postedOn, description, tags, fbid from topics ' +
                 'join users on topics.uid = users.uid where tid = ?', [id], function(err, result){
         if(err) console.log('Error', err);
         result = result[0];
@@ -387,12 +397,60 @@ io.on('connection', function(socket){
             }
         });
 
-        socket.on('fetch-feed', function() {
-            feedPageInit(socket, 0);
+        socket.on('fetch-feed', function(data) {
+            var page = (data && data.pageId) ? data.pageId : 0;
+            feedPageInit(socket, page);
         });
 
         socket.on('fetch-question', function(id) {
-            debatePageInit(socket, id);
+            var response = {};
+            Q(undefined)
+            .then(function(){
+                var defer = Q.defer();
+
+                L.info("SQL-QUERY", "select tid, fullName, postedOn, description, fbid from topics join users on topics.uid = users.uid where tid = ?");
+                L.info("SQL-PARAMS", [id]);
+                mysql.query('select tid, fullName, postedOn, description, fbid from topics join users on topics.uid = users.uid where tid = ?', [id],
+                function(err, result) {
+                    if (err) {
+                        defer.reject(err);
+                    }
+                    else {
+                        response.question = result;
+                        L.info(response, result);
+                        defer.resolve(id);
+                    }
+                });
+                return defer.promise;
+            }).then(function(id) {
+                var defer = Q.defer();
+                L.info("SQL-QUERY", "select count(1) as voteCount, voteType, tid from users where tid = ?");
+                L.info("SQL-PARAMS", [id]);
+
+                mysql.query("select count(1) as voteCount, voteType from votes where tid = ? group by voteType", [id], function(err, voteResult){
+                    if(err) return defer.reject(err);
+
+                    var voteList = {};
+                    for (var i = 0, len = voteResult.length; i < len; i++) {
+                        voteList[voteResult[i].voteType] = voteResult[i].voteCount;
+                    }
+                    response.voteList = voteList;
+                    return defer.resolve(id);
+                });
+
+                return defer.promise;
+            }).then(function(id){
+                L.info("SQL-QUERY", "select * from opinions where tid = ?  order by updatedOn desc");
+                L.info("SQL-PARAMS", [id]);
+
+                mysql.query("select * from opinions where tid = ?  order by updatedOn desc", [id], function(err, opinionResult){
+                    if(err) return defer.reject(err);
+                    response.opinionResult = opinionResult;
+                    socket.emit('debate-ques', response);
+                });
+            }).fail(function(err) {
+                L.error('Error while fetching question : '+id, err);
+            });
         });
 
         socket.on('add-topic', function(data) {
@@ -471,6 +529,47 @@ io.on('connection', function(socket){
                 L.info('Comment removed', true);
             });
         });
+
+        socket.on('cast-vote', function(data){
+          L.info('data', data);
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
+            Q(undefined)
+            .then(function(){
+                L.info('Add vote in database', [data]);
+                var defer = Q.defer();
+                mysql.query("replace into votes(uid,tid,voteType) values(?,?,?);",[ userId, data.tid, data.voteType ],
+                function(err, result){
+                    err ? defer.reject(err) : defer.resolve(result);
+                });
+                return defer.promise;
+            }).then(function(){
+                L.info('Vote added to the database', true);
+                socket.emit('vote-added', data);
+            }).fail(function(err){
+                L.err('Error while writing comments', err);
+            });
+        });
+
+        socket.on('post-opinion', function(data){
+          L.info('data', data);
+            var userId = _.get(socketList, [socket.id, 'uid'], '-1');
+            Q(undefined)
+            .then(function(){
+                L.info('Add opinion in database', [data]);
+                var defer = Q.defer();
+                mysql.query("insert into opinions (uid,tid,opinion,opinionType) values(?,?,?,?)",[ userId, data.tid, data.opinion, data.opinionType ],
+                function(err, result){
+                    err ? defer.reject(err) : defer.resolve(result);
+                });
+                return defer.promise;
+            }).then(function(){
+                L.info('Opinion added to the database', true);
+                socket.emit('opinion-added', data);
+            }).fail(function(err){
+                L.err('Error while writing comments', err);
+            });
+        });
+
     });
 
 });

@@ -49,11 +49,29 @@
 .usrComments {
 		max-height: 150px;
 		line-height: 1.5;
-		padding-top: 20px;
+		padding-top: 10px;
 		text-overflow: ellipsis;
     overflow: auto;
 }
 
 .hideCommentBox {
 		display: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.similarBox {
+		background-color: #5a8dbf;
+		color: white;
+		font-weight: 500;
+}
+
+.up {
+		background-image: linear-gradient( #cdfbd1, #ffffff );
+}
+
+.down {
+		background-image: linear-gradient( #fbdecd, #ffffff );
 }

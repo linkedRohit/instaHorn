@@ -1,13 +1,19 @@
 <div ng-controller="FeedCtrl">
-    <div class="panel" ng-repeat="story in feeds">
+    <div class="panel border mb50" ng-repeat="story in feeds">
         <div class="panel-body">
-            <h3 class="p10 m0 text-center">
-                <a href="#" ng-click="loadQuestion(story.tid)">
-                    {{ story.description }}
-                </a>
-            </h3>
-            <p class="f09 plr10 ca"><i class="fa fa-clock-o"></i> started <span am-time-ago="story.postedOn"></span></p>
-            <div class="row-fluid">
+            <div class="row">
+                <div class="col-sm-2 text-center">
+                    <div class="row"><img class="img-circle" src="https://graph.facebook.com/2023825090976399/picture?width=40"></div>
+                    <div class="row mt10"><p class="f09 plr10 ca"><i class="fa fa-clock-o"></i> <span am-time-ago="story.postedOn"></span></p></div>
+                </div>
+
+                <h3 class="p10 m0 text-left">
+                    <a href="#" ng-click="loadQuestion(story.tid)">
+                        {{ story.description }}
+                    </a>
+                </h3>
+            </div>
+            <div class="row">
                 <div class="col-sm-6 p0 spot">
                 <!-- truncate responses after 140 characters using aangular-->
                     <div class="bg-ok p5 text-right">
@@ -29,26 +35,26 @@
         </div>
         <div class="panel-footer">
             <div class="f1">
-                <span class="ml10" title="UpVotes">
+                <span title="UpVotes">
                     <a href="#">
                         <i class="fa fa-chevron-up"></i>
                     </a>
-                    <span>{{ voteCountList[story.tid] }}</span>
+                    <small>{{ voteCountList[story.tid].up }}</small>
                 </span>
                 <span class="ml10" title="DownVotes">
                     <a href="#" class="cr">
                         <i class="fa fa-chevron-down"></i>
                     </a>
-                    <span>{{ voteCountList[story.tid] }}</span>
+                    <small>{{ voteCountList[story.tid].down }}</small>
                 </span>
                 <span class="ml10">
-                    <a href="#" ng-click="loadCommentForm(1)" title="Opinions">
+                    <a href="#" ng-click="loadCommentForm(story.tid)" title="Opinions">
                         <i class="fa fa-comment"></i>
                     </a>
-                    <span>{{ commentCountList[story.tid] }}</span>
+                    <small>{{ commentCountList[story.tid] }}</small>
                 </span>
                 <br/>
-                <a href="/trending"><small>#4 trending in Politics</small></a>
+                <a href="/trending"><medium>#4 trending in Politics</medium></a>
             </div>
         </div>
     </div>

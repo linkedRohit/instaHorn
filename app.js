@@ -3,15 +3,19 @@ var app = angular.module('DebateApp', [
     'ngRoute'
 ]);
 
-/*app.config(function($routeProvider) {
+app.config(function($routeProvider) {
     $routeProvider
-    .when("/", {
-        templateUrl : "/views/components/index.html"
+    .when("/feeds", {
+        templateUrl : "/views/components/feed.html",
+        controller: "FeedCtrl"
+    })
+    .when("/views/feeds", {
+        //Page.set('feeds');
     })
     .when("/start", {
-        templateUrl : "/views/components/index.html"
+        //templateUrl : "/views/components/index.html"
     });
-});*/
+});
 
 app.run(['$window', function($window) {
 

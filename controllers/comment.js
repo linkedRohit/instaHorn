@@ -7,16 +7,15 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         if($scope.txtcomment !=''){
             var commentObj = {};
             commentObj.commentString = $scope.txtcomment;
-            commentObj.tid = 1;
+            commentObj.tid = $scope.tid;
             socket.emit('post-comment', commentObj);
   	        $scope.txtcomment = "";
         }
     }
 
     socket.on('comment-added', function(data){
-        console.log(data, $scope.comments);
         $scope.comments.unshift(data);
-        $scope.commentCountList[data.tid]++;
+        $scope.commentCountList[data.tid] = $scope.commentCountList[data.tid] ? $scope.commentCountList[data.tid]++ : 1;
     });
 
     $scope.removeComment = function(index, cmmtId, tId) {
