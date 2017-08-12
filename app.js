@@ -1,6 +1,7 @@
 var app = angular.module('DebateApp', [
     'angularMoment',
-    'ngRoute'
+    'ngRoute',
+    'infinite-scroll'
 ]);
 
 app.config(function($routeProvider) {
