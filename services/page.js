@@ -25,7 +25,7 @@ app.factory('Page', function () {
         subModule = sbMod;
     };
 
-    _page.getModule = function(sbMod){
+    _page.getModule = function(){
         return subModule;
     };
 

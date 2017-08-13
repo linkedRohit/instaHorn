@@ -1,9 +1,13 @@
 app.controller('FeedCtrl', function(Page, $scope, socket) {
+    Page.set('feeds');
 
     $scope.subModule = false;
     $scope.currentPage = 0;
     $scope.fetching = false;
     $scope.fetchNew = true;
+    $scope.currentCommentPage = 0;
+    $scope.fetchingComments = false;
+    $scope.fetchNewComment = true;
 
     socket.on('feed-load', function(data) {
         /*var feeds = data.feed ? data.feed : [];
@@ -50,6 +54,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     }
 
     $scope.loadQuestion = function(id) {
+        $scope.hideCommentBox();
         socket.emit('fetch-question', id);
     }
 
@@ -57,24 +62,49 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
         $scope.subModule = 'comment';
         $scope.class = "";
         $scope.tid = id;
-        socket.emit('fetch-comments', id);
+        var data ={};
+        data.id = id;
+        data.pageId = $scope.currentCommentPage;
+        socket.emit('fetch-comments', data);
     }
 
     socket.on('fetch-comments-receive', function(data) {
         $scope.comments = data.comments;
         $scope.userInfo = data.userFbMapping;
+        $scope.fetchingComments = false;
+        $scope.currentCommentPage++;
     });
 
     $scope.loadMoreFeeds = function() {
-        if($scope.fetching || $scope.fetchNew == false) return;
-        $scope.fetching = true;
+        if(Page.get() !== 'feeds') {
+            if($scope.fetching || $scope.fetchNew == false) return;
+            $scope.fetching = true;
+            var data = {};
+            data.pageId = $scope.currentPage;
+            socket.emit('fetch-feed', data);
+        }
+    };
+
+    $scope.loadMoreComments = function() {
+        if($scope.subModule == 'comments') {
+            return;
+        }
+
+        if($scope.fetchingComments || $scope.fetchNewComment == false) return;
+        $scope.fetchingNewComment = true;
         var data = {};
-        data.pageId = $scope.currentPage;
-        socket.emit('fetch-feed', data);
+        data.id = $scope.tid;
+        data.pageId = $scope.currentCommentPage;
+        socket.emit('fetch-comments', data);
     };
 
     socket.on('feed-last-page', function(data) {
         $scope.fetching = false;
         $scope.fetchNew = false;
+    });
+
+    socket.on('comment-last-page', function(data) {
+        $scope.fetchingComments = false;
+        $scope.fetchNewComment = false;
     });
 });

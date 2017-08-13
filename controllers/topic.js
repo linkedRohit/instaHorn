@@ -16,12 +16,14 @@ app.controller('TopicCtrl', function($scope, socket) {
 
     $scope.postMyOpinion = function(){
         console.log('Posting Opinion', $scope.comment);
-        var type = $scope.commentFlag == 1 ? 'up' : 'down';
-        socket.emit('post-opinion', {
-            tid: $scope.debate.id,
-            opinion: $scope.comment,
-            opinionType: type
-        });
+        if($scope.comment) {
+            var type = $scope.commentFlag == 1 ? 'up' : 'down';
+            socket.emit('post-opinion', {
+                tid: $scope.debate.id,
+                opinion: $scope.comment,
+                opinionType: type
+            });
+        }
     }
 
     $scope.vote = function(id, voteType){

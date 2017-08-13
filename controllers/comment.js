@@ -40,7 +40,7 @@ app.controller('CommentCtrl', function($scope, socket, User) {
     };
 
     $scope.hideCommentBox = function() {
-        $scope.class="hideCommentBox";
+        $scope.subModule = '';
     }
 
 });

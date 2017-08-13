@@ -6,12 +6,11 @@ var app = angular.module('DebateApp', [
 
 app.config(function($routeProvider) {
     $routeProvider
-    .when("/feeds", {
-        templateUrl : "/views/components/feed.html",
+    .when("/", {
         controller: "FeedCtrl"
     })
-    .when("/views/feeds", {
-        //Page.set('feeds');
+    .when("/feeds", {
+        controller: "FeedCtrl"
     })
     .when("/start", {
         //templateUrl : "/views/components/index.html"
