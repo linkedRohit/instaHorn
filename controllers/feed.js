@@ -25,10 +25,12 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
         if(data.feed) feeds = data.feed;
         if(data.commentCount) comments = data.commentCount;
         if(data.voteCount) votes = data.voteCount;
+        if(data.userCount) userCount = data.userCount;
 
         $scope.feeds = getCorrectVal($scope.feeds, feeds);
         $scope.commentCountList = getCorrectVal($scope.commentCountList, comments);
         $scope.voteCountList = getCorrectVal($scope.voteCountList, votes);
+        $scope.userCount = getCorrectVal($scope.userCount, userCount);
         $scope.fetching = false;
         $scope.currentPage++;
         Page.set('feeds');
