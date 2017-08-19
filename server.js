@@ -112,7 +112,7 @@ function feedPageInit(socket, page, limit){
         L.info("SQL-PARAMS", [page, limit]);
 
         mysql.query("select * from topics where active = 1 order by tid desc limit ?, ?", [page, limit], function(err, result){
-            if(err) return defer.reject(err);
+            if(err) socket.emit('feed-last-page', 'end');
             response.feed = result;
             var topicList = [];
             var userList = [];
@@ -120,30 +120,30 @@ function feedPageInit(socket, page, limit){
                 topicList.push(result[i].tid);
                 userList.push(result[i].uid);
             }
-            defer.resolve({ 
+            defer.resolve({
                 topicList: topicList,
                 userList: userList
             });
         });
-        
+
         return defer.promise;
     })
     .then(function(data){
         var defer = Q.defer();
         var userList = data.userList;
-        
+
        mysql.query("select uid, fullName as name, fbid from users where uid in (?)", [userList], function(err, userResult) {
            if(err) return defer.reject(err);
-           
+
            var userCount = {};
            for( var i = 0, len = userResult.length; i < len; i++) {
                userCount[userResult[i].uid] = userResult[i];
            }
            response.userCount = userCount;
-           
+
            return defer.resolve(data.topicList);
        });
-       
+
         return defer.promise;
     })
     .then(function(topicList){
@@ -206,7 +206,7 @@ function onlyUnique(value, index, self) {
 }
 
 function getCommentsForPost(socket, data) {
-  var id = data.id;
+  var id = data.userId;
   var limit = data.limit ? data.limit : 5;
   var page = data.page ? data.page*limit : 0;
 L.info('data', data);
@@ -257,7 +257,7 @@ L.info('data', data);
 
        return defer.promise;
    })
-   .then(function(userFbMapping){
+   .then(function(response){
        L.info('sending comments', response.length);
        socket.emit('fetch-comments-receive', response);
    })
