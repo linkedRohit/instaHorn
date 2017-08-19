@@ -97,8 +97,8 @@ function processPage(socket, path){
 
 function feedPageInit(socket, page, limit){
     var response = {};
-    var page = page ? page : 0;
-    var limit = limit ? limit : 20;
+    var limit = limit ? limit : 2;
+    var page = page ? page*limit : 0;
     /*mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
         L.info('fetching feeds', result.length);
@@ -150,7 +150,9 @@ function feedPageInit(socket, page, limit){
         var defer = Q.defer();
         L.info("SQL-QUERY", "select tid, count(1) as totalComments from comments where tid in (?) group by tid");
         L.info("SQL-PARAMS", [topicList]);
-        if( topicList.length <= 0 ) return defer.reject();
+        if( topicList.length <= 0 ) {
+            socket.emit('feed-last-page', 'end');
+        }
         mysql.query("select tid, count(1) as totalComments from comments where tid in (?) group by tid", [topicList], function(err, commentCountResult) {
             if(err) return defer.reject(err);
             L.info('comments count', commentCountResult);
@@ -203,18 +205,21 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
-function getCommentsForPost(socket, id) {
-
+function getCommentsForPost(socket, data) {
+  var id = data.id;
+  var limit = data.limit ? data.limit : 5;
+  var page = data.page ? data.page*limit : 0;
+L.info('data', data);
    var response = {};
 
    Q(undefined)
    .then(function(){
 
        var defer = Q.defer();
-       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1");
-       L.info("SQL-PARAMS", [id]);
+       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1 limit ?, ?");
+       L.info("SQL-PARAMS", [id, page, limit]);
 
-       mysql.query("select * from comments where tid = ? and active = 1 order by cid desc", [id], function(err, result){
+       mysql.query("select * from comments where tid = ? and active = 1 order by cid desc limit ?, ?", [id, page, limit], function(err, result){
            if(err) return defer.reject(err);
 
            response.comments = result;
@@ -237,7 +242,7 @@ function getCommentsForPost(socket, id) {
        L.info("SQL-QUERY", "select uid, fbid from users where uid in (?)");
        L.info("SQL-PARAMS", [userList]);
 
-       if( userList.length <= 0 ) return defer.reject();
+       if( userList.length <= 0 ) socket.emit('comment-last-page', 'end');
 
        mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
            if(err) return defer.reject(err);
@@ -522,6 +527,9 @@ io.on('connection', function(socket){
             .then(function(){
                 L.info('Writing a comment for post', [userId, JSON.stringify(data)]);
                 var defer = Q.defer();
+                if(!data.commentString) {
+                    return false;
+                }
                 mysql.query("insert into comments (uid, tid, commentString, commentedOn) values (?,?,?, now())",[ userId, data.tid, data.commentString ],
                 function(err, result){
                     err ? defer.reject(err) : defer.resolve(result);
@@ -585,6 +593,7 @@ io.on('connection', function(socket){
             .then(function(){
                 L.info('Add opinion in database', [data]);
                 var defer = Q.defer();
+                if(!data.opinion) return;
                 mysql.query("insert into opinions (uid,tid,opinion,opinionType) values(?,?,?,?)",[ userId, data.tid, data.opinion, data.opinionType ],
                 function(err, result){
                     err ? defer.reject(err) : defer.resolve(result);
