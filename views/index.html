@@ -17,13 +17,15 @@
             <div ng-controller="LoginCtrl" class="h100per">
                 <app-login></app-login>
                 <div ng-show="user">
-                    <app-navigation></app-navigation>
+                    <app-navigation user="user"></app-navigation>
                     <div class="container" ng-show="page === 'editor' || page === 'feeds'">
                         <div class="row-fluid">
+                            <!--
                             <div class="col-sm-3 hidden-xs">
                                 <app-side-profile></app-side-profile>
                             </div>
-                            <div class="col-sm-9">
+                            -->
+                            <div class="col-sm-8">
                                 <div ng-show="page === 'editor'">
                                     <app-start-debate></app-start-debate>
                                 </div>

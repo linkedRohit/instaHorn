@@ -115,11 +115,35 @@ function feedPageInit(socket, page, limit){
             if(err) return defer.reject(err);
             response.feed = result;
             var topicList = [];
+            var userList = [];
             for (var i = 0, len = result.length; i < len; i++) {
                 topicList.push(result[i].tid);
+                userList.push(result[i].uid);
             }
-            defer.resolve(topicList);
+            defer.resolve({ 
+                topicList: topicList,
+                userList: userList
+            });
         });
+        
+        return defer.promise;
+    })
+    .then(function(data){
+        var defer = Q.defer();
+        var userList = data.userList;
+        
+       mysql.query("select uid, fullName as name, fbid from users where uid in (?)", [userList], function(err, userResult) {
+           if(err) return defer.reject(err);
+           
+           var userCount = {};
+           for( var i = 0, len = userResult.length; i < len; i++) {
+               userCount[userResult[i].uid] = userResult[i];
+           }
+           response.userCount = userCount;
+           
+           return defer.resolve(data.topicList);
+       });
+       
         return defer.promise;
     })
     .then(function(topicList){
@@ -151,8 +175,9 @@ function feedPageInit(socket, page, limit){
             for (var i = 0, len = voteCountResult.length; i < len; i++) {
                 var tid = voteCountResult[i].tid;
                 var voteType = voteCountResult[i].voteType;
-                voteCount[tid] = voteCount[tid] ? voteCount[tid] : {};
+                voteCount[tid] = voteCount[tid] ? voteCount[tid] : { 'total': 0, 'up': 0, 'down': 0 };
                 voteCount[tid][voteType] = voteCountResult[i].voteCount;
+                voteCount[tid]['total'] += voteCountResult[i].voteCount;
             }
 
             if(voteCountResult) {
@@ -168,6 +193,9 @@ function feedPageInit(socket, page, limit){
     .then(function(response){
       L.info("response", response);
         socket.emit('feed-load', response);
+    })
+    .catch(function(err){
+      L.err("ERROR", err);
     });
 }
 

@@ -1,4 +1,51 @@
-<div ng-controller="FeedCtrl">
+<div ng-controller="FeedCtrl" class="mt20 feed-box">
+    
+    <div class="card" ng-repeat="story in feeds">
+        <div class="f18 strong shade">
+             <a href="#" ng-click="loadQuestion(story.tid)">
+                 {{ story.description }}
+             </a>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-7">
+                <div class="InB va">
+                    <img class="img-circle" src="https://graph.facebook.com/{{ userCount[story.uid].fbid }}/picture?width=36" />
+                </div>
+                <div class="InB va ml5">
+                    <div class="low strong f09">{{ userCount[story.uid].name }}</div>
+                    <div class="light f08">
+                        <span am-time-ago="story.postedOn"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="container-fluid text-right" ng-if="voteCountList[story.tid].total > 0">
+                    <div class="row strong low text-center">
+                        <div class="col-xs-6">
+                            {{ voteCountList[story.tid].up }} supporters
+                        </div>
+                        <div class="col-xs-6">
+                            {{ voteCountList[story.tid].down }} haters
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 levels p0 m0">
+                            <div class="progress m0">
+                                <div class="progress-bar pull-right progress-bar-success" style="width:{{ 100 * voteCountList[story.tid].up / voteCountList[story.tid].total }}%"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 levels p0 m0">
+                            <div class="progress m0">
+                                <div class="progress-bar progress-bar-danger" style="width:{{ 100 * voteCountList[story.tid].down / voteCountList[story.tid].total }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
     <div class="panel border mb50" ng-repeat="story in feeds">
         <div class="panel-body">
             <div class="row">
@@ -15,7 +62,6 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 p0 spot">
-                <!-- truncate responses after 140 characters using aangular-->
                     <div class="bg-ok p5 text-right">
                         People really, really want it. Already, more than 3.2 million users have become fans of the “Dislike Button,” 1.3 million have signed a petition
                     </div>
@@ -58,4 +104,5 @@
             </div>
         </div>
     </div>
+    -->
 </div>

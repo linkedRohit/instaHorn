@@ -5,8 +5,9 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     socket.on('feed-load', function(data){
         $scope.feeds = data.feed;
         $scope.commentCountList = data.commentCount;
-        console.log(data);
         $scope.voteCountList = data.voteCount;
+        $scope.userCount = data.userCount;
+        
         Page.set('feeds');
     });
 

@@ -2,7 +2,7 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
 
     socket.on('debate-ques', function(data){
         Page.set('debate');
-        console.log(data);
+        
         var question = data.question[0];
         $scope.debate = {
             question: question.description,

@@ -4,12 +4,10 @@ app.controller('LoginCtrl', function(Page, $scope, socket, User) {
     $scope.page = false;
 
     $scope.login = function(response) {
-        console.log('Intializing Server Login', response.userID);
         socket.emit('init', response);
     }
 
     Page.onChange(function(name){
-        console.log('Page changed to', name);
         $scope.page = name;
     });
 

@@ -1,11 +1,71 @@
 html, body {
     height: 100%;
     width: 100%;
+    background:#fafafa;
+}
+
+.welcomePage {
+    margin-top: 120px;
+}
+
+.shade a {
+    color: #333;
+}
+
+.mt50 {
+    margin-top: 50px;
+}
+
+ul.navbar-nav li {
+    margin-right: 20px;
+}
+
+.feed-box .card {
+    margin-bottom: 12px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.gray {
+    color: #333;
+}
+
+.f15 {
+    font-size: 1.5em;
+}
+
+.strong {
+    font-weight: 700;
+}
+
+.f18 {
+    font-size: 1.8em;
+}
+
+.low {
+    color: #aaa;
+}
+
+.light {
+    font-weight: 300;
 }
 
 .app {
-    background-image: linear-gradient( #cdcdfb, #193b5a );
+    background-image: url('/assets/img/page.jpg');
+    background-size: cover;
     height: 100%;
+}
+
+.card {
+  position:relative;
+  z-index:2;
+  padding:1.5rem;
+  box-shadow:0 1px 2px #d2d2d2;
+  background:white;
+  border-radius:3px;
+  user-select:none;
 }
 
 ::-webkit-scrollbar {
@@ -19,13 +79,6 @@ html, body {
 ::-webkit-scrollbar-thumb {
     border: 2px solid #2c3e50;
     background: #18bc9c;
-}
-
-.welcomePage {
-    text-align: center;
-    color: white;
-    font-weight: 400;
-    font-size: 20px;
 }
 
 .f50 {
@@ -46,6 +99,10 @@ html, body {
 
 .f11 {
     font-size: 1.1em;
+}
+
+.f12 {
+    font-size: 1.2em;
 }
 
 .f2 {
@@ -122,16 +179,34 @@ html, body {
     margin-left: 20px;
 }
 
+.ml5 {
+    margin-left: 5px;
+}
+
+.va {
+   vertical-align: middle;
+}
+
+
+.levels .progress, .levels .progress-bar {
+    border-radius: 0px;
+    height: 5px;
+}
+
 .m0 {
     margin: 0;
+}
+
+.InB {
+    display: inline-block;
 }
 
 .f09 {
     font-size: 0.9em;
 }
 
-.f12 {
-    font-size: 12px;
+.f08 {
+    font-size: 0.8em;
 }
 
 .ca {

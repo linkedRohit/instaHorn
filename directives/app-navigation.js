@@ -3,7 +3,7 @@ app.directive('appNavigation', function(){
         templateUrl: '/views/components/navigation.html',
         replace: true,
         scope: {
-            user: '@'
+            user: '='
         }
     }
 });
