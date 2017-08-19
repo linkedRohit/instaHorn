@@ -14,8 +14,16 @@ html, body {
     margin-bottom: 30px;
 }
 
+.mt3 {
+    margin-top: 3px;
+}
+
 .shade a {
     color: #333;
+}
+
+.shade a:hover {
+    text-decoration: underline;
 }
 
 .mt50 {
