@@ -43,4 +43,17 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         $scope.subModule = '';
     }
 
+    $scope.loadMoreComments = function() {
+        if($scope.subModule == 'comments') {
+            return;
+        }
+
+        if($scope.fetchingComments || $scope.fetchNewComment == false) return;
+        $scope.fetchingNewComment = true;
+        var data = {};
+        data.id = $scope.tid;
+        data.pageId = $scope.currentCommentPage;
+        socket.emit('fetch-comments', data);
+    };
+
 });

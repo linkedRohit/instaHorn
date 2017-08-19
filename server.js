@@ -206,9 +206,9 @@ function onlyUnique(value, index, self) {
 }
 
 function getCommentsForPost(socket, data) {
-  var id = data.userId;
-  var limit = data.limit ? data.limit : 5;
-  var page = data.page ? data.page*limit : 0;
+  var id = data.id;
+  var limit = data.limit ? data.limit : 20;
+  var page = data.pageId ? data.pageId*limit : 0;
 L.info('data', data);
    var response = {};
 

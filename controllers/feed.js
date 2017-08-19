@@ -71,7 +71,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     }
 
     socket.on('fetch-comments-receive', function(data) {
-        $scope.comments = data.comments;
+        $scope.comments = getCorrectVal($scope.comments, data.comments);
         $scope.userInfo = data.userFbMapping;
         $scope.fetchingComments = false;
         $scope.currentCommentPage++;
@@ -85,19 +85,6 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
             data.pageId = $scope.currentPage;
             socket.emit('fetch-feed', data);
         //}
-    };
-
-    $scope.loadMoreComments = function() {
-        if($scope.subModule == 'comments') {
-            return;
-        }
-
-        if($scope.fetchingComments || $scope.fetchNewComment == false) return;
-        $scope.fetchingNewComment = true;
-        var data = {};
-        data.id = $scope.tid;
-        data.pageId = $scope.currentCommentPage;
-        socket.emit('fetch-comments', data);
     };
 
     socket.on('feed-last-page', function(data) {

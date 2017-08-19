@@ -1,6 +1,5 @@
 <div ng-controller="CommentCtrl">
-    <div><!-- infinite-scroll="loadMoreComments()" infinite-scroll-disabled="fetchingComments">-->
-        <div class="comment">
+    <div class="comment {{ class }}">
         <div class="row">
             <div class="col-xs-1 backButton ng-binding" ng-click="hideCommentBox()">
                 <span class="fa fa-arrow-left"></span>
@@ -39,8 +38,10 @@
                 <div ng-show='fetchingComments'>
                     <img src="/assets/img/comment-loader.svg">
                 </div>
+                <div ng-hide='fetchingComments'>
+                    <div ng-click="loadMoreComments()" class="crsrPntr text-center"><small>Load more <span class="fa fa-arrow-down"</small></div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </div>

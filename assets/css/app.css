@@ -23,7 +23,7 @@ html, body {
 }
 
 .shade a:hover {
-    text-decoration: underline;local    
+    text-decoration: underline;local
 }
 
 .mt50 {
@@ -262,6 +262,10 @@ ul.navbar-nav li {
 .backButton {
     font-size: 15px;
     margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.crsrPntr {
     cursor: pointer;
 }
 
