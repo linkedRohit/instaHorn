@@ -1,12 +1,11 @@
 <div ng-controller="FeedCtrl" class="mt20 feed-box">
-    
-    <div class="card" ng-repeat="story in feeds">
+    <div class="box" ng-repeat="story in feeds">
         <div class="f18 strong shade">
              <a href="#" ng-click="loadQuestion(story.tid)">
                  {{ story.description }}
              </a>
         </div>
-        <div class="row mt10">
+        <div class="row mt20">
             <div class="col-sm-7">
                 <div class="InB va">
                     <img class="img-circle" src="https://graph.facebook.com/{{ userCount[story.uid].fbid }}/picture?width=36" />
