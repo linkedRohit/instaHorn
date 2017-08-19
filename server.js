@@ -97,7 +97,7 @@ function processPage(socket, path){
 
 function feedPageInit(socket, page, limit){
     var response = {};
-    var limit = limit ? limit : 2;
+    var limit = limit ? limit : 10;
     var page = page ? page*limit : 0;
     /*mysql.query('select * from topics where active = 1 order by tid desc limit 10', function(err, result){
         if(err) console.log('Error', err);
