@@ -1,27 +1,32 @@
 <nav class="navbar mt10" id="onlineDebatingNavigation">
     <div class="container" ng-controller="NavCtrl">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navdeb8">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand gray f15" href="#" ng-click="loadFeed()">
                 <i class="fa fa-bullhorn"></i>
                 <span class="light">instahorn</span>
             </a>
+            <div class="pull-right visible-xs mr20">
+                <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt10">
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="navdeb8">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt10">
-                </li>
-                <li>
-                    <button class="btn btn-danger btn-xs navbar-btn" ng-click="loadEditor()">
+        <div class="visible-xs text-center mt10">
+            <div class="row-fluid">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <button class="btn btn-block btn-sm mt10 btn-danger">
                         <span class="fa fa-pencil"></span> &nbsp;Post a Debate
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+            <li>
+                <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt10">
+            </li>
+            <li>
+                <button class="btn btn-danger btn-xs navbar-btn" ng-click="loadEditor()">
+                    <span class="fa fa-pencil"></span> &nbsp;Post a Debate
+                </button>
+            </li>
+        </ul>
     </div>
 </nav>

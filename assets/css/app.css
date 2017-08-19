@@ -10,7 +10,7 @@ html, body {
 
 .feed-box .box {
     border-bottom: 1px solid #eee;
-    padding: 20px;
+    padding: 5px 10px 20px 10px;
     margin-bottom: 30px;
 }
 
@@ -23,7 +23,7 @@ html, body {
 }
 
 .shade a:hover {
-    text-decoration: underline;
+    text-decoration: underline;local    
 }
 
 .mt50 {
@@ -179,6 +179,10 @@ ul.navbar-nav li {
 
 .mb50 {
     margin-bottom: 50px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
 }
 
 .mt0 {
