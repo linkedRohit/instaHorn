@@ -1,9 +1,9 @@
 <nav class="navbar mt10" id="onlineDebatingNavigation">
     <div class="container" ng-controller="NavCtrl">
         <div class="navbar-header">
-            <a class="navbar-brand gray f15" href="#" ng-click="loadFeed()">
+            <a class="navbar-brand gray f15" href="#!/" ng-click="loadFeed()">
                 <i class="fa fa-bullhorn"></i>
-                <span class="light">instahorn</span>
+                <span class="light"><strong>instahorn</strong> <small>{{page}}</small></span>
             </a>
             <div class="pull-right visible-xs mr20">
                 <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt10">
@@ -12,9 +12,13 @@
         <div class="visible-xs text-center mt10">
             <div class="row-fluid">
                 <div class="col-xs-8 col-xs-offset-2">
-                    <button class="btn btn-block btn-sm mt10 btn-danger">
-                        <span class="fa fa-pencil"></span> &nbsp;Post a Debate
-                    </button>
+                  <a ng-href="#!/start" class="float" ng-click="loadEditor()">
+                      <i class="fa fa-pencil my-float"></i>
+                  </a>
+                  <div class="label-container bringUp">
+                      <div class="label-text">Post a Debate</div>
+                      <i class="fa fa-play label-arrow"></i>
+                  </div>
                 </div>
             </div>
         </div>
@@ -23,9 +27,9 @@
                 <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt10">
             </li>
             <li>
-                <button class="btn btn-danger btn-xs navbar-btn" ng-click="loadEditor()">
+                <a ng-href="#!/start" class="btn btn-danger postBtn mt10" ng-click="loadEditor()">
                     <span class="fa fa-pencil"></span> &nbsp;Post a Debate
-                </button>
+                </a>
             </li>
         </ul>
     </div>

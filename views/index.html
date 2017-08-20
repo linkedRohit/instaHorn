@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="/assets/css/feed.css" />
         <link rel="stylesheet" href="/assets/css/nprogress.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#000" id="themeColor">  
-	    <script src="/socket.io/socket.io.js"></script>
+        <meta name="theme-color" content="#000" id="themeColor">
+	      <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/js/nprogress.js"></script>
     </head>
     <body ng-app="DebateApp">
@@ -19,15 +19,10 @@
                 <app-login></app-login>
                 <div ng-show="user">
                     <app-navigation user="user"></app-navigation>
-                    <div class="container" ng-show="page === 'editor' || page === 'feeds'">
+                    <div class="container" ng-show="page === 'start' || page === 'feeds'">
                         <div class="row-fluid">
-                            <!--
-                            <div class="col-sm-3 hidden-xs">
-                                <app-side-profile></app-side-profile>
-                            </div>
-                            -->
                             <div class="col-sm-8">
-                                <div ng-show="page === 'editor'">
+                                <div ng-show="page === 'start'">
                                     <app-start-debate></app-start-debate>
                                 </div>
                                 <div ng-show="page === 'feeds'">
@@ -36,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="page === 'debate'">
+                    <div ng-show="page === 'topic'">
                         <app-debate-page></app-debate-page>
                     </div>
 

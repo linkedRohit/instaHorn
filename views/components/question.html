@@ -3,7 +3,7 @@
         <div class="row-fluid clearfix">
             <div class="col-sm-9 text-center">
               <div class="row">
-                  <div class="row text-center"><img class="img-circle" src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
+                  <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
               </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}"class="ease">{{ debate.question }}</div>
                 <p class="f09">
@@ -35,20 +35,20 @@
                   <h4>{{ opinions.length > 0 ? 'Opinions' : '' }}</h4>
                   <ul class="pl0">
                       <li ng-repeat="thisOpinion in opinions" class="usrComments">
-                          <div class="col-sm-1 col-xs-3 lh3">
-                              <img src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=30" class="img-circle">
+                          <div class="col-sm-1 col-xs-2 lh3 p0">
+                              <img ng-src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=30" class="img-circle">
                           </div>
-                          <div class="col-sm-10 col-xs-7 {{ thisOpinion.opinionType }}">
+                          <div class="col-sm-10 col-xs-8 {{ thisOpinion.opinionType }}">
                               {{ thisOpinion.opinion }}<br/><small><i class="fa fa-clock-o"></i> <span am-time-ago="thisOpinion.updatedOn"></span></small>
                           </div>
-                          <div class="col-sm-1 col-xs-2">
-                              <a style="float: right;" href="" ng-show={{ thisOpinion.uid === userInfo }} ng-click="removeComment($index, thisOpinion.cid, thisOpinion.tid)"><span class="fa fa-trash-o"></span></a>
+                          <div class="col-sm-1 col-xs-1">
+                              <a style="float: right;" href="" ng-show="thisOpinion.uid === userInfo" ng-click="removeComment($index, thisOpinion.cid, thisOpinion.tid)"><span class="fa fa-trash-o"></span></a>
                           </div>
                       </li>
                   </ul>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt50">
                 <div class="panel border">
                     <div class="panel-heading similarBox">
                         <h4>Similar debates going on</h4>

@@ -23,15 +23,15 @@
             <div class="col-sm-4 col-sm-offset-4">
                 <h4>{{ comments.length > 0 ? 'Comments' : 'No comments' }}</h4>
                 <ul>
-                    <li loadMoreComments ng-repeat="thisComment in comments" class="usrComments">
+                    <li ng-repeat="thisComment in comments" class="usrComments">
                         <div class="col-xs-2">
-                            <img src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
+                            <img ng-src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
                         </div>
                         <div class="col-xs-8">
                             {{ thisComment.commentString }}
                         </div>
                         <div class="col-xs-1">
-                            <a style="float: right;" href="" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
+                            <a style="float: right;" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
                         </div>
                     </li>
                 </ul>
@@ -39,7 +39,7 @@
                     <img src="/assets/img/comment-loader.svg">
                 </div>
                 <div ng-hide='fetchingComments'>
-                    <div ng-click="loadMoreComments()" class="crsrPntr text-center"><small>Load more <span class="fa fa-arrow-down"</small></div>
+                    <div ng-show="comments.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center"><small>Load more <span class="fa fa-arrow-down"</small></div>
                 </div>
             </div>
         </div>

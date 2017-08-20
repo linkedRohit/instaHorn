@@ -1,15 +1,15 @@
 <div ng-controller="FeedCtrl" class="mt20 feed-box">
-    <div infinite-scroll="loadMoreFeeds()" infinite-scroll-disabled="fetching"></div>
+    <div infinite-scroll="loadMoreFeeds()" infinite-scroll-distance="10" infinite-scroll-disabled="fetching"></div>
         <div class="box" ng-repeat="story in feeds">
           <div class="f18 strong shade">
-               <a href="#" ng-click="loadQuestion(story.tid)">
+               <a ng-href="#!/topic/{{story.tid}}/{{ story.description | spaceless}}" ng-click="loadQuestion(story.tid)">
                    {{ story.description }}
                </a>
           </div>
           <div class="row mt20">
               <div class="col-sm-7 mb20">
                   <div class="InB va">
-                      <img class="img-circle" src="https://graph.facebook.com/{{ userCount[story.uid].fbid }}/picture?width=36" />
+                      <img class="img-circle" ng-src="https://graph.facebook.com/{{ userCount[story.uid].fbid }}/picture?width=36" />
                   </div>
                   <div class="InB va ml5">
                       <div class="low strong f09">{{ userCount[story.uid].name }}</div>

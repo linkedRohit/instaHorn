@@ -50,8 +50,7 @@ process.env.PWD = process.cwd();
 
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
 app.use('/', express["static"](process.env.PWD));
-
-app.use('/views', express["static"](path.join(process.env.PWD, 'views')));
+app.use('/', express["static"](path.join(process.env.PWD, 'views')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -72,6 +71,12 @@ app.use('/api', proxy('127.0.0.1:8000', {
 io.listen(app.listen(PORT, function() {
     return console.log('Listening to ' + PORT);
 }));
+
+app.get('/topic/:id?*', function(req, res) {
+    //socket.emit('fetch-question', req.params.id);
+    L.info('123','123');
+    res.send('123');
+})
 
 // socket stuff
 var socketList = {};
@@ -206,64 +211,64 @@ function onlyUnique(value, index, self) {
 }
 
 function getCommentsForPost(socket, data) {
-  var id = data.id;
-  var limit = data.limit ? data.limit : 20;
-  var page = data.pageId ? data.pageId*limit : 0;
-L.info('data', data);
-   var response = {};
+    var id = data.id;
+    var limit = data.limit ? data.limit : 20;
+    var page = data.pageId ? data.pageId*limit : 0;
+    L.info('data', data);
+     var response = {};
 
-   Q(undefined)
-   .then(function(){
+     Q(undefined)
+     .then(function(){
 
-       var defer = Q.defer();
-       L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1 limit ?, ?");
-       L.info("SQL-PARAMS", [id, page, limit]);
+         var defer = Q.defer();
+         L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1 limit ?, ?");
+         L.info("SQL-PARAMS", [id, page, limit]);
 
-       mysql.query("select * from comments where tid = ? and active = 1 order by cid desc limit ?, ?", [id, page, limit], function(err, result){
-           if(err) return defer.reject(err);
+         mysql.query("select * from comments where tid = ? and active = 1 order by cid desc limit ?, ?", [id, page, limit], function(err, result){
+             if(err) return defer.reject(err);
 
-           response.comments = result;
+             response.comments = result;
 
-           var userList = [];
-           for (var i = 0, len = result.length; i < len; i++) {
-               userList.push(result[i].uid);
-           }
-           userList = userList.filter( onlyUnique );
+             var userList = [];
+             for (var i = 0, len = result.length; i < len; i++) {
+                 userList.push(result[i].uid);
+             }
+             userList = userList.filter( onlyUnique );
 
-           defer.resolve(userList);
-       });
+             defer.resolve(userList);
+         });
 
-       return defer.promise;
-   })
-   .then(function(userList){
+         return defer.promise;
+     })
+     .then(function(userList){
 
-       var defer = Q.defer();
+         var defer = Q.defer();
 
-       L.info("SQL-QUERY", "select uid, fbid from users where uid in (?)");
-       L.info("SQL-PARAMS", [userList]);
+         L.info("SQL-QUERY", "select uid, fbid from users where uid in (?)");
+         L.info("SQL-PARAMS", [userList]);
 
-       if( userList.length <= 0 ) socket.emit('comment-last-page', 'end');
+         if( userList.length <= 0 ) socket.emit('comment-last-page', 'end');
 
-       mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
-           if(err) return defer.reject(err);
+         mysql.query("select uid, fbid from users where uid in (?)", [userList], function(err, userMapping){
+             if(err) return defer.reject(err);
 
-           var userFbMappingList = {};
-           for (var i = 0, len = userMapping.length; i < len; i++) {
-               userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
-           }
-           response.userFbMapping = userFbMappingList;
-           return defer.resolve(response);
-       });
+             var userFbMappingList = {};
+             for (var i = 0, len = userMapping.length; i < len; i++) {
+                 userFbMappingList[userMapping[i].uid] = userMapping[i].fbid;
+             }
+             response.userFbMapping = userFbMappingList;
+             return defer.resolve(response);
+         });
 
-       return defer.promise;
-   })
-   .then(function(response){
-       L.info('sending comments', response.length);
-       socket.emit('fetch-comments-receive', response);
-   })
-   .catch(function(err){
-       L.err('getCommentsForPost', JSON.stringify(err));
-    });
+         return defer.promise;
+     })
+     .then(function(response){
+         L.info('sending comments', response.length);
+         socket.emit('fetch-comments-receive', response);
+     })
+     .catch(function(err){
+         L.err('getCommentsForPost', JSON.stringify(err));
+     });
 }
 
 var Topics=require('./api/routes/topicRoutes');

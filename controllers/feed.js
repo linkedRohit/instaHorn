@@ -78,13 +78,13 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     });
 
     $scope.loadMoreFeeds = function() {
-        //if(Page.get() !== 'feeds') {
+        if(Page.get() == 'feeds') {
             if($scope.fetching || $scope.fetchNew == false) return;
             $scope.fetching = true;
             var data = {};
             data.pageId = $scope.currentPage;
             socket.emit('fetch-feed', data);
-        //}
+        }
     };
 
     socket.on('feed-last-page', function(data) {

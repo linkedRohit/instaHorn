@@ -44,6 +44,7 @@ app.controller('CommentCtrl', function($scope, socket, User) {
     }
 
     $scope.loadMoreComments = function() {
+        return;
         if($scope.subModule == 'comments') {
             return;
         }

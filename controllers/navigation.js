@@ -7,7 +7,11 @@ app.controller('NavCtrl', function(Page, $scope, socket, User) {
     });
 
     $scope.loadEditor = function(){
-        Page.set('editor');
+        Page.set('start');
     };
+
+    $scope.loadFeed = function() {
+        Page.set('feeds');
+    }
 
 });
