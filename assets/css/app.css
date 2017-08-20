@@ -173,6 +173,10 @@ ul.navbar-nav li {
     padding-right: 10px;
 }
 
+.nav > li > a:hover, .nav > li > a:focus {
+    color: #333;
+}
+
 .mb0 {
     margin-bottom: 0;
 }
