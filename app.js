@@ -3,23 +3,11 @@ var app = angular.module('DebateApp', [
     'ngRoute',
     'infinite-scroll'
 ]);
-/*
-app.config(function($routeProvider) {
-    $routeProvider
-    .when("/", {
-        controller: "FeedCtrl"
-    })
-    .when("/topic/:id/:title", {
-        redirectTo: function($routeParams) {
-            $scope.loadQuestion($routeParams.id);
-        }
-    })
-    .when("/test", {
 
-    })
-    .otherwise({
-		});
-});*/
+
+app.config(function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+});
 
 app.run(['$window', function($window) {
     var hash = $window.location.hash;

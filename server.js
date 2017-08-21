@@ -49,7 +49,7 @@ PORT = process.env.PORT || 3000;
 process.env.PWD = process.cwd();
 
 app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
-app.use('/', express["static"](process.env.PWD));
+//app.use('/', express["static"](process.env.PWD));
 app.use('/', express["static"](path.join(process.env.PWD, 'views')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

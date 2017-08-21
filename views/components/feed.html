@@ -2,7 +2,7 @@
     <div infinite-scroll="loadMoreFeeds()" infinite-scroll-distance="10" infinite-scroll-disabled="fetching"></div>
         <div class="box" ng-repeat="story in feeds">
           <div class="f18 strong shade">
-               <a ng-href="#!/topic/{{story.tid}}/{{ story.description | spaceless}}" ng-click="loadQuestion(story.tid)">
+               <a ng-href="/topic/{{story.tid}}/{{ story.description | spaceless}}" ng-click="loadQuestion(story.tid)">
                    {{ story.description }}
                </a>
           </div>
