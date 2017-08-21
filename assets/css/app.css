@@ -317,8 +317,8 @@ ul.navbar-nav li {
   	position:fixed;
   	width:60px;
   	height:60px;
-  	bottom:40px;
-  	right:40px;
+  	bottom:25px;
+  	right:15px;
   	background-color:#e74c3c;
   	color:#FFF;
   	border-radius:50px;
