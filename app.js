@@ -7,6 +7,12 @@ var app = angular.module('DebateApp', [
 
 app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
+    
+    $routeProvider
+        .when('/topic/:id/:slug', {
+            controller: 'FeedCtrl',
+            selector: 'topic'
+        });
 });
 
 app.run(['$window', function($window) {

@@ -1,6 +1,6 @@
-app.controller('FeedCtrl', function(Page, $scope, socket) {
+app.controller('FeedCtrl', function(Page, $scope, socket, $route, $routeParams) {
     Page.set('feeds');
-
+    
     $scope.subModule = false;
     $scope.currentPage = 0;
     $scope.fetching = false;
@@ -56,7 +56,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
     }
 
     $scope.loadQuestion = function(id) {
-        $scope.hideCommentBox();
+        //$scope.hideCommentBox();
         socket.emit('fetch-question', id);
     }
 
@@ -96,4 +96,11 @@ app.controller('FeedCtrl', function(Page, $scope, socket) {
         $scope.fetchingComments = false;
         $scope.fetchNewComment = false;
     });
+    
+    // adding autoloads needs to be fixed
+    if( typeof $route.current !== 'undefined' ){
+        if( $route.current.$$route.selector == 'topic' ){
+            $scope.loadQuestion($routeParams.id);
+        }
+    }
 });

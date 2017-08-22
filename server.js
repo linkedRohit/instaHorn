@@ -1,5 +1,6 @@
-var PORT, app, express, fs, jsonserver, path, proxy, url, _, L, chalk, Q, FB, fb;
+var PORT, app, express, fs, jsonserver, path, proxy, url, _, L, chalk, Q, FB, fb, engines;
 
+engines = require('consolidate');
 path = require('path');
 express = require('express');
 favicon = require('serve-favicon');
@@ -48,35 +49,23 @@ mysql.connect();
 PORT = process.env.PORT || 3000;
 process.env.PWD = process.cwd();
 
-app.use('/assets', express["static"](path.join(process.env.PWD, 'assets')));
-//app.use('/', express["static"](process.env.PWD));
-app.use('/', express["static"](path.join(process.env.PWD, 'views')));
+app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.set('views', path.join(__dirname, 'views'));
-
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-
 app.use(cors());
 
-app.use('/api', proxy('127.0.0.1:8000', {
-    forwardPath: function(req, res) {
-      return '/api' + url.parse(req.url).path;
-  }
-}));
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', engines.mustache);
+app.set('view engine', 'html');
+
+app.get(/^\/(?!assets)(.*)$/, function(req, res, next) {
+    return res.render('index.html');
+});
 
 io.listen(app.listen(PORT, function() {
     return console.log('Listening to ' + PORT);
 }));
-
-app.get('/topic/:id?*', function(req, res) {
-    //socket.emit('fetch-question', req.params.id);
-    L.info('123','123');
-    res.send('123');
-})
 
 // socket stuff
 var socketList = {};
