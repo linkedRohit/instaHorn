@@ -356,3 +356,12 @@ a.float:hover + div.label-container{
 .postBtn {
     padding: 9px 20px !important;
 }
+
+.nav-style {
+    background: white;
+    border-bottom: 1px solid #4abca5;
+}
+
+.posFxd {
+    position: fixed;
+}

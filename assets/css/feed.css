@@ -51,7 +51,8 @@
 		line-height: 1.5;
 		padding-top: 10px;
 		text-overflow: ellipsis;
-    overflow: auto;
+		overflow-x: hidden;
+		word-wrap: break-word;
 }
 
 .hideCommentBox {
@@ -69,9 +70,9 @@ a:hover {
 }
 
 .up {
-		background-image: linear-gradient( #cdfbd1, #ffffff );
+		color: #1fde1f;
 }
 
 .down {
-		background-image: linear-gradient( #fbdecd, #ffffff );
+		color: #ff5656;
 }

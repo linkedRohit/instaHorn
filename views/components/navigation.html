@@ -1,5 +1,5 @@
 <nav class="navbar mt10" id="onlineDebatingNavigation">
-    <div class="container" ng-controller="NavCtrl">
+    <div class="container navbar-fixed-top nav-style" ng-controller="NavCtrl">
         <div class="navbar-header">
             <a class="navbar-brand gray f15" href="/" ng-click="loadFeed()">
                 <i class="fa fa-bullhorn"></i>
@@ -34,7 +34,9 @@
                 </a>
             </li>
             <li class="ml7">
-                <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt7">
+                <a ng-href="/profile" style="padding:0px;">
+                    <img src="https://graph.facebook.com/{{ user.id }}/picture?width=42" class="img-circle mt7">
+                </a>
             </li>
         </ul>
     </div>

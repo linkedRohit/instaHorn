@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <div class="row-fluid clearfix">
             <div class="col-sm-9 text-center">
-              <div class="row">
-                  <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
-              </div>
+                <div class="row">
+                    <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
+                </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}"class="ease">{{ debate.question }}</div>
                 <p class="f09">
                     Asked by <strong>{{ debate.name }}</strong> &bullet;&nbsp;
@@ -31,39 +31,63 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-sm-10 col-sm-offset-1 text-left">
-                  <h4>{{ opinions.length > 0 ? 'Opinions' : '' }}</h4>
-                  <ul class="pl0">
-                      <li ng-repeat="thisOpinion in opinions" class="usrComments">
-                          <div class="col-sm-1 col-xs-2 lh3 p0">
-                              <img ng-src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=30" class="img-circle">
-                          </div>
-                          <div class="col-sm-10 col-xs-8 {{ thisOpinion.opinionType }}">
-                              {{ thisOpinion.opinion }}<br/><small><i class="fa fa-clock-o"></i> <span am-time-ago="thisOpinion.updatedOn"></span></small>
-                          </div>
-                          <div class="col-sm-1 col-xs-1">
-                              <a style="float: right;" href="" ng-show="thisOpinion.uid === userInfo" ng-click="removeComment($index, thisOpinion.cid, thisOpinion.tid)"><span class="fa fa-trash-o"></span></a>
-                          </div>
-                      </li>
-                  </ul>
+                <div class="col-sm-10 text-left">
+                    <h4>{{ opinions.length > 0 ? 'Opinions' : '' }}</h4>
+                    <ul class="pl0">
+                        <li ng-repeat="thisOpinion in opinions" class="usrComments">
+                            <div ng-class="{'text-right': thisOpinion.opinionType == 'down', 'text-left' : thisOpinion.opinionType == 'up' }">
+                                <div ng-hide="{{ thisOpinion.opinionType == 'down' }}" class="col-sm-2 col-xs-2 lh3 p0 text-center">
+                                    <div class="row">
+                                        <img ng-src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=40" class="img-circle">
+                                    </div>
+                                    <div class="row">
+                                        <i class="fa fa-clock-o"></i>
+                                        <small>
+                                            <span class="{{ thisOpinion.opinionType }}" am-time-ago="thisOpinion.updatedOn"></span>
+                                        </small>
+                                    </div>
+                                  </div>
+                                <div class="col-sm-10 col-xs-8">
+                                    {{ thisOpinion.opinion }}
+                                </div>
+                                <div class="col-sm-1 col-xs-1" ng-show="thisOpinion.uid === userInfo">
+                                    <a style="float: right;" ng-click="removeComment($index, thisOpinion.cid, thisOpinion.tid)">
+                                        <span class="fa fa-trash-o"></span>
+                                    </a>
+                                </div>
+                                <div ng-hide="{{ thisOpinion.opinionType == 'up' }}" class="col-sm-2 col-xs-2 lh3 p0 text-center">
+                                    <div class="row">
+                                        <img ng-src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=40" class="img-circle">
+                                    </div>
+                                    <div class="row">
+                                        <i class="fa fa-clock-o"></i>
+                                        <small>
+                                            <span class="{{ thisOpinion.opinionType }}" am-time-ago="thisOpinion.updatedOn"></span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-sm-3 mt50">
-                <div class="panel border">
+                <div class="panel border posFxd">
                     <div class="panel-heading similarBox">
                         <h4>Similar debates going on</h4>
                     </div>
                     <div class="panel-body">
                         <ul>
-                          <li>
-                        <h5><a href="#" ng-click="loadQuestion(2)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
-                      </li>
-                        <li>
-                      <h5><a href="#" ng-click="loadQuestion(6)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
-                    </li>
-                      <li>
-                    <h5><a href="#" ng-click="loadQuestion(9)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
-                  </li></ul>
+                            <li>
+                                <h5><a href="#" ng-click="loadQuestion(2)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                            </li>
+                            <li>
+                                <h5><a href="#" ng-click="loadQuestion(6)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                            </li>
+                            <li>
+                                <h5><a href="#" ng-click="loadQuestion(9)">Should men be behaved like women for 1 week to help them realize inequality and challenges that women face</a></h5>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
