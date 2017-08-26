@@ -369,3 +369,17 @@ a.float:hover + div.label-container{
 .posFxd {
     position: fixed;
 }
+
+.vSmText {
+    font-size: 12px;
+}
+
+.btn-danger-text {
+    color: #000;
+    border-bottom: 2px solid #e74c3c
+}
+
+.btn-primary-text {
+    color: #000;
+    border-bottom: 2px solid #5a8dbf;
+}

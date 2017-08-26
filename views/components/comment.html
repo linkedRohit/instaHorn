@@ -16,19 +16,20 @@
                 </div>
             </div>
             <div class="col-xs-3">
-                <button title="Express" ng-click='addComment();' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Express</span></button>
+                <button title="Support" ng-click='addComment("up", 2);' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Support</span></button>
+                <button title="Oppose" ng-click='addComment("down", 2);' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Oppose</span></button>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-3">
                 <h4>{{ comments.length > 0 ? 'Opinions' : 'No opinions' }}</h4>
                 <ul>
-                    <li ng-repeat="thisComment in comments" class="usrComments">
+                    <li ng-repeat="thisComment in comments" class="usrComments mt30">
                         <div class="col-xs-2">
                             <img ng-src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
                         </div>
                         <div class="col-xs-8">
-                            {{ thisComment.commentString }}
+                            {{ thisComment.description }}
                         </div>
                         <div class="col-xs-1">
                             <a style="float: right;" ng-click="removeComment($index, thisComment.cid, thisComment.tid)"><span class="fa fa-trash-o"></span></a>
@@ -39,7 +40,9 @@
                     <img src="/assets/img/comment-loader.svg">
                 </div>
                 <div ng-hide='fetchingComments'>
-                    <div ng-show="comments.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center"><small>Load more <span class="fa fa-arrow-down"</small></div>
+                    <div ng-show="comments.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center">
+                        <small>Load more <span class="fa fa-arrow-down"></span></small>
+                    </div>
                 </div>
             </div>
         </div>

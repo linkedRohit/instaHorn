@@ -102,10 +102,10 @@ function feedPageInit(socket, page, limit){
     Q(undefined)
     .then(function(){
         var defer = Q.defer();
-        L.info("SQL-QUERY", "select * from topics where active = 1 order by tid desc limit ?, ?");
+        L.info("SQL-QUERY", "select * from topics where active = 1 and pid is NULL order by tid desc limit ?, ?");
         L.info("SQL-PARAMS", [page, limit]);
 
-        mysql.query("select * from topics where active = 1 order by tid desc limit ?, ?", [page, limit], function(err, result){
+        mysql.query("select * from topics where active = 1 and pid is NULL order by tid desc limit ?, ?", [page, limit], function(err, result){
             if(err) socket.emit('feed-last-page', 'end');
             response.feed = result;
             var topicList = [];
@@ -210,10 +210,10 @@ function getCommentsForPost(socket, data) {
      .then(function(){
 
          var defer = Q.defer();
-         L.info("SQL-QUERY", "select * from comments where tid = ? and active = 1 limit ?, ?");
+         L.info("SQL-QUERY", "select * from topics where pid = ? and active = 1 limit ?, ?");
          L.info("SQL-PARAMS", [id, page, limit]);
 
-         mysql.query("select * from comments where tid = ? and active = 1 order by cid desc limit ?, ?", [id, page, limit], function(err, result){
+         mysql.query("select * from topics where pid = ? and active = 1 order by tid desc limit ?, ?", [id, page, limit], function(err, result){
              if(err) return defer.reject(err);
 
              response.comments = result;
@@ -467,11 +467,16 @@ io.on('connection', function(socket){
 
                 return defer.promise;
             }).then(function(id){
-                L.info("SQL-QUERY", "select * from opinions where tid = ?  order by updatedOn desc");
+                L.info("SQL-QUERY", "select * from topics where pid = ? order by tid desc");
                 L.info("SQL-PARAMS", [id]);
 
-                mysql.query("select * from opinions where tid = ?  order by updatedOn desc", [id], function(err, opinionResult){
-                    if(err) return defer.reject(err);
+                mysql.query("select * from topics where pid = ? order by tid desc", [id], function(err, opinionResult){
+
+                    if(err) {
+                        L.info('error', err);
+                        return defer.reject(err);
+
+                    }
                     response.opinionResult = opinionResult;
                     socket.emit('debate-ques', response);
                 });
@@ -487,7 +492,7 @@ io.on('connection', function(socket){
             .then(function(){
                 L.info('starting debate', data.description);
                 var defer = Q.defer();
-                mysql.query("Insert into topics (description, uid, postedOn) values(?,?,now())", [data.description, data.userId],
+                mysql.query("Insert into topics (description, uid, postedOn, bitFlag) values(?,?,now(), 1)", [data.description, data.userId],
                     function(err, result){
                         err ? defer.reject() : defer.resolve();
                     }
@@ -524,7 +529,7 @@ io.on('connection', function(socket){
                 if(!data.commentString) {
                     return false;
                 }
-                mysql.query("insert into comments (uid, tid, commentString, commentedOn) values (?,?,?, now())",[ userId, data.tid, data.commentString ],
+                mysql.query("insert into topics (uid, pid, description, postedOn, bitFlag) values (?,?,?, now(), ?)",[ userId, data.tid, data.commentString, data.flag],
                 function(err, result){
                     err ? defer.reject(err) : defer.resolve(result);
                 });
@@ -581,26 +586,30 @@ io.on('connection', function(socket){
         });
 
         socket.on('post-opinion', function(data){
-          L.info('data', data);
+            L.info('data', data);
             var userId = _.get(socketList, [socket.id, 'uid'], '-1');
             Q(undefined)
             .then(function(){
                 L.info('Add opinion in database', [data]);
                 var defer = Q.defer();
-                if(!data.opinion) return;
-                mysql.query("insert into opinions (uid,tid,opinion,opinionType) values(?,?,?,?)",[ userId, data.tid, data.opinion, data.opinionType ],
+                if(!data.description) return;
+                mysql.query("insert into topics (uid, pid, description, type, postedOn, bitFlag) values(?,?,?,?,now(),?)",[ userId, data.tid, data.description, data.type, data.flag ],
                 function(err, result){
-                    err ? defer.reject(err) : defer.resolve(result);
+                    if(err) {
+                        defer.reject(err);
+                    } else {
+                        data.tid  = result.insertId;
+                        defer.resolve(data);
+                    }
                 });
                 return defer.promise;
-            }).then(function(){
-                L.info('Opinion added to the database', true);
+            }).then(function(data){
+                L.info('Opinion added to the database', data);
                 socket.emit('opinion-added', data);
             }).fail(function(err){
                 L.err('Error while writing comments', err);
             });
         });
-
     });
 
 });

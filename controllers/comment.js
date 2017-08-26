@@ -3,12 +3,15 @@ app.controller('CommentCtrl', function($scope, socket, User) {
     $scope.class="no-fullScreen";
     $scope.arrow="fa-chevron-up";
     $scope.comments = [];
-    $scope.addComment = function() {
+    $scope.addComment = function(type, flag) {
         if($scope.txtcomment !=''){
             var commentObj = {};
-            commentObj.commentString = $scope.txtcomment;
+            flag = flag ? flag : 1;
+            commentObj.description = $scope.txtcomment;
             commentObj.tid = $scope.tid;
-            socket.emit('post-comment', commentObj);
+            commentObj.type = type;
+            commentObj.flag = flag;
+            socket.emit('post-opinion', commentObj);
   	        $scope.txtcomment = "";
         }
     }
