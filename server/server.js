@@ -12,9 +12,6 @@ function app(opts){
     var 
         self            = this;
 
-        // global vars
-        self.PORT       = process.env.PORT || 3000;
-
         // loading server elements
         self.express    = express();
         self.http       = http.Server(self.express);
@@ -23,6 +20,8 @@ function app(opts){
         // load configurations
         self.logger     = opts.logger;
         self.config     = opts.config;
+        
+        self.PORT       = process.env.PORT || 3000;
         
         self.mysql      = sql.createConnection(opts.config.mysql);
         

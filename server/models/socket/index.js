@@ -14,15 +14,15 @@ Util.inherits(socket, parent);
 
 socket.prototype.init = function(){
     var
-        self        = this,
-        clients     = {};
+        self        = this;
         
+    self.clients     = {};
     self.mapBindPrototypes(self.io, socket.prototype);
 };
 
 socket.prototype.__onConnect = function(self, client){
-     self.logger.info('New Client Connected');
-     client.emit('auth');
+     self.logger.info('Socket::connect', 'New Client Connected', client.id);
+     self.clients[client.id] = client;
 };
 
 module.exports = socket;
