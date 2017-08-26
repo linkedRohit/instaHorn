@@ -360,6 +360,7 @@ a.float:hover + div.label-container{
 .nav-style {
     background: white;
     border-bottom: 1px solid #4abca5;
+    z-index: 5;
 }
 
 .posFxd {
