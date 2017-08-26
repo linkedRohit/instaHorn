@@ -27,7 +27,7 @@ var config = {
 };
 
 if( program.server ){
-    logger.info('server program initiates');
+    logger.info('App::init', 'server program initiates');
     var server = new server({
         logger: logger,
         config: config
