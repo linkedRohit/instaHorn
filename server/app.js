@@ -8,7 +8,6 @@ var
 /** setting up intitalizers **/
 program
     .version('1.0.0')
-    .option('-v, --verbose', 'Runs with Logs in Verbose Mode')
     .option('-s, --server', 'Runs the main server')
     .parse(process.argv);
     
