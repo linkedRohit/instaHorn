@@ -1,28 +1,28 @@
 /** dependencies **/
 var 
-    extend   = require('util')._extend;
+    Util   = require('util'),
+    parent = require('../');
 
-function socket(parent, proto) {
+function socket(root) {
     
     var
         self        = this;
     
-    extend(self, parent);
+    Util._extend(self, root);
 }
+Util.inherits(socket, parent);
 
 socket.prototype.init = function(){
     var
         self        = this,
         clients     = {};
         
-    self._bindPrototypes(self, socket.prototype);
+    self.mapBindPrototypes(self.io, socket.prototype);
 };
 
 socket.prototype.__onConnect = function(self, client){
      self.logger.info('New Client Connected');
      client.emit('auth');
-     
-     self.addClient(client);
 };
 
 module.exports = socket;
