@@ -77,20 +77,23 @@ html, body {
   border-radius:3px;
   user-select:none;
 }
-/** no changes in scroll bar currently
+
 ::-webkit-scrollbar {
-    width: 2px;
+    width: 1px;
 }
 
 ::-webkit-scrollbar-track {
-    border: 1px solid #2c3e50;
+    border: 1px solid #eef3f7;
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 2px solid #2c3e50;
-    background: #18bc9c;
+    border: 1px solid #18bc9c;
 }
-*/
+
+.leftscrollbar {
+    overflow:auto;
+    direction: rtl;
+}
 
 .f50 {
     font-size: 50px;

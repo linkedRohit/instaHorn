@@ -23,19 +23,19 @@
                 <div class="form-group mt20" ng-class="{'has-error': commentFlag == -1, 'has-success': commentFlag == 1}" ng-hide="commentFlag == 0">
                     <textarea class="form-control" placeholder="Have an opinion? [Optional]" ng-model="comment"></textarea>
                     <div class="text-right">
-                        <button class="btn btn-xs btn-default mt20" ng-click="cancelOpinion()">
+                        <button class="btn btn-xs btn-default mt20 mr20" ng-click="cancelOpinion()">
                             <i class="fa fa-chevron-right"></i> Skip
                         </button>
                         <button class="btn btn-xs btn-primary mt20" ng-click="postMyOpinion()">
-                            <i class="fa fa-send"></i> Post your opinion
+                            <i class="fa fa-send"></i> Express
                         </button>
                     </div>
                 </div>
                 <div class="col-sm-10 text-left">
                     <h4>{{ opinions.length > 0 ? 'Opinions' : '' }}</h4>
                     <ul class="pl0">
-                        <li ng-repeat="thisOpinion in opinions" class="usrComments">
-                            <div ng-class="{'text-right': thisOpinion.opinionType == 'down', 'text-left' : thisOpinion.opinionType == 'up' }">
+                        <li ng-repeat="thisOpinion in opinions" class="usrComments mt50">
+                            <div ng-class="{'leftscrollbar': thisOpinion.opinionType == 'down'}" ng-class="{'text-left' : thisOpinion.opinionType == 'up' }" class="row">
                                 <div ng-hide="{{ thisOpinion.opinionType == 'down' }}" class="col-sm-2 col-xs-2 lh3 p0 text-center">
                                     <div class="row">
                                         <img ng-src="https://graph.facebook.com/{{ userInfo[thisOpinion.uid] ? userInfo[thisOpinion.uid] : user.id }}/picture?width=40" class="img-circle">
@@ -46,8 +46,8 @@
                                             <span class="{{ thisOpinion.opinionType }}" am-time-ago="thisOpinion.updatedOn"></span>
                                         </small>
                                     </div>
-                                  </div>
-                                <div class="col-sm-10 col-xs-8">
+                                </div>
+                                <div class="col-sm-8 col-xs-8 cmtTxt" ng-class="{'col-sm-offset-2': thisOpinion.opinionType == 'down', 'text-right': thisOpinion.opinionType == 'down'}">
                                     {{ thisOpinion.opinion }}
                                 </div>
                                 <div class="col-sm-1 col-xs-1" ng-show="thisOpinion.uid === userInfo">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="col-sm-3 mt50">
-                <div class="panel border posFxd">
+                <div class="panel border posFxd mr20">
                     <div class="panel-heading similarBox">
                         <h4>Similar debates going on</h4>
                     </div>
