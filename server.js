@@ -223,7 +223,6 @@ function getCommentsForPost(socket, data) {
                  userList.push(result[i].uid);
              }
              userList = userList.filter( onlyUnique );
-
              defer.resolve(userList);
          });
 
@@ -257,6 +256,7 @@ function getCommentsForPost(socket, data) {
      })
      .catch(function(err){
          L.err('getCommentsForPost', JSON.stringify(err));
+         socket.emit('fetch-comments-receive', {});
      });
 }
 

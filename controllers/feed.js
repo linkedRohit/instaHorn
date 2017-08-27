@@ -1,6 +1,6 @@
 app.controller('FeedCtrl', function(Page, $scope, socket, $route, $routeParams) {
     Page.set('feeds');
-    
+
     $scope.subModule = false;
     $scope.currentPage = 0;
     $scope.fetching = false;
@@ -60,10 +60,12 @@ app.controller('FeedCtrl', function(Page, $scope, socket, $route, $routeParams) 
         socket.emit('fetch-question', id);
     }
 
-    $scope.loadCommentForm = function(id) {
+    $scope.loadCommentForm = function(id, flag) {
+        $scope.comments = [];
         $scope.subModule = 'comment';
         $scope.class = "";
         $scope.tid = id;
+        $scope.flag = flag;//direct comment, reply to comment
         var data ={};
         data.id = id;
         data.pageId = $scope.currentCommentPage;
@@ -71,10 +73,15 @@ app.controller('FeedCtrl', function(Page, $scope, socket, $route, $routeParams) 
     }
 
     socket.on('fetch-comments-receive', function(data) {
-        $scope.comments = getCorrectVal($scope.comments, data.comments);
+        if(data.comments) {
+            $scope.comments = getCorrectVal($scope.comments, data.comments);
+        } else {
+            $scope.comments = [];
+        }
         $scope.userInfo = data.userFbMapping;
         $scope.fetchingComments = false;
-        $scope.currentCommentPage++;
+        if(data.comments.length==20)
+            $scope.currentCommentPage++;
     });
 
     $scope.loadMoreFeeds = function() {
@@ -96,7 +103,7 @@ app.controller('FeedCtrl', function(Page, $scope, socket, $route, $routeParams) 
         $scope.fetchingComments = false;
         $scope.fetchNewComment = false;
     });
-    
+
     // adding autoloads needs to be fixed
     if( typeof $route.current !== 'undefined' ){
         if( $route.current.$$route.selector == 'topic' ){

@@ -10,21 +10,21 @@
         </div>
 
         <div class="row mt10">
-            <div class="col-sm-6 col-xs-9 col-sm-offset-3">
+            <div class="col-sm-8 col-xs-9 col-sm-offset-1">
                 <div class="form-group">
                     <textarea ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?" rows="1"></textarea>
                 </div>
             </div>
             <div class="col-xs-3">
-                <button title="Support" ng-click='addComment("up", 2);' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Support</span></button>
-                <button title="Oppose" ng-click='addComment("down", 2);' class="btn btn-default submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Oppose</span></button>
+                <button title="Write in Support" ng-click='addComment("up");' class="btn btn-success submit"><i class="fa fa-bullhorn" aria-hidden="true"></i><span class="hidden-xs"></span></button>
+                <button title="Write in Oppose" ng-click='addComment("down");' class="btn btn-default submit"><i class="fa fa-thumbs-down" aria-hidden="true"></i><span class="hidden-xs"></span></button>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-3">
-                <h4>{{ opinions.length > 0 ? 'Opinions' : 'No opinions' }}</h4>
+                <h4>{{ comments.length > 0 ? 'Opinions' : 'No opinions' }}</h4>
                 <ul class="row">
-                    <li ng-repeat="thisComment in opinions" class="usrComments mt30">
+                    <li ng-repeat="thisComment in comments" class="usrComments mt30">
                         <div class="col-xs-2">
                             <img ng-src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
                         </div>
@@ -40,7 +40,7 @@
                     <img ng-src="/assets/img/comment-loader.svg">
                 </div>
                 <div class="row" ng-hide='fetchingComments'>
-                    <div ng-show="opinions.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center">
+                    <div ng-show="comments.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center">
                         <small>Load more <span class="fa fa-arrow-down"></span></small>
                     </div>
                 </div>

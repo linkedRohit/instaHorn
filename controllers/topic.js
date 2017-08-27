@@ -65,8 +65,11 @@ app.controller('TopicCtrl', function($scope, socket) {
     });
 
     socket.on('opinion-added', function(data) {
-        data.updatedOn = new Date();
-        $scope.opinions.unshift(data);
+        data.editedOn = new Date();
+        if(data.flag == 2) {
+            $scope.opinions.unshift(data);
+        }
+        $scope.comments.unshift(data);
         $scope.cancelOpinion();
     });
 });
