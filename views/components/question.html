@@ -5,22 +5,57 @@
                 <div class="row">
                     <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
                 </div>
-                <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}"class="ease">{{ debate.question }}</div>
+                <!--<div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}" class="ease">{{ debate.question }}</div>-->
+                <div class="h1 ease">{{ debate.question }}</div>
                 <p class="f09">
                     Asked by <strong>{{ debate.name }}</strong> &bullet;&nbsp;
                     <span class="text-muted">
                         <i class="fa fa-clock-o"></i> <span am-time-ago="debate.when"></span>
                     </span>
                 </p>
-                <div class="mt20 btn-space text-center">
-                    <button ng-disabled="commentFlag == 1" class="btn btn-sm btn-success" ng-click="vote(debate.id, 'up')">
+                <div class="mt20 btn-space text-center crsrPtr brdrStd p10">
+                    <!--<button ng-disabled="commentFlag == 1" class="btn btn-sm btn-success" ng-click="vote(debate.id, 'up')">
                         <i class="fa fa-check"></i> I support this one!
-                    </button><medium><span class="badge">{{ debate.upCount }}</span></medium>
+                    </button><small><span class="badge">{{ debate.upCount }}</span></small>
                     <button ng-disabled="commentFlag == -1" class="btn btn-sm btn-danger" ng-click="vote(debate.id, 'down')">
                         <i class="fa fa-times"></i> Nah. Nope. I disagree.
-                    </button><medium><span class="badge">{{ debate.downCount }}</span></medium>
+                    </button><small><span class="badge">{{ debate.downCount }}</span></small>-->
+                    <div class="row">
+                        <div class="col-sm-1 col-xs-3 col-sm-offset-2" ng-click="vote(debate.id, 'up')">
+                            <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='up'}">
+                                <img ng-src="/assets/img/torch.svg" height="45px">
+                            </div>
+                            <div class="row">
+                                <small>I am in <span ng-show="debate.upCount>0" class="badge reaction-Count"> {{ debate.upCount }}</span></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'haha')">
+                            <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='haha'}">
+                                <img ng-src="/assets/img/laughing.svg" height="45px">
+                            </div>
+                            <div class="row">
+                                <small>Haha <span ng-show="debate.hahaCount>0" class="badge reaction-Count"> {{ debate.hahaCount }}</span></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'down')">
+                            <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='down'}">
+                                <img ng-src="/assets/img/bomb.svg" height="45px">
+                            </div>
+                            <div class="row">
+                                <small>Rubbish <span ng-show="debate.downCount>0" class="badge reaction-Count"> {{ debate.downCount }}</span></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'angry')">
+                            <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='angry'}">
+                                <img ng-src="/assets/img/flame.svg" height="45px">
+                            </div>
+                            <div class="row">
+                                <small>Angry <span ng-show="debate.angryCount>0" class="badge reaction-Count"> {{ debate.angryCount }}</span></small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mt20" ng-class="{'has-error': commentFlag == -1, 'has-success': commentFlag == 1}" ng-hide="commentFlag == 0">
+                <!--<div class="form-group mt20" ng-class="{'has-error': commentFlag == -1, 'has-success': commentFlag == 1}" ng-hide="commentFlag == 0">
                     <textarea class="form-control" placeholder="Have an opinion? [Optional]" ng-model="comment"></textarea>
                     <div class="text-right">
                         <button class="btn btn-xs btn-default mt20 mr20" ng-click="cancelOpinion()">
@@ -30,11 +65,11 @@
                             <i class="fa fa-send"></i> Express
                         </button>
                     </div>
-                </div>
-                <div class="col-sm-10 text-left">
-                    <h4>{{ opinions.length > 0 ? 'Opinions' : '' }}</h4>
-                    <ul class="pl0">
-                        <li ng-repeat="thisOpinion in opinions" class="usrComments mt20">
+                </div>-->
+                <h4 class="opinionHead mt50">{{ opinions.length > 0 ? 'Opinions' : 'No Opinions' }}</h4>
+                <div ng-show="opinions" class="col-sm-12 text-left cmmtBg">
+                    <ul>
+                        <li ng-repeat="thisOpinion in opinions" class="usrComments mt20 brdrStd">
                             <div ng-class="{'leftscrollbar': thisOpinion.type == 'down'}" ng-class="{'text-left' : thisOpinion.type == 'up' }" class="row">
                                 <div ng-hide="{{ thisOpinion.type == 'down' }}" class="col-sm-2 col-xs-2 lh3 p0 text-center">
                                     <div class="row">
@@ -57,7 +92,7 @@
                                     <div class="row">
                                         <i class="fa fa-clock-o"></i>
                                         <small>
-                                            <span class="{{ thisOpinion.type }}" am-time-ago="thisOpinion.updatedOn"></span>
+                                            <span class="{{ thisOpinion.type }}" am-time-ago="thisOpinion.editedOn"></span>
                                         </small>
                                     </div>
                                 </div>
@@ -65,7 +100,7 @@
                                     <button class="btn btn-xs btn-primary-text" title="Reply" ng-click="loadCommentForm(thisOpinion.tid)"><!--ng-click="replyToComment($index, thisOpinion.oid)">-->
                                         <span class="fa fa-reply"></span> Reply
                                     </button>
-                                    <button class="btn btn-xs btn-danger-text mt10" title="Delete" ng-click="removeComment($index, thisOpinion.tid, thisOpinion.pid)">
+                                    <button class="btn btn-xs btn-danger-text mt10" title="Delete" ng-click="removeComment($index, thisOpinion.tid)">
                                         <span class="fa fa-trash-o"></span> Delete
                                     </button>
                                 </div>
@@ -96,4 +131,5 @@
             </div>
         </div>
     </div>
+    <div>Icons made by <a href="https://www.flaticon.com/authors/creaticca-creative-agency" title="Creaticca Creative Agency">Creaticca Creative Agency</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 </div>

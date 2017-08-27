@@ -15,6 +15,8 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
         if(data && data.voteList) {
             $scope.debate.upCount = data.voteList.up;
             $scope.debate.downCount = data.voteList.down;
+            $scope.debate.hahaCount = data.voteList.haha;
+            $scope.debate.angryCount = data.voteList.angry;
         }
 
         $scope.opinions = data.opinionResult;

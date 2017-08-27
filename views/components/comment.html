@@ -22,9 +22,9 @@
           </div>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-3">
-                <h4>{{ comments.length > 0 ? 'Opinions' : 'No opinions' }}</h4>
-                <ul>
-                    <li ng-repeat="thisComment in comments" class="usrComments mt30">
+                <h4>{{ opinions.length > 0 ? 'Opinions' : 'No opinions' }}</h4>
+                <ul class="row">
+                    <li ng-repeat="thisComment in opinions" class="usrComments mt30">
                         <div class="col-xs-2">
                             <img ng-src="https://graph.facebook.com/{{ userInfo[thisComment.uid] ? userInfo[thisComment.uid] : user.id }}/picture?width=30" class="img-circle">
                         </div>
@@ -37,10 +37,10 @@
                     </li>
                 </ul>
                 <div ng-show='fetchingComments'>
-                    <img src="/assets/img/comment-loader.svg">
+                    <img ng-src="/assets/img/comment-loader.svg">
                 </div>
-                <div ng-hide='fetchingComments'>
-                    <div ng-show="comments.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center">
+                <div class="row" ng-hide='fetchingComments'>
+                    <div ng-show="opinions.length > 0" ng-click="loadMoreComments()" class="crsrPntr text-center">
                         <small>Load more <span class="fa fa-arrow-down"></span></small>
                     </div>
                 </div>

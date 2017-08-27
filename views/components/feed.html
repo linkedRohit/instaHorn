@@ -22,10 +22,10 @@
                   <div class="container-fluid text-right" ng-if="voteCountList[story.tid].total > 0">
                       <div class="row strong low text-center">
                           <div class="col-xs-6">
-                              {{ voteCountList[story.tid].up }} supporters
+                              {{ voteCountList[story.tid].up + voteCountList[story.tid].haha }} supporters
                           </div>
                           <div class="col-xs-6">
-                              {{ voteCountList[story.tid].down }} haters
+                              {{ voteCountList[story.tid].down + voteCountList[story.tid].angry }} haters
                           </div>
                       </div>
                       <div class="row">

@@ -21,11 +21,11 @@ app.controller('CommentCtrl', function($scope, socket, User) {
         $scope.commentCountList[data.tid] = $scope.commentCountList[data.tid] ? $scope.commentCountList[data.tid]++ : 1;
     });
 
-    $scope.removeComment = function(index, cmmtId, tId) {
-        $scope.comments.splice(index, 1);
+    $scope.removeComment = function(index, cmmtId) {
+        //$scope.comments.splice(index, 1);
+        $scope.opinions.splice(index, 1);
         var removeCommentObj = {}
-        removeCommentObj.tid = tId;
-        removeCommentObj.cid = cmmtId;
+        removeCommentObj.tid = cmmtId;
         socket.emit('remove-comment', removeCommentObj);
     }
 

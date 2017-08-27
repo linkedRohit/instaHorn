@@ -171,7 +171,7 @@ function feedPageInit(socket, page, limit){
             for (var i = 0, len = voteCountResult.length; i < len; i++) {
                 var tid = voteCountResult[i].tid;
                 var voteType = voteCountResult[i].voteType;
-                voteCount[tid] = voteCount[tid] ? voteCount[tid] : { 'total': 0, 'up': 0, 'down': 0 };
+                voteCount[tid] = voteCount[tid] ? voteCount[tid] : { 'total': 0, 'up': 0, 'down': 0 , 'angry': 0, 'haha': 0};
                 voteCount[tid][voteType] = voteCountResult[i].voteCount;
                 voteCount[tid]['total'] += voteCountResult[i].voteCount;
             }
@@ -187,11 +187,11 @@ function feedPageInit(socket, page, limit){
         return defer.promise;
     })
     .then(function(response){
-      L.info("response", response);
+        L.info("response", response);
         socket.emit('feed-load', response);
     })
     .catch(function(err){
-      L.err("ERROR", err);
+        L.err("ERROR", err);
     });
 }
 
@@ -553,7 +553,7 @@ io.on('connection', function(socket){
             .then(function(){
                 L.info('Delete comment for post', [data]);
                 var defer = Q.defer();
-                mysql.query("delete from comments where tid = ? and cid = ? and uid = ?",[ data.tid, data.cid, userId ],
+                mysql.query("delete from topics where tid = ? and uid = ?",[ data.tid, userId ],
                 function(err, result){
                     err ? defer.reject(err) : defer.resolve(result);
                 });

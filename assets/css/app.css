@@ -383,3 +383,35 @@ a.float:hover + div.label-container{
     color: #000;
     border-bottom: 2px solid #5a8dbf;
 }
+
+.brdrStd {
+    border-bottom: 1px solid #eee;
+}
+
+.reaction {
+    position: relative;
+    border: 2px solid #eee;
+    border-radius: 50px;
+    padding: 13px;
+}
+
+.reaction-sel {
+    background: #5a8dbf;
+}
+
+.reaction-Count {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.cmmtBg {
+    background: rgba(236, 240, 241, 0.38);
+}
+
+.opinionHead {
+    background: #5a8dbf;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
