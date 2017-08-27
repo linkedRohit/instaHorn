@@ -84,19 +84,21 @@
                         </div>
                     </div>-->
                 </div>
-                
+
                 <div class="well well-lg mt20" ng-show="opinions.length == 0">
-                      <div class="h3 text-center"> 
+                      <div class="h3 text-center">
                           <i class="fa fa-frown-o"></i> &nbsp;no opinions yet
                       </div>
                 </div>
                 <div class="row mt20 opinion" ng-show-"opinions" ng-repeat="opinion in opinions">
                     <div class="col-sm-6" ng-class="opinion.type == 'down' ? 'col-sm-push-6 text-left' : 'text-right'">
                         <div class="comment-box">
-                            <div class="f09 mb4"> 
+                            <div class="f09 mb4">
                                 <strong class="fade-clr">{{ user.name }}</strong> <span class="text-muted">says</span>
                             </div>
-                            {{ opinion.description }}
+                            <div class="shade">
+                                <a href="#" ng-click="loadQuestion(opinion.tid)">{{ opinion.description }}</a>
+                            </div>
                             <span class="triangle" ng-class="opinion.type == 'down' ? 'dn' : 'up'">{{ opinion.type == 'down' ? "&#9665;" : "&#9655;" }}</span>
                         </div>
                     </div>
