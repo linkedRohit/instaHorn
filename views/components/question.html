@@ -1,13 +1,13 @@
 <div class="rootElem">
-    <div class="container-fluid">
+    <div class="container-fluid mb40">
         <div class="row-fluid clearfix">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
                 <!--
                 <div class="row">
                     <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
                 </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}" class="ease">{{ debate.question }}</div>-->
-                <div class="h1 ease">{{ debate.question }}</div>
+                <div class="h1 mt3 ease strong">{{ debate.question }}</div>
                 <p>
                     <img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=24">
                     <strong>{{ debate.name }}</strong> &bullet;&nbsp;
@@ -72,8 +72,10 @@
                         </button>
                     </div>
                 </div>-->
-                <div>
-                    <button type="button" class="btn btn-primary-text" ng-click="loadCommentForm(debate.id, 2)"><span class="fa fa-paper-plane"></span> Express your Opinion now!</button>
+                <div class="mt20">
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="loadCommentForm(debate.id, 2)">
+                        <span class="fa fa-comment-o"></span> &nbsp; Express your Opinion now!
+                    </button>
                     <!--<div class="input-group">
                         <input type="text" ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">
                         <div class="input-group-btn">
@@ -82,11 +84,28 @@
                         </div>
                     </div>-->
                 </div>
+                
                 <div class="well well-lg mt20" ng-show="opinions.length == 0">
                       <div class="h3 text-center"> 
                           <i class="fa fa-frown-o"></i> &nbsp;no opinions yet
                       </div>
                 </div>
+                <div class="row mt20 opinion" ng-show-"opinions" ng-repeat="opinion in opinions">
+                    <div class="col-sm-6" ng-class="opinion.type == 'down' ? 'col-sm-push-6 text-left' : 'text-right'">
+                        <div class="comment-box">
+                            <div class="f09 mb4"> 
+                                <strong class="fade-clr">{{ user.name }}</strong> <span class="text-muted">says</span>
+                            </div>
+                            {{ opinion.description }}
+                            <span class="triangle" ng-class="opinion.type == 'down' ? 'dn' : 'up'">{{ opinion.type == 'down' ? "&#9665;" : "&#9655;" }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="line"></div>
+                        <img ng-src="https://graph.facebook.com/{{ userInfo[opinion.uid] ? userInfo[opinion.uid] : user.id }}/picture?width=40" class="img-circle">
+                    </div>
+                </div>
+                <!--
                 <div ng-show="opinions" class="col-sm-12 text-left cmmtBg mt20">
                     <ul>
                         <li ng-repeat="thisOpinion in opinions" class="usrComments mt20 brdrStd">
@@ -117,7 +136,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2 col-xs-2 crsrPntr vSmText" style="float: right;">
-                                    <button class="btn btn-xs btn-primary-text" title="Reply" ng-click="loadCommentForm(thisOpinion.tid, 4)"><!--ng-click="replyToComment($index, thisOpinion.oid)">-->
+                                    <button class="btn btn-xs btn-primary-text" title="Reply" ng-click="loadCommentForm(thisOpinion.tid, 4)"><!--ng-click="replyToComment($index, thisOpinion.oid)">
                                         <span class="fa fa-reply"></span> Reply
                                     </button>
                                     <button class="btn btn-xs btn-danger-text mt10" title="Delete" ng-click="removeComment($index, thisOpinion.tid)">
@@ -128,6 +147,7 @@
                         </li>
                     </ul>
                 </div>
+            -->
                <!-- <div class="col-sm-9 posFxd bottom cmtBox">
                     <div class="row p10">
                        <input type="text" class="form-control" placeholder="What you think about it?">

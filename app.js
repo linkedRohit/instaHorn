@@ -52,7 +52,10 @@ app.run(['$window', function($window) {
 app.filter('spaceless',function() {
     return function(input) {
         if (input) {
-            return input.replace(/\s+/g, '-');
+            return input
+                .toLowerCase()
+                .replace(/[\s]+/g, '-')
+                .replace(/[^0-9a-z\-]+/g, '');
         }
     }
 });

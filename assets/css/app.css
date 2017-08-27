@@ -22,6 +22,41 @@ html, body {
     color: #333;
 }
 
+.fade-clr {
+    color: #797979;
+}
+
+.comment-box {
+    background: #fff;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 1px 4px 0px #eee;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+}
+
+.comment-box .triangle {
+    position: absolute;
+    font-size: 2em;
+    z-index: -1;
+    color: #ddd;
+    text-shadow: 1px 1px 8px #eee;
+}
+
+.triangle.up {
+    top: -5px;
+    right: -15px;
+}
+
+.triangle.dn {
+    left: -16px;
+    top: -5px;
+}
+
+
 .shade a:hover {
     text-decoration: underline;
 }
@@ -90,6 +125,21 @@ html, body {
     border: 1px solid #18bc9c;
 }
 
+@media (min-width: 768px) {
+    .opinion .col-sm-2 {
+        width: 7%;
+    }
+    .opinion .col-sm-6 {
+        width: 46%;
+        margin-right: 4px;
+    }
+    .opinion .col-sm-push-6 {
+        width: 46%;
+        margin-left: 28px;
+        margin-right: -22px;
+    }
+}
+
 .leftscrollbar {
     overflow:auto;
     direction: rtl;
@@ -97,6 +147,10 @@ html, body {
 
 .f50 {
     font-size: 50px;
+}
+
+.mb4 {
+    margin-bottom: 4px;
 }
 
 .mt10 {
