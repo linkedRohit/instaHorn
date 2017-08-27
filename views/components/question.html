@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-sm-1 col-xs-3 col-sm-offset-2" ng-click="vote(debate.id, 'up')">
                             <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='up'}">
-                                <img ng-src="/assets/img/torch.svg" height="45px">
+                                <img ng-src="/assets/img/torch.svg">
                             </div>
                             <div class="row">
                                 <small>I am in <span ng-show="debate.upCount>0" class="badge reaction-Count"> {{ debate.upCount }}</span></small>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'haha')">
                             <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='haha'}">
-                                <img ng-src="/assets/img/laughing.svg" height="45px">
+                                <img ng-src="/assets/img/laughing.svg">
                             </div>
                             <div class="row">
                                 <small>Haha <span ng-show="debate.hahaCount>0" class="badge reaction-Count"> {{ debate.hahaCount }}</span></small>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'down')">
                             <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='down'}">
-                                <img ng-src="/assets/img/bomb.svg" height="45px">
+                                <img ng-src="/assets/img/bomb.svg">
                             </div>
                             <div class="row">
                                 <small>Rubbish <span ng-show="debate.downCount>0" class="badge reaction-Count"> {{ debate.downCount }}</span></small>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-sm-1 col-sm-offset-1 col-xs-3" ng-click="vote(debate.id, 'angry')">
                             <div class="row reaction crsrPntr" ng-class="{'reaction-sel':reactionSel=='angry'}">
-                                <img ng-src="/assets/img/flame.svg" height="45px">
+                                <img ng-src="/assets/img/flame.svg">
                             </div>
                             <div class="row">
                                 <small>Angry <span ng-show="debate.angryCount>0" class="badge reaction-Count"> {{ debate.angryCount }}</span></small>
@@ -66,7 +66,7 @@
                         </button>
                     </div>
                 </div>-->
-                <h4 class="opinionHead mt50">{{ opinions.length > 0 ? 'Opinions' : 'No Opinions' }}</h4>
+                <h4 class="">{{ opinions.length > 0 ? 'Opinions' : 'No Opinions' }}</h4>
                 <div ng-show="opinions" class="col-sm-12 text-left cmmtBg">
                     <ul>
                         <li ng-repeat="thisOpinion in opinions" class="usrComments mt20 brdrStd">
@@ -108,8 +108,15 @@
                         </li>
                     </ul>
                 </div>
+                <div class="col-sm-9 posFxd bottom cmtBox">
+                    <div class="row p10">
+                       <input type="text" class="form-control" placeholder="What you think about it?">
+                       <button class="btn btn-sm btn-success mt10" ng-click='addOpinion("up", 2);' type="button"><span class="fa fa-bullhorn"><strong> Support</strong></span></button>
+                       <button class="btn btn-sm btn-danger mt10" ng-click='addOpinion("down", 2);' type="button"><span class="fa fa-thumbs-down"><strong> Oppose</strong></span></button>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-3 mt50">
+            <div class="col-lg-3 col-md-3 hidden-xs hidden-sm mt50">
                 <div class="panel border posFxd mr20">
                     <div class="panel-heading similarBox">
                         <h4>Similar debates going on</h4>

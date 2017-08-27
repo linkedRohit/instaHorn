@@ -415,3 +415,12 @@ a.float:hover + div.label-container{
     padding: 15px;
     border-radius: 10px;
 }
+
+.bottom {
+    bottom: 0px;
+}
+
+.cmtBox {
+    background: rgba(23, 69, 99, 0.43);
+    border-radius: 5px 5px 0px 0px;
+}
