@@ -23,28 +23,40 @@
                         <i class="fa fa-times"></i> Nah. Nope. I disagree.
                     </button><small><span class="badge">{{ debate.downCount }}</span></small>-->
                     <div class="row">
-                        <div class="col-xs-3 col-sm-2 col-sm-offset-4" ng-click="vote(debate.id, 'up')">
-                            <div class="row reaction reaction-big crsrPntr" ng-class="{'reaction-sel':reactionSel=='up'}">
-                                <img ng-src="/assets/img/torch.svg">
-                                <small>I am in <span ng-show="debate.upCount>0" class="badge reaction-Count"> {{ debate.upCount }}</span></small>
+                        <div class="col-xs-3 col-sm-2 col-sm-offset-2" ng-click="vote(debate.id, 'up')">
+                            <div class="row reaction reaction-big crsrPntr text-center" ng-class="{'reaction-sel':reactionSel=='up'}">
+                                <div class="round">
+                                    <img ng-src="/assets/img/torch.svg">
+                                    <span ng-show="debate.upCount>0" class="badge reaction-Count"> {{ debate.upCount }}</span>
+                                </div>
+                                <p>I am in</p>
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-2" ng-click="vote(debate.id, 'haha')">
-                            <div class="row reaction reaction-big crsrPntr" ng-class="{'reaction-sel':reactionSel=='haha'}">
-                                <img ng-src="/assets/img/laughing.svg">
-                                <small>Haha <span ng-show="debate.hahaCount>0" class="badge reaction-Count"> {{ debate.hahaCount }}</span></small>
+                            <div class="row reaction reaction-big crsrPntr text-center" ng-class="{'reaction-sel':reactionSel=='haha'}">
+                                <div class="round">
+                                    <img ng-src="/assets/img/laughing.svg">
+                                    <span ng-show="debate.hahaCount>0" class="badge reaction-Count"> {{ debate.hahaCount }}</span>
+                                </div>
+                                <p>Haha </p>
                             </div>
                         </div>
                         <div class="col-sm-2 col-xs-3" ng-click="vote(debate.id, 'down')">
-                            <div class="row reaction reaction-big crsrPntr" ng-class="{'reaction-sel':reactionSel=='down'}">
-                                <img ng-src="/assets/img/bomb.svg">
-                                <small>Rubbish <span ng-show="debate.downCount>0" class="badge reaction-Count"> {{ debate.downCount }}</span></small>
+                            <div class="row reaction reaction-big crsrPntr text-center" ng-class="{'reaction-sel':reactionSel=='down'}">
+                                <div class="round">
+                                    <img ng-src="/assets/img/bomb.svg">
+                                    <span ng-show="debate.downCount>0" class="badge reaction-Count"> {{ debate.downCount }}</span>
+                                </div>
+                                <p>Rubbish</p>
                             </div>
                         </div>
                         <div class="col-sm-2 col-xs-3" ng-click="vote(debate.id, 'angry')">
-                            <div class="row reaction reaction-big crsrPntr" ng-class="{'reaction-sel':reactionSel=='angry'}">
-                                <img ng-src="/assets/img/flame.svg">
-                                <small>Angry <span ng-show="debate.angryCount>0" class="badge reaction-Count"> {{ debate.angryCount }}</span></small>
+                            <div class="row reaction reaction-big crsrPntr text-center" ng-class="{'reaction-sel':reactionSel=='angry'}">
+                                <div class="round">
+                                    <img ng-src="/assets/img/flame.svg">
+                                    <span ng-show="debate.angryCount>0" class="badge reaction-Count"> {{ debate.angryCount }}</span>
+                                </div>
+                                <p>Angry</p>
                             </div>
                         </div>
                     </div>
@@ -60,14 +72,7 @@
                         </button>
                     </div>
                 </div>-->
-
-                <div class="well well-lg mt20" ng-show="opinions.length == 0">
-                      <div class="h3 text-center"> 
-                          <i class="fa fa-frown-o"></i> &nbsp;no opinions yet
-                      </div>
-                </div>
                 <div>
-                    <h4 class="">{{ opinions.length > 0 ? 'Opinions' : 'No Opinions' }}</h4>
                     <button type="button" class="btn btn-primary-text" ng-click="loadCommentForm(debate.id, 2)"><span class="fa fa-paper-plane"></span> Express your Opinion now!</button>
                     <!--<div class="input-group">
                         <input type="text" ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">
@@ -76,6 +81,11 @@
                             <button type="button" class="btn btn-warning">Oppose</button>
                         </div>
                     </div>-->
+                </div>
+                <div class="well well-lg mt20" ng-show="opinions.length == 0">
+                      <div class="h3 text-center"> 
+                          <i class="fa fa-frown-o"></i> &nbsp;no opinions yet
+                      </div>
                 </div>
                 <div ng-show="opinions" class="col-sm-12 text-left cmmtBg">
                     <ul>

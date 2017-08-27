@@ -389,10 +389,20 @@ a.float:hover + div.label-container{
 }
 
 .reaction {
+    padding: 13px;
+}
+
+.reaction .round {
     position: relative;
     border: 2px solid #eee;
     border-radius: 50px;
-    padding: 13px;
+    display: inline-block;
+}
+
+.reaction-big img {
+    width: 54px;
+    height: 54px;
+    padding: 5px;
 }
 
 .reaction-sel {
@@ -401,7 +411,9 @@ a.float:hover + div.label-container{
 
 .reaction-Count {
     position: absolute;
-    bottom: 23px;
+    top: -7px;
+    right: -7px;
+    font-size: 0.7em;
 }
 
 .cmmtBg {
