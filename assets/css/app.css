@@ -405,7 +405,7 @@ a.float:hover + div.label-container{
     padding: 5px;
 }
 
-.reaction-sel {
+.reaction-sel .round {
     background: #5a8dbf;
 }
 
