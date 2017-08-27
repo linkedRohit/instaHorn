@@ -401,8 +401,7 @@ a.float:hover + div.label-container{
 
 .reaction-Count {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    bottom: 23px;
 }
 
 .cmmtBg {
