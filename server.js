@@ -16,8 +16,8 @@ chalk = require('chalk');
 Q = require('q');
 FB = require('fb');
 fb = new FB.Facebook({
-    appId: '456012464779296',
-    secret: 'eed306dedb6f6ea9f207bea6f4f534eb'
+    appId: '504162896584154', //'456012464779296',
+    secret: 'b231671c38e50433f7f11bc57a0b61f1' //'eed306dedb6f6ea9f207bea6f4f534eb'
 });
 
 L = {
