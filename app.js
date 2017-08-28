@@ -21,7 +21,7 @@ app.run(['$window', function($window) {
     //if(urlComponents[1] != "topic") {
         $window.fbAsyncInit = function() {
           FB.init({
-            appId      : '456012464779296',
+            appId      : '504162896584154', //'456012464779296',
             cookie     : true,
             xfbml      : true,
             version    : 'v2.8'
