@@ -1,6 +1,6 @@
 app.directive('appLogin', function(){
     return {
-        templateUrl: '/views/components/login.html',
+        templateUrl: '/components/login.html',
         replace: true
     }
 });

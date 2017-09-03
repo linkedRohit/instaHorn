@@ -1,6 +1,6 @@
 app.directive('appCommentDialog', function(){
     return {
-        templateUrl: '/views/components/comment.html',
+        templateUrl: '/components/comment.html',
         replace: true
     }
 });

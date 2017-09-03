@@ -1033,21 +1033,21 @@ app.factory('User', function(){
 
 app.directive('appLogin', function(){
     return {
-        templateUrl: '/views/components/login.html',
+        templateUrl: '/components/login.html',
         replace: true
     }
 });
 
 app.directive('appSideProfile', function(){
     return {
-        templateUrl: '/views/components/side-profile.html',
+        templateUrl: '/components/side-profile.html',
         replace: true
     }
 });
 
 app.directive('appNavigation', function(){
     return {
-        templateUrl: '/views/components/navigation.html',
+        templateUrl: '/components/navigation.html',
         replace: true,
         scope: {
             user: '='
@@ -1057,28 +1057,28 @@ app.directive('appNavigation', function(){
 
 app.directive('appDebatePage', function(){
     return {
-        templateUrl: '/views/components/question.html',
+        templateUrl: '/components/question.html',
         replace: true
     }
 });
 
 app.directive('appDebateFeed', function(){
     return {
-        templateUrl: '/views/components/feed.html',
+        templateUrl: '/components/feed.html',
         replace: true
     }
 });
 
 app.directive('appStartDebate', function(){
     return {
-        templateUrl: '/views/components/debate.html',
+        templateUrl: '/components/debate.html',
         replace: true
     }
 });
 
 app.directive('appCommentDialog', function(){
     return {
-        templateUrl: '/views/components/comment.html',
+        templateUrl: '/components/comment.html',
         replace: true
     }
 });

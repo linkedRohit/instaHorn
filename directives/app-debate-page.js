@@ -1,6 +1,6 @@
 app.directive('appDebatePage', function(){
     return {
-        templateUrl: '/views/components/question.html',
+        templateUrl: '/components/question.html',
         replace: true
     }
 });

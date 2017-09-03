@@ -1,6 +1,6 @@
 app.directive('appDebateFeed', function(){
     return {
-        templateUrl: '/views/components/feed.html',
+        templateUrl: '/components/feed.html',
         replace: true
     }
 });
