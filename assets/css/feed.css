@@ -73,9 +73,9 @@ a:hover {
 }
 
 .up {
-		border-bottom: 1px solid #18bc9c;
+		border-color: #aee8ae;
 }
 
 .down {
-		border-bottom: 1px solid #e74c3c;
+		border-color: #ffd3d3;
 }

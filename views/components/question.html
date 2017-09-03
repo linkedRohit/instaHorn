@@ -93,7 +93,7 @@
                 </div>
                 <div class="row mt20 opinion" ng-show-"opinions" ng-repeat="opinion in opinions">
                     <div class="col-sm-6" ng-class="opinion.type == 'down' ? 'col-sm-push-6 text-left' : 'text-right'">
-                        <div class="comment-box">
+                        <div class="comment-box" ng-class="opinion.type == 'down' ? 'down':'up'">
                             <div class="f09 mb4">
                                 <strong class="fade-clr">{{ user.name }}</strong> <span class="text-muted">says</span>
                             </div>
