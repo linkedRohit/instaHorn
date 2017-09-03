@@ -87,6 +87,7 @@ module.exports = function(grunt) {
                     'node_modules/angular-resource/angular-resource.min.js',
                     'node_modules/angular-route/angular-route.min.js',
                     'node_modules/angular-moment/angular-moment.min.js',
+                    'node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js',
                     
                     'app.js',
                     
