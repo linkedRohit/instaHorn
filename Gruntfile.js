@@ -1,11 +1,12 @@
 module.exports = function(grunt) {
     
     grunt.initConfig({
-        htmlbuild: {
-             production: {
-                 src: 'views/index.html',
-                 dest: 'build/assets/html/'
-             }
+        processhtml: {
+            production: {
+                files: {
+                    'build/html/index.html': ['views/index.html']
+                }
+            }
         },
         clean: {
             production: [
@@ -98,7 +99,7 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.loadNpmTasks('grunt-html-build');
+    grunt.loadNpmTasks('grunt-processhtml');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -106,7 +107,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
        'clean:production',
        'concat:production_css',
-       'copy:production'
+       'copy:production',
+       'processhtml:production'
     ]);
     
     

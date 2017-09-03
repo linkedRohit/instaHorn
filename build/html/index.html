@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="build/assets/css/app.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#000" id="themeColor">
+        <base href="/">
+        
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body ng-app="DebateApp">
+        <div ng-controller="RouteCtrl"></div>
+        <div id="fb-root"></div>
+
+        <div ng-controller="AppCtrl" class="h100per">
+            <div ng-controller="LoginCtrl" class="h100per">
+                <app-login></app-login>
+                <div ng-show="user">
+                    <app-navigation user="user"></app-navigation>
+                    <div class="container" ng-show="page === 'start' || page === 'feeds'">
+                        <div class="row-fluid">
+                            <div class="col-sm-8">
+                                <div ng-show="page === 'start'">
+                                    <app-start-debate></app-start-debate>
+                                </div>
+                                <div ng-show="page === 'feeds'">
+                                    <app-debate-feed></app-debate-feed>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="page === 'topic'">
+                        <app-debate-page></app-debate-page>
+                    </div>
+
+                    <!--comments will be loaded at Bottom on click of show comments.-->
+                    <div ng-show="subModule==='comment'">
+                        <app-comment-dialog></app-comment-dialog>
+                    </div>
+                </div>                
+            </div>
+        </div>
+
+        
+        <script src="build/assets/js/app.js"></script>
+    </body>
+</html>
