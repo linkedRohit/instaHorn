@@ -1,7 +1,6 @@
 app.controller('TopicCtrl', function($scope, socket) {
-
-    $scope.commentFlag = 0;
     $scope.reactionSel = 0;
+    $scope.commentBox = false;
 
     $scope.startDebate = function() {
     	console.log('Sending new topic data to server', $scope.formData);
@@ -15,14 +14,13 @@ app.controller('TopicCtrl', function($scope, socket) {
     };
 
 
-    $scope.postMyOpinion = function(flag){
-        console.log('Posting Opinion', $scope.comment);
-        if($scope.comment) {
-            var type = $scope.commentFlag == 1 ? 'up' : 'down';
+    $scope.postMyOpinion = function(type, flag){
+        console.log('Posting Opinion', $scope.opinion);
+        if($scope.opinion) {
             var flag = flag ? flag : 1
             socket.emit('post-opinion', {
                 tid: $scope.debate.id,
-                description: $scope.comment,
+                description: $scope.opinion,
                 type: type,
                 flag: flag
             });
@@ -38,8 +36,8 @@ app.controller('TopicCtrl', function($scope, socket) {
     };
 
     $scope.cancelOpinion = function(){
-        $scope.comment = '';
-        $scope.commentFlag = 0;
+        $scope.opinion = '';
+        $scope.commentBox = false;
     };
 
     socket.on('vote-added', function(data) {
@@ -62,4 +60,8 @@ app.controller('TopicCtrl', function($scope, socket) {
         $scope.comments.unshift(data);
         $scope.cancelOpinion();
     });
+
+    $scope.loadCommentBox = function() {
+        $scope.commentBox = !$scope.commentBox;
+    }
 });

@@ -73,16 +73,17 @@
                     </div>
                 </div>-->
                 <div class="mt20">
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="loadCommentForm(debate.id, 2)">
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="loadCommentBox(debate.id, 2)">
                         <span class="fa fa-comment-o"></span> &nbsp; Express your Opinion now!
                     </button>
-                    <!--<div class="input-group">
-                        <input type="text" ng-model="txtcomment" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">
+                    <div class="input-group" ng-show="commentBox">
+                        <input type="text" ng-model="opinion" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-success">Support</button>
-                            <button type="button" class="btn btn-warning">Oppose</button>
+                            <button type="button" class="btn btn-success" ng-click="postMyOpinion('up',2)">Support</button>
+                            <button type="button" class="btn btn-warning" ng-click="postMyOpinion('down',2)">Oppose</button>
+                            <span class="fa fa-cross"></span>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
 
                 <div class="well well-lg mt20" ng-show="opinions.length == 0">
