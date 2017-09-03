@@ -71,9 +71,9 @@ module.exports = function(grunt) {
                 src: [
                     'node_modules/bootstrap/dist/css/bootstrap.min.css',
                     'node_modules/font-awesome/css/font-awesome.min.css',
-                    'assets/css/app.js',
-                    'assets/css/feed.js',
-                    'node_modules/nprogress/nprogress.css'
+                    'node_modules/nprogress/nprogress.css',
+                    'assets/css/app.css',
+                    'assets/css/feed.css'
                 ],
                 dest: 'build/assets/css/app.css'
             },

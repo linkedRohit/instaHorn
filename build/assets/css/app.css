@@ -83,3 +83,577 @@
   100% { transform: rotate(360deg); }
 }
 
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background:#fefefe;
+}
+
+.welcomePage {
+    margin-top: 120px;
+}
+
+.feed-box .box {
+    border-bottom: 1px solid #eee;
+    padding: 5px 10px 20px 10px;
+    margin-bottom: 30px;
+}
+
+.mt3 {
+    margin-top: 3px;
+}
+
+.shade a {
+    color: #333;
+}
+
+.fade-clr {
+    color: #797979;
+}
+
+.comment-box {
+    background: #fff;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 1px 4px 0px #eee;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+}
+
+.comment-box .triangle {
+    position: absolute;
+    font-size: 2em;
+    z-index: -1;
+    color: #ddd;
+    text-shadow: 1px 1px 8px #eee;
+}
+
+.triangle.up {
+    top: -5px;
+    right: -15px;
+}
+
+.triangle.dn {
+    left: -16px;
+    top: -5px;
+}
+
+
+.shade a:hover {
+    text-decoration: underline;
+}
+
+.mt50 {
+    margin-top: 50px;
+}
+
+.feed-box .card {
+    margin-bottom: 12px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.gray {
+    color: #333;
+}
+
+.f15 {
+    font-size: 1.5em;
+}
+
+.strong {
+    font-weight: 700;
+}
+
+.f18 {
+    font-size: 1.8em;
+}
+
+.low {
+    color: #aaa;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.app {
+    background-image: url('/assets/img/page2.jpg');
+    background-size: cover;
+    height: 100%;
+}
+
+.card {
+  position:relative;
+  z-index:2;
+  padding:1.5rem;
+  box-shadow: 0px 1px 3px 1px #e0e0e0;
+  background:white;
+  border-radius:3px;
+  user-select:none;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #eef3f7;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 1px solid #18bc9c;
+}
+
+@media (min-width: 768px) {
+    .opinion .col-sm-2 {
+        width: 7%;
+    }
+    .opinion .col-sm-6 {
+        width: 46%;
+        margin-right: 4px;
+    }
+    .opinion .col-sm-push-6 {
+        width: 46%;
+        margin-left: 28px;
+        margin-right: -22px;
+    }
+}
+
+.leftscrollbar {
+    overflow:auto;
+    direction: rtl;
+}
+
+.f50 {
+    font-size: 50px;
+}
+
+.mb4 {
+    margin-bottom: 4px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.f1 {
+    font-size: 1em;
+}
+
+.f11 {
+    font-size: 1.1em;
+}
+
+.f12 {
+    font-size: 1.2em;
+}
+
+.f2 {
+    font-size: 2em;
+}
+
+.p0 {
+    padding: 0;
+}
+
+.p5 {
+    padding: 5px;
+}
+
+
+.btn-space .btn {
+    margin:5px 10px;
+}
+
+.h100per {
+    height: 100%;
+}
+
+.spot {
+    line-height: 1.75;
+}
+
+.spot .bg-ok {
+    margin-right: 0;
+}
+
+.spot .bg-ok, .spot .bg-no {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.bg-ok {
+    margin-right: -5px;
+    border-right: 5px solid #bbf9a7;
+    background-image: linear-gradient(to left, #edffe7 , white);
+}
+
+.bg-no {
+    border-left: 5px solid #f1d7dc;
+    background-image: linear-gradient(to right, #f9eaed , white);
+}
+
+.p10 {
+    padding: 10px;
+}
+
+.plr10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background: #fff;
+    color: #333;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.mb50 {
+    margin-bottom: 50px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mt0 {
+    margin-top: 0;
+}
+
+.mr20 {
+    margin-right: 20px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.va {
+   vertical-align: middle;
+}
+
+
+.levels .progress, .levels .progress-bar {
+    border-radius: 0px;
+    height: 5px;
+}
+
+.m0 {
+    margin: 0;
+}
+
+.InB {
+    display: inline-block;
+}
+
+.f09 {
+    font-size: 0.9em;
+}
+
+.f08 {
+    font-size: 0.8em;
+}
+
+.ca {
+    color: #aaa;
+}
+
+.cr {
+    color: #e74c3c;
+}
+
+.ease {
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+}
+
+.fullScreen {
+    top:0 !important;
+    left:0 !important;
+    width:100% !important;
+    height:100% !important;
+    z-index:1000 !important;
+}
+
+.upArrow {
+    margin-left: 50%;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #3498db;
+}
+
+.backButton {
+    font-size: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.crsrPntr {
+    cursor: pointer;
+}
+
+.ml7 {
+    margin-left: 7px;
+}
+
+.mt7 {
+    margin-top: 7px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.border {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.panel {
+  box-shadow: 2px 2px 2px rgb(169, 199, 208);
+}
+
+.lh3 {
+    line-height: 3;
+}
+
+.label-container{
+  	position:fixed;
+  	bottom:48px;
+  	right:105px;
+  	display:table;
+  	visibility: hidden;
+}
+
+.label-text{
+  	color:#FFF;
+  	background:rgba(51,51,51,0.5);
+  	display:table-cell;
+  	vertical-align:middle;
+  	padding:10px;
+  	border-radius:3px;
+}
+
+.label-arrow{
+  	display:table-cell;
+  	vertical-align:middle;
+  	color:#333;
+  	opacity:0.5;
+}
+
+.float{
+  	position:fixed;
+  	width:60px;
+  	height:60px;
+  	bottom:25px;
+  	right:15px;
+  	background-color:#e74c3c;
+  	color:#FFF;
+  	border-radius:50px;
+  	text-align:center;
+  	box-shadow: 2px 2px 3px #999;
+    z-index: 2;
+}
+
+.my-float{
+  	font-size:24px;
+  	margin-top:18px;
+}
+
+a.float + div.label-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+}
+
+a.float:hover + div.label-container{
+    visibility: visible;
+    opacity: 1;
+}
+
+.bringUp {
+    z-index: 2;
+}
+
+.postBtn {
+    padding: 9px 20px !important;
+}
+
+.nav-style {
+    background: white;
+    border-bottom: 1px solid #4abca5;
+    z-index: 5;
+}
+
+.posFxd {
+    position: fixed;
+}
+
+.vSmText {
+    font-size: 12px;
+}
+
+.btn-danger-text {
+    color: #000;
+    border-bottom: 2px solid #e74c3c
+}
+
+.btn-primary-text {
+    color: #000;
+    border-bottom: 2px solid #5a8dbf;
+}
+
+.brdrStd {
+    border-bottom: 1px solid #eee;
+}
+
+.reaction {
+    padding: 13px;
+}
+
+.reaction .round {
+    position: relative;
+    border: 2px solid #eee;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.reaction-big img {
+    width: 54px;
+    height: 54px;
+    padding: 5px;
+}
+
+.reaction-sel .round {
+    background: #5a8dbf;
+}
+
+.reaction-Count {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    font-size: 0.7em;
+}
+
+.cmmtBg {
+    background: rgba(236, 240, 241, 0.38);
+}
+
+.opinionHead {
+    background: #5a8dbf;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.bottom {
+    bottom: 0px;
+}
+
+.cmtBox {
+    background: rgba(23, 69, 99, 0.43);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.feedLayer {
+		background: #EEE;
+}
+
+.photo {
+    border-radius: 25px;
+}
+
+.userPhotos {
+		border-radius: 25px;
+		padding:5;
+}
+
+.userInfo {
+		font-size: 10px;
+		width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.postedTime {
+		margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.responseText {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.comment {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		background: rgba(0, 0, 0, 0.85);
+		color: #ccc;
+		padding: 10px;
+		height: 50%;
+		overflow: auto;
+}
+
+.comment ul li {
+		list-style: none;
+}
+
+.usrComments {
+		line-height: 1.5;
+		padding-top: 10px;
+		list-style: none;
+}
+
+.cmtTxt {
+		max-height: 75px;
+		overflow: auto;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+}
+.hideCommentBox {
+		display: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.similarBox {
+		background-color: #5a8dbf;
+		color: white;
+		font-weight: 500;
+}
+
+.up {
+		border-bottom: 1px solid #18bc9c;
+}
+
+.down {
+		border-bottom: 1px solid #e74c3c;
+}
