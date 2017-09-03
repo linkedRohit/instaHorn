@@ -142,17 +142,17 @@ function feedPageInit(socket, page, limit){
     })
     .then(function(topicList){
         var defer = Q.defer();
-        L.info("SQL-QUERY", "select tid, count(1) as totalComments from comments where tid in (?) group by tid");
+        L.info("SQL-QUERY", "select pid, count(1) as totalComments from topics where pid in (?) group by pid");
         L.info("SQL-PARAMS", [topicList]);
         if( topicList.length <= 0 ) {
             socket.emit('feed-last-page', 'end');
         }
-        mysql.query("select tid, count(1) as totalComments from comments where tid in (?) group by tid", [topicList], function(err, commentCountResult) {
+        mysql.query("select pid, count(1) as totalComments from topics where pid in (?) group by pid", [topicList], function(err, commentCountResult) {
             if(err) return defer.reject(err);
             L.info('comments count', commentCountResult);
             var commentCount = {};
             for (var i = 0, len = commentCountResult.length; i < len; i++) {
-                commentCount[commentCountResult[i].tid] = commentCountResult[i].totalComments;
+                commentCount[commentCountResult[i].pid] = commentCountResult[i].totalComments;
             }
             response.commentCount = commentCount;
             return defer.resolve(topicList);
