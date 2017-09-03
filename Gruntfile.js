@@ -49,6 +49,23 @@ module.exports = function(grunt) {
                 ]
             }  
         },
+        cssmin: {
+            target: {
+                files: {
+                    'build/assets/css/app.min.css': ['build/assets/css/app.css']
+                }
+            }
+        },
+        uglify: {
+            target: {
+                options: {
+                    compress: true
+                },
+                files: {
+                    'build/assets/js/app.min.js': ['build/assets/js/app.js']
+                }
+            }
+        },
         concat: {
             production_css: {
                 src: [
@@ -100,15 +117,20 @@ module.exports = function(grunt) {
     });
     
     grunt.loadNpmTasks('grunt-processhtml');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     
     grunt.registerTask('build', [
        'clean:production',
        'concat:production_css',
+       'concat:production_js',
        'copy:production',
-       'processhtml:production'
+       'processhtml:production',
+       'cssmin',
+       'uglify'
     ]);
     
     
