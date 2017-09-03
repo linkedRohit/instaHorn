@@ -98,6 +98,12 @@
                             </div>
                             <div class="shade">
                                 <a href="#" ng-click="loadQuestion(opinion.tid)">{{ opinion.description }}</a>
+                                <div class="text-muted f09">
+                                    <i class="fa fa-clock-o"></i>
+                                    <small>
+                                        <span am-time-ago="opinion.editedOn"></span>
+                                    </small>
+                                </div>
                             </div>
                             <span class="triangle" ng-class="opinion.type == 'down' ? 'dn' : 'up'">{{ opinion.type == 'down' ? "&#9665;" : "&#9655;" }}</span>
                         </div>
