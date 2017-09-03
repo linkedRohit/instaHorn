@@ -2,7 +2,6 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
 
     socket.on('debate-ques', function(data){
         Page.set('topic');
-
         var question = data.question[0];
         $scope.debate = {
             question: question.description,
@@ -20,7 +19,8 @@ app.controller('AppCtrl', function(Page, $scope, socket, User) {
         }
 
         $scope.opinions = data.opinionResult;
-
+        $scope.reactions = data.reactionCount;
+        $scope.replies = data.replyCount;
     });
 
 });

@@ -99,6 +99,44 @@
                             </div>
                             <div class="shade">
                                 <a href="#" ng-click="loadQuestion(opinion.tid)">{{ opinion.description }}</a>
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-2">
+                                        <div class="row reaction reaction-small text-center" ng-class="{'reaction-sel':reactionSel=='up'}">
+                                            <div class="crsrPntr" ng-click="vote(opinion.tid, 'up')">
+                                                <img ng-src="/assets/img/torch.svg">
+                                                <span ng-show="reactions[opinion.tid].up>0" class="badge f06"> {{ reactions[opinion.tid].up }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-2">
+                                        <div class="row reaction reaction-small text-center" ng-class="{'reaction-sel':reactionSel=='haha'}">
+                                            <div class="crsrPntr" ng-click="vote(opinion.tid, 'haha')">
+                                                <img ng-src="/assets/img/laughing.svg">
+                                                <span ng-show="reactions[opinion.tid].haha>0" class="badge f06"> {{ reactions[opinion.tid].haha }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-3">
+                                        <div class="row reaction reaction-small text-center" ng-class="{'reaction-sel':reactionSel=='down'}">
+                                            <div class="crsrPntr" ng-click="vote(opinion.tid, 'down')">
+                                                <img ng-src="/assets/img/bomb.svg">
+                                                <span ng-show="reactions[opinion.tid].down>0" class="badge f06"> {{ reactions[opinion.tid].down }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-3">
+                                        <div class="row reaction reaction-small text-center">
+                                            <div class="crsrPntr" ng-click="vote(opinion.tid, 'angry')">
+                                                <img ng-src="/assets/img/flame.svg">
+                                                <span ng-show="reactions[opinion.tid].angry>0" class="badge f06"> {{ reactions[opinion.tid].angry }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-sm-offset-5 col-xs-6 col-xs-offset-6">
+                                        <h2>{{ replies[opinion.tid] }}</h2>
+                                        <span ng-show="replies[opinion.tid]>0">Replies</span>
+                                    </div>
+                                </div>
                                 <div class="text-muted f09">
                                     <i class="fa fa-clock-o"></i>
                                     <small>

@@ -444,7 +444,7 @@ io.on('connection', function(socket){
                     }
                     else {
                         response.question = result;
-                        L.info(response, result);
+                        L.info('response', result);
                         defer.resolve(id);
                     }
                 });
@@ -467,19 +467,70 @@ io.on('connection', function(socket){
 
                 return defer.promise;
             }).then(function(id){
+                var defer = Q.defer();
                 L.info("SQL-QUERY", "select * from topics where pid = ? order by tid desc");
                 L.info("SQL-PARAMS", [id]);
 
                 mysql.query("select * from topics where pid = ? order by tid desc", [id], function(err, opinionResult){
-
                     if(err) {
                         L.info('error', err);
                         return defer.reject(err);
-
                     }
+                    var id = [];
+                    for(var i=0; i<opinionResult.length; i++) {
+                        id.push(opinionResult[i].tid);
+                    }
+
                     response.opinionResult = opinionResult;
-                    socket.emit('debate-ques', response);
+                    return defer.resolve(id);
                 });
+                return defer.promise;
+            }).then(function(id) {
+                var defer = Q.defer();
+                L.info("SQL-QUERY", "select tid, voteType, count(1) as count from votes where tid in (?) group by tid, voteType")
+                L.info("SQL-PARAMS", [id]);
+
+                mysql.query("select tid, voteType, count(1) as count from votes where tid in (?) group by tid, voteType", [id], function(err, opinionReactionCount){
+                    if(err) {
+                        L.info('error while fetching reaction count for opinions', err);
+                        //return defer.reject(err);
+                    }
+                    var reactionCount = {};
+                    if(opinionReactionCount) {
+                        for (var i = 0, len = opinionReactionCount.length; i < len; i++) {
+                            if(!reactionCount[opinionReactionCount[i].tid]) {
+                                reactionCount[opinionReactionCount[i].tid] = {};
+                            }
+                            reactionCount[opinionReactionCount[i].tid][opinionReactionCount[i].voteType] = opinionReactionCount[i].count;
+                        }
+                    }
+                    response.reactionCount = reactionCount;
+                    return defer.resolve(id);
+                });
+                return defer.promise;
+            }).then(function(id) {
+                var defer = Q.defer();
+                L.info("SQL-QUERY", "select pid, count(1) as count from topics where pid in (?) group by pid")
+                L.info("SQL-PARAMS", [id]);
+
+                mysql.query("select pid, count(1) as count from topics where pid in (?) group by pid", [id], function(err, opinionReplyCount){
+                    if(err) {
+                        L.info('error while fetching reply counts', err);
+                        //return defer.reject(err);
+                    }
+                    var replyCount = {};
+                    if(opinionReplyCount) {
+                        for (var i = 0, len = opinionReplyCount.length; i < len; i++) {
+                            if(!replyCount[opinionReplyCount[i].pid]) {
+                                replyCount[opinionReplyCount[i].pid] = {};
+                            }
+                            replyCount[opinionReplyCount[i].pid] = opinionReplyCount[i].count;
+                        }
+                    }
+                    response.replyCount = replyCount;
+                    socket.emit('debate-ques', response);
+                })
+                return defer.promise;
             }).fail(function(err) {
                 L.error('Error while fetching question : '+id, err);
             });

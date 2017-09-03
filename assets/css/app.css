@@ -286,6 +286,10 @@ html, body {
     font-size: 0.8em;
 }
 
+.f06 {
+    font-size: 0.6em;
+}
+
 .ca {
     color: #aaa;
 }
@@ -457,6 +461,11 @@ a.float:hover + div.label-container{
     width: 54px;
     height: 54px;
     padding: 5px;
+}
+
+.reaction-small img {
+    width: 20px;
+    height: 20px;
 }
 
 .reaction-sel .round {
