@@ -7,7 +7,7 @@
                     <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
                 </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}" class="ease">{{ debate.question }}</div>-->
-                <div class="h1 mt3 ease strong">{{ debate.question }}</div>
+                <div class="h1 mt3 ease strong" ng-bind-html="highlight(debate.question, 'angular')">{{ debate.question }}</div>
                 <p>
                     <img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=24">
                     <strong>{{ debate.name }}</strong> &bullet;&nbsp;
@@ -97,8 +97,8 @@
                             <div class="f09 mb4">
                                 <strong class="fade-clr">{{ user.name }}</strong> <span class="text-muted">says</span>
                             </div>
-                            <div class="shade">
-                                <a href="#" ng-click="loadQuestion(opinion.tid)">{{ opinion.description }}</a>
+                            <div class="shade crsrPntr">
+                                <span ng-click="loadQuestion(opinion.tid)" ng-mouseup="showHighlighter(opinion.tid)">{{ opinion.description }}</span>
                                 <div class="row">
                                     <div class="col-xs-3 col-sm-2">
                                         <div class="row reaction reaction-small text-center" ng-class="{'reaction-sel':reactionSel=='up'}">

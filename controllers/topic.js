@@ -1,4 +1,4 @@
-app.controller('TopicCtrl', function($scope, socket) {
+app.controller('TopicCtrl', function($scope, socket, $sce) {
     $scope.reactionSel = 0;
     $scope.commentBox = false;
 
@@ -64,4 +64,17 @@ app.controller('TopicCtrl', function($scope, socket) {
     $scope.loadCommentBox = function() {
         $scope.commentBox = !$scope.commentBox;
     }
+
+    $scope.showHighlighter = function(id) {
+
+    }
+
+    $scope.highlight = function(haystack, needle) {
+        if(!needle) {
+            return $sce.trustAsHtml(haystack);
+        }
+        return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
+            return '<span class="highlightedText">' + match + '</span>';
+        }));
+    };
 });

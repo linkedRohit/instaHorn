@@ -125,6 +125,35 @@ html, body {
     border: 1px solid #18bc9c;
 }
 
+/*** Works on common browsers ***/
+::selection {
+    background-color: #7abfab;
+    color: #fff;
+}
+
+/*** Mozilla based browsers ***/
+::-moz-selection {
+    background-color: #7abfab;
+    color: #fff;
+}
+
+/***For Other Browsers ***/
+::-o-selection {
+    background-color: #7abfab;
+    color: #fff;
+}
+
+::-ms-selection {
+    background-color: #7abfab;
+    color: #fff;
+}
+
+/*** For Webkit ***/
+::-webkit-selection {
+    background-color: #7abfab;
+    color: #fff;
+}
+
 @media (min-width: 768px) {
     .opinion .col-sm-2 {
         width: 7%;
@@ -497,4 +526,9 @@ a.float:hover + div.label-container{
 .cmtBox {
     background: rgba(23, 69, 99, 0.43);
     border-radius: 5px 5px 0px 0px;
+}
+
+.highlightedText {
+    background: #1fcedc;
+    color: white;
 }
