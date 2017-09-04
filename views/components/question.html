@@ -7,7 +7,7 @@
                     <div class="row text-center"><img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=60"></div>
                 </div>
                 <div ng-class="{'h1':commentFlag == 0, 'h3 text-success':commentFlag == 1, 'h3 text-danger':commentFlag == -1}" class="ease">{{ debate.question }}</div>-->
-                <div class="h1 mt3 ease strong" ng-bind-html="highlight(debate.question, 'angular')">{{ debate.question }}</div>
+                <div class="h1 mt3 ease strong" ng-bind-html="highlight(debate.question, 'angular')"></div>
                 <p>
                     <img class="img-circle" ng-src="https://graph.facebook.com/{{debate.fbid}}/picture?width=24">
                     <strong>{{ debate.name }}</strong> &bullet;&nbsp;
@@ -77,7 +77,9 @@
                         <span class="fa fa-comment-o"></span> &nbsp; Express your Opinion now!
                     </button>
                     <div class="input-group" ng-show="commentBox">
-                        <input type="text" ng-model="opinion" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">
+                        <medium-editor class="form-control pull-left" ng-model="opinion" bind-options="mediumBindOptions"></medium-editor>
+                        <!--<p ng-model="text" class="form-control pull-left" medium-editor bind-options="mediumBindOptions"></p>
+                        <input type="text" ng-model="opinion" class="form-control pull-left" name="comment" id="comment" placeholder="What you think?">-->
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-success" ng-click="postMyOpinion('up',2)">Support</button>
                             <button type="button" class="btn btn-warning" ng-click="postMyOpinion('down',2)">Oppose</button>
@@ -98,7 +100,7 @@
                                 <strong class="fade-clr">{{ user.name }}</strong> <span class="text-muted">says</span>
                             </div>
                             <div class="shade crsrPntr">
-                                <span ng-click="loadQuestion(opinion.tid)" ng-mouseup="showHighlighter(opinion.tid)">{{ opinion.description }}</span>
+                                <span ng-click="loadQuestion(opinion.tid)">{{ opinion.description }}</span>
                                 <div class="row">
                                     <div class="col-xs-3 col-sm-2">
                                         <div class="row reaction reaction-small text-center" ng-class="{'reaction-sel':reactionSel=='up'}">

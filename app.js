@@ -1,13 +1,14 @@
 var app = angular.module('DebateApp', [
     'angularMoment',
     'ngRoute',
-    'infinite-scroll'
+    'infinite-scroll',
+    'angular-medium-editor'
 ]);
 
 
 app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    
+
     $routeProvider
         .when('/topic/:id/:slug', {
             controller: 'FeedCtrl',
